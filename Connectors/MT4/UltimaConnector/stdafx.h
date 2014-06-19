@@ -8,3 +8,11 @@
 
 #define _ELPP_THREAD_SAFE
 #include "easylogging++.h"
+
+#include <cstring>
+#include <string>
+#include <chrono>
+
+#include "Data.hpp"
+
+std::string ToString(const wchar_t* str);

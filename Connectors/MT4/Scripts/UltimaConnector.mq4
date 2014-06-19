@@ -47,9 +47,10 @@ int OnInit()
 	string company = AccountCompany();
 	if (StringLen(BrokerAlias) > 0)
 		company = BrokerAlias;
+	string dataPath = TerminalInfoString(TERMINAL_DATA_PATH);
 		
 	Print("[Debug] Loading Ultima.Meta4.dll...");
-	int res = Initialize(company);
+	int res = Initialize(dataPath, company);
 	if (res == false)
 	{
 		Alert("Initialize Error");
@@ -71,7 +72,7 @@ void OnDeinit(const int reason)
 {
 	Print("[Debug] OnDeinit. Reason: " + GetUninitReasonText(reason));
  
-   	DeleteVersionLabel();
+	DeleteVersionLabel();
 
 	Print("[Debug] Calling DeInitialize...");
 	DeInitialize();

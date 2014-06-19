@@ -93,8 +93,8 @@ struct MT4Order
 	datetime CloseTime;
 };
 
-#import "Ultima.Meta4.dll"
-	bool Initialize(string company);
+#import "UltimaConnector.dll"
+	bool Initialize(string dataPath, string company);
 	void DeInitialize();
 	
 	bool HasCommands();
