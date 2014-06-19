@@ -20,11 +20,12 @@
 #endif
 
 #include <google/protobuf/generated_message_util.h>
-#include <google/protobuf/message.h>
+#include <google/protobuf/message_lite.h>
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
-#include <google/protobuf/unknown_field_set.h>
 // @@protoc_insertion_point(includes)
+
+namespace UltimaConnector {
 
 // Internal implementation detail -- do not call these.
 void  protobuf_AddDesc_Protocol_2eproto();
@@ -47,7 +48,7 @@ class OrdersHistoryDTO;
 
 // ===================================================================
 
-class LoginDTO : public ::google::protobuf::Message {
+class LoginDTO : public ::google::protobuf::MessageLite {
  public:
   LoginDTO();
   virtual ~LoginDTO();
@@ -59,24 +60,24 @@ class LoginDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const LoginDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const LoginDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(LoginDTO* other);
 
   // implements Message ----------------------------------------------
 
   LoginDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const LoginDTO& from);
   void MergeFrom(const LoginDTO& from);
   void Clear();
@@ -87,7 +88,6 @@ class LoginDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -95,7 +95,7 @@ class LoginDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -113,19 +113,21 @@ class LoginDTO : public ::google::protobuf::Message {
   inline ::std::string* release_company();
   inline void set_allocated_company(::std::string* company);
 
-  // @@protoc_insertion_point(class_scope:LoginDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.LoginDTO)
  private:
   inline void set_has_company();
   inline void clear_has_company();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* company_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -134,7 +136,7 @@ class LoginDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class SymbolRegistrationDTO : public ::google::protobuf::Message {
+class SymbolRegistrationDTO : public ::google::protobuf::MessageLite {
  public:
   SymbolRegistrationDTO();
   virtual ~SymbolRegistrationDTO();
@@ -146,24 +148,24 @@ class SymbolRegistrationDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const SymbolRegistrationDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const SymbolRegistrationDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(SymbolRegistrationDTO* other);
 
   // implements Message ----------------------------------------------
 
   SymbolRegistrationDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const SymbolRegistrationDTO& from);
   void MergeFrom(const SymbolRegistrationDTO& from);
   void Clear();
@@ -174,7 +176,6 @@ class SymbolRegistrationDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -182,7 +183,7 @@ class SymbolRegistrationDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -207,14 +208,12 @@ class SymbolRegistrationDTO : public ::google::protobuf::Message {
   inline bool register_() const;
   inline void set_register_(bool value);
 
-  // @@protoc_insertion_point(class_scope:SymbolRegistrationDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.SymbolRegistrationDTO)
  private:
   inline void set_has_symbol();
   inline void clear_has_symbol();
   inline void set_has_register_();
   inline void clear_has_register_();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::std::string* symbol_;
   bool register__;
@@ -222,7 +221,11 @@ class SymbolRegistrationDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -231,7 +234,7 @@ class SymbolRegistrationDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class PriceDTO : public ::google::protobuf::Message {
+class PriceDTO : public ::google::protobuf::MessageLite {
  public:
   PriceDTO();
   virtual ~PriceDTO();
@@ -243,24 +246,24 @@ class PriceDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const PriceDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const PriceDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(PriceDTO* other);
 
   // implements Message ----------------------------------------------
 
   PriceDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const PriceDTO& from);
   void MergeFrom(const PriceDTO& from);
   void Clear();
@@ -271,7 +274,6 @@ class PriceDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -279,7 +281,7 @@ class PriceDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -311,7 +313,7 @@ class PriceDTO : public ::google::protobuf::Message {
   inline double ask() const;
   inline void set_ask(double value);
 
-  // @@protoc_insertion_point(class_scope:PriceDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.PriceDTO)
  private:
   inline void set_has_symbol();
   inline void clear_has_symbol();
@@ -320,8 +322,6 @@ class PriceDTO : public ::google::protobuf::Message {
   inline void set_has_ask();
   inline void clear_has_ask();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* symbol_;
   double bid_;
   double ask_;
@@ -329,7 +329,11 @@ class PriceDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -338,7 +342,7 @@ class PriceDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class OpenOrderCommandDTO : public ::google::protobuf::Message {
+class OpenOrderCommandDTO : public ::google::protobuf::MessageLite {
  public:
   OpenOrderCommandDTO();
   virtual ~OpenOrderCommandDTO();
@@ -350,24 +354,24 @@ class OpenOrderCommandDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const OpenOrderCommandDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const OpenOrderCommandDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(OpenOrderCommandDTO* other);
 
   // implements Message ----------------------------------------------
 
   OpenOrderCommandDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const OpenOrderCommandDTO& from);
   void MergeFrom(const OpenOrderCommandDTO& from);
   void Clear();
@@ -378,7 +382,6 @@ class OpenOrderCommandDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -386,7 +389,7 @@ class OpenOrderCommandDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -493,7 +496,7 @@ class OpenOrderCommandDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 lastchanceretryspanms() const;
   inline void set_lastchanceretryspanms(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:OpenOrderCommandDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.OpenOrderCommandDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -522,8 +525,6 @@ class OpenOrderCommandDTO : public ::google::protobuf::Message {
   inline void set_has_lastchanceretryspanms();
   inline void clear_has_lastchanceretryspanms();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* symbol_;
   ::google::protobuf::int32 command_;
   ::google::protobuf::int32 tradecommand_;
@@ -541,7 +542,11 @@ class OpenOrderCommandDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -550,7 +555,7 @@ class OpenOrderCommandDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class ModifyOrderCommandDTO : public ::google::protobuf::Message {
+class ModifyOrderCommandDTO : public ::google::protobuf::MessageLite {
  public:
   ModifyOrderCommandDTO();
   virtual ~ModifyOrderCommandDTO();
@@ -562,24 +567,24 @@ class ModifyOrderCommandDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const ModifyOrderCommandDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const ModifyOrderCommandDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(ModifyOrderCommandDTO* other);
 
   // implements Message ----------------------------------------------
 
   ModifyOrderCommandDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const ModifyOrderCommandDTO& from);
   void MergeFrom(const ModifyOrderCommandDTO& from);
   void Clear();
@@ -590,7 +595,6 @@ class ModifyOrderCommandDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -598,7 +602,7 @@ class ModifyOrderCommandDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -653,7 +657,7 @@ class ModifyOrderCommandDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 retryspanms() const;
   inline void set_retryspanms(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:ModifyOrderCommandDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.ModifyOrderCommandDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -670,8 +674,6 @@ class ModifyOrderCommandDTO : public ::google::protobuf::Message {
   inline void set_has_retryspanms();
   inline void clear_has_retryspanms();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::google::protobuf::int32 command_;
   ::google::protobuf::int32 order_;
   double openprice_;
@@ -683,7 +685,11 @@ class ModifyOrderCommandDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -692,7 +698,7 @@ class ModifyOrderCommandDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CloseOrderCommandDTO : public ::google::protobuf::Message {
+class CloseOrderCommandDTO : public ::google::protobuf::MessageLite {
  public:
   CloseOrderCommandDTO();
   virtual ~CloseOrderCommandDTO();
@@ -704,24 +710,24 @@ class CloseOrderCommandDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const CloseOrderCommandDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const CloseOrderCommandDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(CloseOrderCommandDTO* other);
 
   // implements Message ----------------------------------------------
 
   CloseOrderCommandDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const CloseOrderCommandDTO& from);
   void MergeFrom(const CloseOrderCommandDTO& from);
   void Clear();
@@ -732,7 +738,6 @@ class CloseOrderCommandDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -740,7 +745,7 @@ class CloseOrderCommandDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -774,7 +779,7 @@ class CloseOrderCommandDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 retryspanms() const;
   inline void set_retryspanms(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:CloseOrderCommandDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.CloseOrderCommandDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -785,8 +790,6 @@ class CloseOrderCommandDTO : public ::google::protobuf::Message {
   inline void set_has_retryspanms();
   inline void clear_has_retryspanms();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::google::protobuf::int32 command_;
   ::google::protobuf::int32 order_;
   ::google::protobuf::int32 retries_;
@@ -795,7 +798,11 @@ class CloseOrderCommandDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -804,7 +811,7 @@ class CloseOrderCommandDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CloseOrderByCommandDTO : public ::google::protobuf::Message {
+class CloseOrderByCommandDTO : public ::google::protobuf::MessageLite {
  public:
   CloseOrderByCommandDTO();
   virtual ~CloseOrderByCommandDTO();
@@ -816,24 +823,24 @@ class CloseOrderByCommandDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const CloseOrderByCommandDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const CloseOrderByCommandDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(CloseOrderByCommandDTO* other);
 
   // implements Message ----------------------------------------------
 
   CloseOrderByCommandDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const CloseOrderByCommandDTO& from);
   void MergeFrom(const CloseOrderByCommandDTO& from);
   void Clear();
@@ -844,7 +851,6 @@ class CloseOrderByCommandDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -852,7 +858,7 @@ class CloseOrderByCommandDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -893,7 +899,7 @@ class CloseOrderByCommandDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 retryspanms() const;
   inline void set_retryspanms(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:CloseOrderByCommandDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.CloseOrderByCommandDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -906,8 +912,6 @@ class CloseOrderByCommandDTO : public ::google::protobuf::Message {
   inline void set_has_retryspanms();
   inline void clear_has_retryspanms();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::google::protobuf::int32 command_;
   ::google::protobuf::int32 order_;
   ::google::protobuf::int32 orderby_;
@@ -917,7 +921,11 @@ class CloseOrderByCommandDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -926,7 +934,7 @@ class CloseOrderByCommandDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class OrderInfoDTO : public ::google::protobuf::Message {
+class OrderInfoDTO : public ::google::protobuf::MessageLite {
  public:
   OrderInfoDTO();
   virtual ~OrderInfoDTO();
@@ -938,24 +946,24 @@ class OrderInfoDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const OrderInfoDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const OrderInfoDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(OrderInfoDTO* other);
 
   // implements Message ----------------------------------------------
 
   OrderInfoDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const OrderInfoDTO& from);
   void MergeFrom(const OrderInfoDTO& from);
   void Clear();
@@ -966,7 +974,6 @@ class OrderInfoDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -974,7 +981,7 @@ class OrderInfoDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1062,7 +1069,7 @@ class OrderInfoDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 opentime() const;
   inline void set_opentime(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:OrderInfoDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.OrderInfoDTO)
  private:
   inline void set_has_order();
   inline void clear_has_order();
@@ -1087,8 +1094,6 @@ class OrderInfoDTO : public ::google::protobuf::Message {
   inline void set_has_opentime();
   inline void clear_has_opentime();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* symbol_;
   ::google::protobuf::int32 order_;
   ::google::protobuf::int32 tradecommand_;
@@ -1104,7 +1109,11 @@ class OrderInfoDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -1113,7 +1122,7 @@ class OrderInfoDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class UpdateOrdersDTO : public ::google::protobuf::Message {
+class UpdateOrdersDTO : public ::google::protobuf::MessageLite {
  public:
   UpdateOrdersDTO();
   virtual ~UpdateOrdersDTO();
@@ -1125,24 +1134,24 @@ class UpdateOrdersDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const UpdateOrdersDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const UpdateOrdersDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(UpdateOrdersDTO* other);
 
   // implements Message ----------------------------------------------
 
   UpdateOrdersDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const UpdateOrdersDTO& from);
   void MergeFrom(const UpdateOrdersDTO& from);
   void Clear();
@@ -1153,7 +1162,6 @@ class UpdateOrdersDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1161,35 +1169,37 @@ class UpdateOrdersDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
   // accessors -------------------------------------------------------
 
-  // repeated .OrderInfoDTO orders = 1;
+  // repeated .UltimaConnector.OrderInfoDTO orders = 1;
   inline int orders_size() const;
   inline void clear_orders();
   static const int kOrdersFieldNumber = 1;
-  inline const ::OrderInfoDTO& orders(int index) const;
-  inline ::OrderInfoDTO* mutable_orders(int index);
-  inline ::OrderInfoDTO* add_orders();
-  inline const ::google::protobuf::RepeatedPtrField< ::OrderInfoDTO >&
+  inline const ::UltimaConnector::OrderInfoDTO& orders(int index) const;
+  inline ::UltimaConnector::OrderInfoDTO* mutable_orders(int index);
+  inline ::UltimaConnector::OrderInfoDTO* add_orders();
+  inline const ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO >&
       orders() const;
-  inline ::google::protobuf::RepeatedPtrField< ::OrderInfoDTO >*
+  inline ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO >*
       mutable_orders();
 
-  // @@protoc_insertion_point(class_scope:UpdateOrdersDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.UpdateOrdersDTO)
  private:
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::RepeatedPtrField< ::OrderInfoDTO > orders_;
+  ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO > orders_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -1198,7 +1208,7 @@ class UpdateOrdersDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class CommandResultDTO : public ::google::protobuf::Message {
+class CommandResultDTO : public ::google::protobuf::MessageLite {
  public:
   CommandResultDTO();
   virtual ~CommandResultDTO();
@@ -1210,24 +1220,24 @@ class CommandResultDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const CommandResultDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const CommandResultDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(CommandResultDTO* other);
 
   // implements Message ----------------------------------------------
 
   CommandResultDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const CommandResultDTO& from);
   void MergeFrom(const CommandResultDTO& from);
   void Clear();
@@ -1238,7 +1248,6 @@ class CommandResultDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1246,7 +1255,7 @@ class CommandResultDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1273,7 +1282,7 @@ class CommandResultDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 order() const;
   inline void set_order(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:CommandResultDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.CommandResultDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -1282,8 +1291,6 @@ class CommandResultDTO : public ::google::protobuf::Message {
   inline void set_has_order();
   inline void clear_has_order();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::google::protobuf::int32 command_;
   ::google::protobuf::int32 result_;
   ::google::protobuf::int32 order_;
@@ -1291,7 +1298,11 @@ class CommandResultDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -1300,7 +1311,7 @@ class CommandResultDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class RequestHistoryDTO : public ::google::protobuf::Message {
+class RequestHistoryDTO : public ::google::protobuf::MessageLite {
  public:
   RequestHistoryDTO();
   virtual ~RequestHistoryDTO();
@@ -1312,24 +1323,24 @@ class RequestHistoryDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const RequestHistoryDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const RequestHistoryDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(RequestHistoryDTO* other);
 
   // implements Message ----------------------------------------------
 
   RequestHistoryDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const RequestHistoryDTO& from);
   void MergeFrom(const RequestHistoryDTO& from);
   void Clear();
@@ -1340,7 +1351,6 @@ class RequestHistoryDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1348,7 +1358,7 @@ class RequestHistoryDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1361,19 +1371,21 @@ class RequestHistoryDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 command() const;
   inline void set_command(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:RequestHistoryDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.RequestHistoryDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int32 command_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -1382,7 +1394,7 @@ class RequestHistoryDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class HistoryOrderInfoDTO : public ::google::protobuf::Message {
+class HistoryOrderInfoDTO : public ::google::protobuf::MessageLite {
  public:
   HistoryOrderInfoDTO();
   virtual ~HistoryOrderInfoDTO();
@@ -1394,24 +1406,24 @@ class HistoryOrderInfoDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const HistoryOrderInfoDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const HistoryOrderInfoDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(HistoryOrderInfoDTO* other);
 
   // implements Message ----------------------------------------------
 
   HistoryOrderInfoDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const HistoryOrderInfoDTO& from);
   void MergeFrom(const HistoryOrderInfoDTO& from);
   void Clear();
@@ -1422,7 +1434,6 @@ class HistoryOrderInfoDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1430,7 +1441,7 @@ class HistoryOrderInfoDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1525,7 +1536,7 @@ class HistoryOrderInfoDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 closetime() const;
   inline void set_closetime(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:HistoryOrderInfoDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.HistoryOrderInfoDTO)
  private:
   inline void set_has_order();
   inline void clear_has_order();
@@ -1552,8 +1563,6 @@ class HistoryOrderInfoDTO : public ::google::protobuf::Message {
   inline void set_has_closetime();
   inline void clear_has_closetime();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
   ::std::string* symbol_;
   ::google::protobuf::int32 order_;
   ::google::protobuf::int32 tradecommand_;
@@ -1570,7 +1579,11 @@ class HistoryOrderInfoDTO : public ::google::protobuf::Message {
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -1579,7 +1592,7 @@ class HistoryOrderInfoDTO : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class OrdersHistoryDTO : public ::google::protobuf::Message {
+class OrdersHistoryDTO : public ::google::protobuf::MessageLite {
  public:
   OrdersHistoryDTO();
   virtual ~OrdersHistoryDTO();
@@ -1591,24 +1604,24 @@ class OrdersHistoryDTO : public ::google::protobuf::Message {
     return *this;
   }
 
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
   static const OrdersHistoryDTO& default_instance();
+
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  // Returns the internal default instance pointer. This function can
+  // return NULL thus should not be used by the user. This is intended
+  // for Protobuf internal code. Please use default_instance() declared
+  // above instead.
+  static inline const OrdersHistoryDTO* internal_default_instance() {
+    return default_instance_;
+  }
+  #endif
 
   void Swap(OrdersHistoryDTO* other);
 
   // implements Message ----------------------------------------------
 
   OrdersHistoryDTO* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
+  void CheckTypeAndMergeFrom(const ::google::protobuf::MessageLite& from);
   void CopyFrom(const OrdersHistoryDTO& from);
   void MergeFrom(const OrdersHistoryDTO& from);
   void Clear();
@@ -1619,7 +1632,6 @@ class OrdersHistoryDTO : public ::google::protobuf::Message {
       ::google::protobuf::io::CodedInputStream* input);
   void SerializeWithCachedSizes(
       ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
   int GetCachedSize() const { return _cached_size_; }
   private:
   void SharedCtor();
@@ -1627,7 +1639,7 @@ class OrdersHistoryDTO : public ::google::protobuf::Message {
   void SetCachedSize(int size) const;
   public:
 
-  ::google::protobuf::Metadata GetMetadata() const;
+  ::std::string GetTypeName() const;
 
   // nested types ----------------------------------------------------
 
@@ -1640,32 +1652,34 @@ class OrdersHistoryDTO : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 command() const;
   inline void set_command(::google::protobuf::int32 value);
 
-  // repeated .HistoryOrderInfoDTO orders = 2;
+  // repeated .UltimaConnector.HistoryOrderInfoDTO orders = 2;
   inline int orders_size() const;
   inline void clear_orders();
   static const int kOrdersFieldNumber = 2;
-  inline const ::HistoryOrderInfoDTO& orders(int index) const;
-  inline ::HistoryOrderInfoDTO* mutable_orders(int index);
-  inline ::HistoryOrderInfoDTO* add_orders();
-  inline const ::google::protobuf::RepeatedPtrField< ::HistoryOrderInfoDTO >&
+  inline const ::UltimaConnector::HistoryOrderInfoDTO& orders(int index) const;
+  inline ::UltimaConnector::HistoryOrderInfoDTO* mutable_orders(int index);
+  inline ::UltimaConnector::HistoryOrderInfoDTO* add_orders();
+  inline const ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO >&
       orders() const;
-  inline ::google::protobuf::RepeatedPtrField< ::HistoryOrderInfoDTO >*
+  inline ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO >*
       mutable_orders();
 
-  // @@protoc_insertion_point(class_scope:OrdersHistoryDTO)
+  // @@protoc_insertion_point(class_scope:UltimaConnector.OrdersHistoryDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
 
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::RepeatedPtrField< ::HistoryOrderInfoDTO > orders_;
+  ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO > orders_;
   ::google::protobuf::int32 command_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
 
+  #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
+  friend void  protobuf_AddDesc_Protocol_2eproto_impl();
+  #else
   friend void  protobuf_AddDesc_Protocol_2eproto();
+  #endif
   friend void protobuf_AssignDesc_Protocol_2eproto();
   friend void protobuf_ShutdownFile_Protocol_2eproto();
 
@@ -3011,27 +3025,27 @@ inline void OrderInfoDTO::set_opentime(::google::protobuf::int32 value) {
 
 // UpdateOrdersDTO
 
-// repeated .OrderInfoDTO orders = 1;
+// repeated .UltimaConnector.OrderInfoDTO orders = 1;
 inline int UpdateOrdersDTO::orders_size() const {
   return orders_.size();
 }
 inline void UpdateOrdersDTO::clear_orders() {
   orders_.Clear();
 }
-inline const ::OrderInfoDTO& UpdateOrdersDTO::orders(int index) const {
+inline const ::UltimaConnector::OrderInfoDTO& UpdateOrdersDTO::orders(int index) const {
   return orders_.Get(index);
 }
-inline ::OrderInfoDTO* UpdateOrdersDTO::mutable_orders(int index) {
+inline ::UltimaConnector::OrderInfoDTO* UpdateOrdersDTO::mutable_orders(int index) {
   return orders_.Mutable(index);
 }
-inline ::OrderInfoDTO* UpdateOrdersDTO::add_orders() {
+inline ::UltimaConnector::OrderInfoDTO* UpdateOrdersDTO::add_orders() {
   return orders_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::OrderInfoDTO >&
+inline const ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO >&
 UpdateOrdersDTO::orders() const {
   return orders_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::OrderInfoDTO >*
+inline ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO >*
 UpdateOrdersDTO::mutable_orders() {
   return &orders_;
 }
@@ -3474,27 +3488,27 @@ inline void OrdersHistoryDTO::set_command(::google::protobuf::int32 value) {
   command_ = value;
 }
 
-// repeated .HistoryOrderInfoDTO orders = 2;
+// repeated .UltimaConnector.HistoryOrderInfoDTO orders = 2;
 inline int OrdersHistoryDTO::orders_size() const {
   return orders_.size();
 }
 inline void OrdersHistoryDTO::clear_orders() {
   orders_.Clear();
 }
-inline const ::HistoryOrderInfoDTO& OrdersHistoryDTO::orders(int index) const {
+inline const ::UltimaConnector::HistoryOrderInfoDTO& OrdersHistoryDTO::orders(int index) const {
   return orders_.Get(index);
 }
-inline ::HistoryOrderInfoDTO* OrdersHistoryDTO::mutable_orders(int index) {
+inline ::UltimaConnector::HistoryOrderInfoDTO* OrdersHistoryDTO::mutable_orders(int index) {
   return orders_.Mutable(index);
 }
-inline ::HistoryOrderInfoDTO* OrdersHistoryDTO::add_orders() {
+inline ::UltimaConnector::HistoryOrderInfoDTO* OrdersHistoryDTO::add_orders() {
   return orders_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::HistoryOrderInfoDTO >&
+inline const ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO >&
 OrdersHistoryDTO::orders() const {
   return orders_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::HistoryOrderInfoDTO >*
+inline ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO >*
 OrdersHistoryDTO::mutable_orders() {
   return &orders_;
 }
@@ -3502,14 +3516,7 @@ OrdersHistoryDTO::mutable_orders() {
 
 // @@protoc_insertion_point(namespace_scope)
 
-#ifndef SWIG
-namespace google {
-namespace protobuf {
-
-
-}  // namespace google
-}  // namespace protobuf
-#endif  // SWIG
+}  // namespace UltimaConnector
 
 // @@protoc_insertion_point(global_scope)
 
