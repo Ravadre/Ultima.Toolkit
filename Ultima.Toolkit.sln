@@ -24,6 +24,22 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mql4", "Mql4", "{A7E1D393-E
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ultima.Core", "Ultima.Core\Ultima.Core.fsproj", "{59990802-AF5D-4F25-939A-DD494F3D0ABB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Connectors", "Connectors", "{0AB68D0F-47A3-4A2B-926F-7B442D78FE86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MT4", "MT4", "{CC3FB89D-415A-4B47-A345-823B98D8CEF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{B5EF872F-9609-49ED-9C46-00E3637C20B8}"
+	ProjectSection(SolutionItems) = preProject
+		Connectors\MT4\Scripts\Common.mq4 = Connectors\MT4\Scripts\Common.mq4
+		Connectors\MT4\Scripts\Common.mqh = Connectors\MT4\Scripts\Common.mqh
+		Connectors\MT4\Scripts\UltimaConnector.Common.mqh = Connectors\MT4\Scripts\UltimaConnector.Common.mqh
+		Connectors\MT4\Scripts\UltimaConnector.mq4 = Connectors\MT4\Scripts\UltimaConnector.mq4
+		Connectors\MT4\Scripts\UltimaConnector.mqh = Connectors\MT4\Scripts\UltimaConnector.mqh
+		Connectors\MT4\Scripts\UltimaConnector.Native.mqh = Connectors\MT4\Scripts\UltimaConnector.Native.mqh
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UltimaConnector", "Connectors\MT4\UltimaConnector\UltimaConnector.vcxproj", "{1BAF596F-4CF1-42C2-BB92-75886025D422}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,6 +70,16 @@ Global
 		{59990802-AF5D-4F25-939A-DD494F3D0ABB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{59990802-AF5D-4F25-939A-DD494F3D0ABB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{59990802-AF5D-4F25-939A-DD494F3D0ABB}.Release|Win32.ActiveCfg = Release|Any CPU
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Debug|Win32.Build.0 = Debug|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Release|Any CPU.ActiveCfg = Release|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Release|Win32.ActiveCfg = Release|Win32
+		{1BAF596F-4CF1-42C2-BB92-75886025D422}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -63,5 +89,8 @@ Global
 		{25065209-803F-473E-8F0C-182FF0D6AAEA} = {49156BD8-E703-49A1-B401-82970D8DF1B6}
 		{A4324E98-D72B-43E3-B7C8-96E65AF18837} = {25065209-803F-473E-8F0C-182FF0D6AAEA}
 		{A7E1D393-E0BF-42C7-9B88-441D89141C20} = {25065209-803F-473E-8F0C-182FF0D6AAEA}
+		{CC3FB89D-415A-4B47-A345-823B98D8CEF6} = {0AB68D0F-47A3-4A2B-926F-7B442D78FE86}
+		{B5EF872F-9609-49ED-9C46-00E3637C20B8} = {CC3FB89D-415A-4B47-A345-823B98D8CEF6}
+		{1BAF596F-4CF1-42C2-BB92-75886025D422} = {CC3FB89D-415A-4B47-A345-823B98D8CEF6}
 	EndGlobalSection
 EndGlobal
