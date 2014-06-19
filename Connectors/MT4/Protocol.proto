@@ -1,0 +1,116 @@
+message LoginDTO
+{
+	required string company = 1;
+}
+
+message SymbolRegistrationDTO
+{
+	required string symbol = 1;
+	required bool register = 2;
+}
+
+message PriceDTO
+{
+	required string symbol = 1;
+	required double bid = 2;
+	required double ask = 3;
+}
+
+message OpenOrderCommandDTO
+{
+	required int32 command = 1;
+	required string symbol = 2;
+	required int32 tradeCommand = 3;
+	required double volume = 4;
+	required double openPrice = 5;
+	required double stopLoss = 6;
+	required double takeProfit = 7;
+	required int32 slippage = 8;
+	optional string comment = 9;
+	optional int32 magicNumber = 10;
+	required int32 retries = 11;
+	required int32 retrySpanMs = 12;
+	required int32 lastChanceRetrySpanMs = 13;
+}
+
+message ModifyOrderCommandDTO
+{
+	required int32 command = 1;
+	required int32 order = 2;
+	required double openPrice = 3;
+	required double stopLoss = 4;
+	required double takeProfit = 5;
+	required int32 retries = 6;
+	required int32 retrySpanMs = 7;
+}
+
+message CloseOrderCommandDTO
+{
+	required int32 command = 1;
+	required int32 order = 2;
+	required int32 retries = 3;
+	required int32 retrySpanMs = 4;
+}
+
+message CloseOrderByCommandDTO
+{
+	required int32 command = 1;
+	required int32 order = 2;
+	required int32 orderBy = 3;
+	required int32 retries = 4;
+	required int32 retrySpanMs = 5;
+}
+
+message OrderInfoDTO
+{
+	required int32 order = 1;
+	required string symbol = 2;
+	required int32 tradeCommand = 3;
+	required double volume = 4;
+	required double openPrice = 5;
+	required double stopLoss = 6;
+	required double takeProfit = 7;
+	required double closePrice = 8;
+	required double profit = 9;
+	required int32 pointProfit = 10;
+	required int32 openTime = 11;
+}
+
+message UpdateOrdersDTO
+{
+	repeated OrderInfoDTO orders = 1;
+}
+
+message CommandResultDTO
+{
+	required int32 command = 1;
+	required int32 result = 2;
+	required int32 order = 3;
+}
+
+message RequestHistoryDTO
+{
+	required int32 command = 1;
+}
+
+message HistoryOrderInfoDTO
+{
+	required int32 order = 1;
+	required string symbol = 2;
+	required int32 tradeCommand = 3;
+	required double volume = 4;
+	required double openPrice = 5;
+	required double stopLoss = 6;
+	required double takeProfit = 7;
+	required double closePrice = 8;
+	required double profit = 9;
+	required int32 pointProfit = 10;
+	required int32 openTime = 11;
+	required int32 closeTime = 12;
+}
+
+message OrdersHistoryDTO
+{
+	required int32 command = 1;
+	repeated HistoryOrderInfoDTO orders = 2;
+}
