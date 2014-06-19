@@ -15,15 +15,17 @@
 #include <Common.mqh>
 
 input ScriptExecMode ExecutionMode = Instant;
+input string ServerAddress = "127.0.0.1:6300";
 extern string SymbolSuffix = "";
 extern int SlippageDivider = 1;
 extern string SlippageDividers = "";
 extern string BrokerAlias = "";
 
+
 bool isRunning;
-string registeredInstruments[];
-double bids[];
-double asks[];
+string registeredInstruments [];
+double bids [];
+double asks [];
 
 int OnInit()
 {
@@ -41,23 +43,23 @@ int OnInit()
 		Alert("Expert Advisors disabled");
 		return(INIT_FAILED);
 	}
-	
+
 	CreateVersionLabel(VERSION);
-		
+
 	string company = AccountCompany();
 	if (StringLen(BrokerAlias) > 0)
 		company = BrokerAlias;
 	string dataPath = TerminalInfoString(TERMINAL_DATA_PATH);
-		
+
 	Print("[Debug] Loading Ultima.Meta4.dll...");
-	int res = Initialize(dataPath, company);
+	int res = Initialize(dataPath, company, ServerAddress);
 	if (res == false)
 	{
 		Alert("Initialize Error");
 		return(INIT_FAILED);
 	}
 	Print("[Debug] OK");
-	
+
 	ArrayResize(registeredInstruments, 0);
 	ArrayResize(bids, 0);
 	ArrayResize(asks, 0);
@@ -71,13 +73,13 @@ int OnInit()
 void OnDeinit(const int reason)
 {
 	Print("[Debug] OnDeinit. Reason: " + GetUninitReasonText(reason));
- 
+
 	DeleteVersionLabel();
 
 	Print("[Debug] Calling DeInitialize...");
 	DeInitialize();
 	Print("[Debug] OK");
-	
+
 	isRunning = false;
 	return;
 }
@@ -102,7 +104,7 @@ int Run()
 		return(0);
 	}
 
-	while(true)
+	while (true)
 	{
 		if (IsStopped())
 		{
@@ -132,7 +134,7 @@ int Run()
 			StringToCharArray(symbol, t.Symbol);
 			t.Bid = MarketInfo(symbolws, MODE_BID);
 			t.Ask = MarketInfo(symbolws, MODE_ASK);
-			
+
 			if (t.Bid != bids[i] ||
 				t.Ask != asks[i])
 			{
@@ -154,7 +156,7 @@ void HandleRegisterCommands()
 	while (GetSymbolRegCommand(cmd))
 	{
 		string symbol = CharArrayToString(cmd.Symbol);
-		bool reg = (bool)cmd.Register;
+		bool reg = (bool) cmd.Register;
 		Print("Registering symbol ", symbol, ", registering: ", reg);
 
 		HandleRegisterSymbol(symbol, reg);
@@ -167,7 +169,7 @@ void HandleCloseOrderCommands()
 	while (GetCloseOrderCommand(cmd))
 	{
 		CloseOrder(cmd.Command, cmd.Order, cmd.Retries, cmd.RetrySpanMs);
-	}		
+	}
 }
 
 void HandleCloseOrderByCommands()
@@ -182,7 +184,7 @@ void HandleCloseOrderByCommands()
 void HandleOpenOrderCommands()
 {
 	OpenOrderCommand cmd;
-	
+
 	while (GetOpenOrderCommand(cmd))
 	{
 		Print("[Debug] Received open order command.");
@@ -198,9 +200,9 @@ void HandleModifyOrderCommands()
 	ModifyOrderCommand cmd;
 	while (GetModifyOrderCommand(cmd))
 	{
-		ModifyOrder(cmd.Command, cmd.Order, cmd.OpenPrice, cmd.StopLoss, cmd.TakeProfit, 
+		ModifyOrder(cmd.Command, cmd.Order, cmd.OpenPrice, cmd.StopLoss, cmd.TakeProfit,
 			cmd.Retries, cmd.RetrySpanMs);
-	}		
+	}
 }
 
 void HandleRequestOrderHistoryCommands()

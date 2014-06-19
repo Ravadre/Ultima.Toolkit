@@ -1,11 +1,15 @@
 #include "stdafx.h"
 #include "UltimaConnector.h"
+#include "UltimaClient.hpp"
 
 using namespace std;
+using namespace asio;
+
+shared_ptr<UltimaClient> client;
 
 extern "C"
 {
-	bool API Initialize(const wchar_t* dataPath, const wchar_t* company)
+	bool API Initialize(const wchar_t* dataPath, const wchar_t* company, const wchar_t* server)
 	{
 		auto _dataPath = ToString(dataPath);
 		auto _company = ToString(company);
@@ -18,13 +22,18 @@ extern "C"
 		el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Filename, _dataPath.c_str());
 
 		LOG(INFO) << "Initialize called";
-
-		return 1;
+		string address = ToString(server);
+		client = make_shared<UltimaClient>();
+		client->connect(address);
+		
+		return true;
 	}
 
 	void API DeInitialize()
 	{
 		LOG(INFO) << "DeInitialize called";
+		client.reset();
+		LOG(INFO) << "DeInitialize done";
 	}
 
 	bool API HasCommands()

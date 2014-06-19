@@ -7,7 +7,7 @@
 #property link      ""
 #property strict
 
-enum CommandResult 
+enum CommandResult
 {
 	Res_OK = 1,
 	Res_OKPartial = 2,
@@ -94,23 +94,23 @@ struct MT4Order
 };
 
 #import "UltimaConnector.dll"
-	bool Initialize(string dataPath, string company);
-	void DeInitialize();
-	
-	bool HasCommands();
-	bool WaitForCommand(int timeoutMs);
-	
-	bool GetSymbolRegCommand(SymbolRegistrationCommand& cmd);
-	
-	bool GetCloseOrderCommand(CloseOrderCommand& cmd);
-	bool GetCloseOrderByCommand(CloseOrderByCommand& cmd);
-	bool GetOpenOrderCommand(OpenOrderCommand& cmd);
-	bool GetModifyOrderCommand(ModifyOrderCommand& cmd);
-	bool GetRequestOrderHistory(OrderHistoryCommand& cmd);
-	
-	void ReportCommand(int command, int result, int order);
-	
-	void UpdatePrice(Tick& tick);
-	void UpdateOrders(int orderCount, MT4Order& orders[]);
-	void UpdateHistory(int command, int orderCount, MT4Order& orders[]);
+bool Initialize(string dataPath, string company, string server);
+void DeInitialize();
+
+bool HasCommands();
+bool WaitForCommand(int timeoutMs);
+
+bool GetSymbolRegCommand(SymbolRegistrationCommand& cmd);
+
+bool GetCloseOrderCommand(CloseOrderCommand& cmd);
+bool GetCloseOrderByCommand(CloseOrderByCommand& cmd);
+bool GetOpenOrderCommand(OpenOrderCommand& cmd);
+bool GetModifyOrderCommand(ModifyOrderCommand& cmd);
+bool GetRequestOrderHistory(OrderHistoryCommand& cmd);
+
+void ReportCommand(int command, int result, int order);
+
+void UpdatePrice(Tick& tick);
+void UpdateOrders(int orderCount, MT4Order& orders []);
+void UpdateHistory(int command, int orderCount, MT4Order& orders []);
 #import

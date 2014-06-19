@@ -2,6 +2,11 @@
 
 #include "targetver.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4996)
+#include <asio.hpp>
+#pragma warning(pop)
+
 #define WIN32_LEAN_AND_MEAN            
 #include <windows.h>
 
@@ -12,6 +17,7 @@
 #include <cstring>
 #include <string>
 #include <chrono>
+#include <vector>
 
 #include "Data.hpp"
 
