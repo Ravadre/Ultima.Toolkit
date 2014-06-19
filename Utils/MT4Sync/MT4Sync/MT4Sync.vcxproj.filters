@@ -30,10 +30,10 @@
     <ClInclude Include="include\Data.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\easylogging++.h">
+    <ClInclude Include="include\DbStatement.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\DbStatement.hpp">
+    <ClInclude Include="include\easylogging++.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
