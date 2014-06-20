@@ -2,11 +2,30 @@
 #property link      ""
 #property strict
 
+#include <Charts/Chart.mqh>
+
 enum ScriptExecMode
 {
 	Instant = 0,
 	Market = 1
 };
+
+void SetupChart(CChart& chart)
+{
+	chart.Attach();
+	chart.ColorBackground(Black);
+	chart.ColorBarDown(Lime);
+	chart.ColorBarUp(Lime);
+	chart.ColorCandleBear(White);
+	chart.ColorCandleBull(Black);
+	chart.ColorChartLine(Lime);
+	chart.ColorForeground(White);
+	chart.ColorLineAsk(Red);
+	chart.ColorLineBid(LightSlateGray);
+	chart.ColorStopLevels(Red);
+	chart.ColorGrid(LightSlateGray);
+	chart.Detach();
+}
 
 void CreateVersionLabel(string version)
 {
@@ -36,7 +55,7 @@ void WaitForTradeContext()
 		else
 		{
 			break;
-		}  
+		}
 	}
 }
 
@@ -45,7 +64,7 @@ void HandleRegisterSymbol(string symbol, bool register)
 {
 	int arLen;
 	int i;
-	
+
 	if (register)
 	{
 		if (ArrayContains(registeredInstruments, symbol))
@@ -53,7 +72,7 @@ void HandleRegisterSymbol(string symbol, bool register)
 			Print("Symbol ", symbol, " already registered");
 			return;
 		}
-	
+
 		ArrayResize(registeredInstruments, ArraySize(registeredInstruments) + 1);
 		registeredInstruments[ArraySize(registeredInstruments) - 1] = symbol;
 

@@ -7,6 +7,7 @@
 #property version VERSION
 
 #include <stdlib.mqh>
+#include <Charts/Chart.mqh>
 #include <UltimaConnector.Native.mqh>
 #include <UltimaConnector.Common.mqh>
 #include <UltimaConnector.mqh>
@@ -21,6 +22,7 @@ extern int SlippageDivider = 1;
 extern string SlippageDividers = "";
 extern string BrokerAlias = "";
 
+CChart chart;
 
 bool isRunning;
 string registeredInstruments [];
@@ -30,6 +32,8 @@ double asks [];
 int OnInit()
 {
 	Print("[Debug] OnInit");
+	SetupChart(chart);
+
 	isRunning = false;
 
 	if (!IsDllsAllowed())
