@@ -2,8 +2,8 @@
 #include "UltimaClient.hpp"
 
 using namespace std;
-using namespace asio;
-using namespace asio::ip;
+using namespace boost::asio;
+using namespace boost::asio::ip;
 
 UltimaClient::UltimaClient()
 	: io(), thread(), socket(io), timer(io)
@@ -45,7 +45,7 @@ void UltimaClient::connect(const std::string& address)
 		tcp::resolver res(io);
 		auto resolved = res.resolve(tcp::resolver::query(v[0], v[1]));
 
-		async_connect(socket, resolved, [this](std::error_code ec, tcp::resolver::iterator) 
+		async_connect(socket, resolved, [this](boost::system::error_code ec, tcp::resolver::iterator) 
 		{
 			if (!ec)
 			{
@@ -57,7 +57,7 @@ void UltimaClient::connect(const std::string& address)
 				LOG(WARNING) << "Could not connect to " << this->address;
 				timer.expires_from_now(boost::posix_time::seconds(15));
 
-				timer.async_wait([this](const std::error_code& ec)
+				timer.async_wait([this](const boost::system::error_code& ec)
 				{
 					if (!ec)
 					{

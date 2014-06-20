@@ -63,7 +63,8 @@
       </Command>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy /Y "$(TargetPath)" "C:\Users\Ravadre\AppData\Roaming\MetaQuotes\Terminal\E014E927B1217F5A561E0813A1C319F3\MQL4\Libraries"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

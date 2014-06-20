@@ -3,7 +3,7 @@
 #include "UltimaClient.hpp"
 
 using namespace std;
-using namespace asio;
+using namespace boost::asio;
 
 shared_ptr<UltimaClient> client;
 
