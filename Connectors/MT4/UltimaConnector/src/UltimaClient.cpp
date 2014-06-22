@@ -8,6 +8,8 @@ using namespace boost::asio::ip;
 UltimaClient::UltimaClient()
 	: io(), thread(), socket(io), timer(io)
 {
+	this->buffer.reserve(2048);
+
 	work = make_shared<io_service::work>(io);
 	this->thread = std::thread([this]() { 
 		LOG(INFO) << "io service running";
@@ -51,19 +53,13 @@ void UltimaClient::connect(const std::string& address)
 			{
 				LOG(INFO) << "Connected to " << this->address;
 				this->socket.set_option(tcp::no_delay(true));
+
+				doRead();
 			}
 			else
 			{
 				LOG(WARNING) << "Could not connect to " << this->address;
-				timer.expires_from_now(boost::posix_time::seconds(15));
-
-				timer.async_wait([this](const boost::system::error_code& ec)
-				{
-					if (!ec)
-					{
-						this->connect(this->address);
-					}
-				});
+				postReconnect();
 			}
 		});
 
@@ -71,4 +67,60 @@ void UltimaClient::connect(const std::string& address)
 	//res.resolve()
 
 
+}
+
+void UltimaClient::postReconnect()
+{
+	timer.expires_from_now(boost::posix_time::seconds(15));
+
+	timer.async_wait([this](const boost::system::error_code& ec)
+	{
+		if (!ec)
+		{
+			this->connect(this->address);
+		}
+	});
+}
+
+
+void UltimaClient::doRead()
+{
+	this->socket.async_read_some(boost::asio::buffer(this->buffer, this->buffer.capacity()),
+		[this](const boost::system::error_code& ec, size_t received)
+	{
+		if (!ec)
+		{
+			recvBuffer.insert(recvBuffer.end(), buffer.begin(), buffer.begin() + received);
+
+			handlePackets();
+
+			doRead();
+		}
+	});
+}
+
+void UltimaClient::handlePackets()
+{
+	while (recvBuffer.size() >= 8)
+	{
+		const int* d = reinterpret_cast<const int*>(recvBuffer.data());
+		int length = *d;
+		int msgType = *(d + 1);
+
+		if (recvBuffer.size() >= length)
+		{
+			auto handler = handlers.find(msgType);
+
+			if (handler == handlers.end())
+			{
+				LOG(WARNING) << "Invalid msg type packet received: " << msgType;
+			}
+			else
+			{
+				handler->second((const char*) (d+2), length - 8);
+			}
+
+			recvBuffer.erase(recvBuffer.begin(), recvBuffer.begin() + length);
+		}
+	}
 }
