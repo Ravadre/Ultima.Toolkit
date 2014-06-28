@@ -116,19 +116,6 @@ public:
 		cmdCond.notify_one();
 	}
 	
-	//template<>
-	//std::deque<SymbolRegistrationDTO>& UltimaClient::getQueueForT()
-	//{
-	//	return symbolRegQ;
-	//}
-	//
-	//std::deque<UltimaConnector::SymbolRegistrationDTO> symbolRegQ;
-	//std::deque<UltimaConnector::CloseOrderCommandDTO> closeOrderQ;
-	//std::deque<UltimaConnector::CloseOrderByCommandDTO> closeOrderByQ;
-	//std::deque<UltimaConnector::OpenOrderCommandDTO> openOrderQ;
-	//std::deque<UltimaConnector::ModifyOrderCommandDTO> modifyOrderQ;
-	//std::deque<UltimaConnector::RequestHistoryDTO> requestHistoryQ;
-
 	template<typename T>
 	bool getFromQueue(T& packet, std::deque<T>& queue)
 	{
@@ -147,5 +134,30 @@ public:
 	inline bool getFromQueue(UltimaConnector::SymbolRegistrationDTO& packet)
 	{
 		return getFromQueue(packet, symbolRegQ);
+	}
+
+	inline bool getFromQueue(UltimaConnector::CloseOrderCommandDTO& packet)
+	{
+		return getFromQueue(packet, closeOrderQ);
+	}
+
+	inline bool getFromQueue(UltimaConnector::CloseOrderByCommandDTO& packet)
+	{
+		return getFromQueue(packet, closeOrderByQ);
+	}
+
+	inline bool getFromQueue(UltimaConnector::OpenOrderCommandDTO& packet)
+	{
+		return getFromQueue(packet, openOrderQ);
+	}
+
+	inline bool getFromQueue(UltimaConnector::ModifyOrderCommandDTO& packet)
+	{
+		return getFromQueue(packet, modifyOrderQ);
+	}
+
+	inline bool getFromQueue(UltimaConnector::RequestHistoryDTO& packet)
+	{
+		return getFromQueue(packet, requestHistoryQ);
 	}
 };

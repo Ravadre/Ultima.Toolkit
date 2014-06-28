@@ -64,27 +64,87 @@ extern "C"
 
 	bool API GetCloseOrderCommand(CloseOrderCommand* cmd)
 	{
-		return false;
+		CloseOrderCommandDTO packet;
+
+		if (!client->getFromQueue(packet))
+			return false;
+
+		cmd->Command = packet.command();
+		cmd->Order = packet.order();
+		cmd->Retries = packet.retries();
+		cmd->RetrySpanMs = packet.retryspanms();
+
+		return true;
 	}
 
 	bool API GetCloseOrderByCommand(CloseOrderByCommand* cmd)
 	{
-		return false;
+		CloseOrderByCommandDTO packet;
+
+		if (!client->getFromQueue(packet))
+			return false;
+
+		cmd->Command = packet.command();
+		cmd->Order = packet.order();
+		cmd->OrderBy = packet.orderby();
+		cmd->Retries = packet.retries();
+		cmd->RetrySpanMs = packet.retryspanms();
+
+		return true;
 	}
 
 	bool API GetOpenOrderCommand(OpenOrderCommand* cmd)
 	{
-		return false;
+		OpenOrderCommandDTO packet;
+
+		if (!client->getFromQueue(packet))
+			return false;
+
+		cmd->Command = packet.command();
+		strcpy_s(cmd->Comment, packet.comment().c_str());
+		cmd->LastChanceRetrySpanMs = packet.lastchanceretryspanms();
+		cmd->MagicNumber = packet.magicnumber();
+		cmd->OpenPrice = packet.openprice();
+		cmd->Retries = packet.retries();
+		cmd->RetrySpanMs = packet.retryspanms();
+		cmd->Slippage = packet.slippage();
+		cmd->StopLoss = packet.stoploss();
+		strcpy_s(cmd->Symbol, packet.symbol().c_str());
+		cmd->TakeProfit = packet.takeprofit();
+		cmd->TradeCommand = packet.tradecommand();
+		cmd->Volume = packet.volume();
+
+		return true;
 	}
 
 	bool API GetModifyOrderCommand(ModifyOrderCommand* cmd)
 	{
-		return false;
+		ModifyOrderCommandDTO packet;
+
+		if (!client->getFromQueue(packet))
+			return false;
+
+		cmd->Command = packet.command();
+		cmd->OpenPrice = packet.openprice();
+		cmd->Order = packet.order();
+		cmd->Retries = packet.retries();
+		cmd->RetrySpanMs = packet.retryspanms();
+		cmd->StopLoss = packet.stoploss();
+		cmd->TakeProfit = packet.takeprofit();
+
+		return true;
 	}
 
 	bool API GetRequestOrderHistory(OrderHistoryCommand* cmd)
 	{
-		return false;
+		RequestHistoryDTO packet;
+
+		if (!client->getFromQueue(packet))
+			return false;
+
+		cmd->Command = packet.command();
+
+		return true;
 	}
 
 	void API ReportCommand(int command, CommandResult result, int order)
