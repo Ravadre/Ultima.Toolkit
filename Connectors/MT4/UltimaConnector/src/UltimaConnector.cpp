@@ -41,18 +41,25 @@ extern "C"
 
 	bool API HasCommands()
 	{
-		return false;
+		return client->getCommandsCount() > 0;
 	}
 
 	bool API WaitForCommand(int timeoutMs)
 	{
-		this_thread::sleep_for(chrono::milliseconds(timeoutMs));
-		return false;
+		return client->waitForCommand(timeoutMs);
 	}
 
 	bool API GetSymbolRegCommand(SymbolRegistrationCommand* cmd)
 	{
-		return false;
+		SymbolRegistrationDTO packet;
+
+		if (!client->getFromQueue(packet))
+			return false;
+
+		cmd->Register = packet.register_();
+		strcpy_s(cmd->Symbol, packet.symbol().c_str());
+		
+		return true;
 	}
 
 	bool API GetCloseOrderCommand(CloseOrderCommand* cmd)

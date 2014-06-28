@@ -7,6 +7,7 @@
 #include <queue>
 #include <map>
 #include <atomic>
+#include <condition_variable>
 #include "Protocol.pb.h"
 #include "MessageId.hpp"
 
@@ -25,9 +26,10 @@ private:
 	std::deque<std::vector<char>> sendBuffers;
 
 	std::map<int, std::function< void(const char*, size_t)>> handlers;
-	std::atomic<uint32_t> commandsInQueues;
 
-	std::mutex cmdMutex;
+	std::atomic<uint32_t> commandsInQueues;
+	std::mutex cmdMutex;	
+	std::condition_variable cmdCond;
 	std::deque<UltimaConnector::SymbolRegistrationDTO> symbolRegQ;
 	std::deque<UltimaConnector::CloseOrderCommandDTO> closeOrderQ;
 	std::deque<UltimaConnector::CloseOrderByCommandDTO> closeOrderByQ;
@@ -35,6 +37,7 @@ private:
 	std::deque<UltimaConnector::ModifyOrderCommandDTO> modifyOrderQ;
 	std::deque<UltimaConnector::RequestHistoryDTO> requestHistoryQ;
 
+	std::vector<char> lastSentOpenedOrdersPacket;
 
 	bool connecting;
 
@@ -52,21 +55,43 @@ public:
 	~UltimaClient();
 
 	void connect(const std::string& address);
-	
+	inline int getCommandsCount() { return commandsInQueues; }
+	inline bool waitForCommand(int timeoutMs)
+	{
+		std::unique_lock<std::mutex> l(cmdMutex);
+		if (commandsInQueues > 0)
+			return true;
+		return cmdCond.wait_for(l, std::chrono::milliseconds(timeoutMs)) == std::cv_status::no_timeout;
+	}
+
 	template<MessageId id, typename T>
 	void send(const T& packet)
 	{
-		io.dispatch([this, &packet]() 
+		io.dispatch([this, packet]() 
 		{
 			std::vector<char> buf;
 			auto bSize = packet.ByteSize() + 8;
-			buf.reserve(bSize);
+
+			buf.resize(bSize);
 
 			auto data = buf.data();
 
 			packet.SerializeToArray(data + 8, bSize - 8);
 			*(int*)(data) = bSize;
 			*(int*)(data + 4) = (int)id;
+
+			if (id == MessageId::OpenedOrders)
+			{
+				if (lastSentOpenedOrdersPacket.size() == buf.size())
+				{
+					if (memcmp(lastSentOpenedOrdersPacket.data(), buf.data(), buf.size()) == 0)
+					{
+						return;
+					}
+				}
+
+				lastSentOpenedOrdersPacket = buf;
+			}
 
 			bool isSending = sendBuffers.size() > 0;
 			sendBuffers.push_back(buf);
@@ -88,6 +113,39 @@ public:
 
 		queue.push_back(packet);
 		++commandsInQueues;
+		cmdCond.notify_one();
 	}
 	
+	//template<>
+	//std::deque<SymbolRegistrationDTO>& UltimaClient::getQueueForT()
+	//{
+	//	return symbolRegQ;
+	//}
+	//
+	//std::deque<UltimaConnector::SymbolRegistrationDTO> symbolRegQ;
+	//std::deque<UltimaConnector::CloseOrderCommandDTO> closeOrderQ;
+	//std::deque<UltimaConnector::CloseOrderByCommandDTO> closeOrderByQ;
+	//std::deque<UltimaConnector::OpenOrderCommandDTO> openOrderQ;
+	//std::deque<UltimaConnector::ModifyOrderCommandDTO> modifyOrderQ;
+	//std::deque<UltimaConnector::RequestHistoryDTO> requestHistoryQ;
+
+	template<typename T>
+	bool getFromQueue(T& packet, std::deque<T>& queue)
+	{
+		lock_guard<mutex> l(cmdMutex);
+
+		if (queue.size() == 0)
+			return false;
+
+		packet = queue.front();
+		queue.pop_front();
+		--commandsInQueues;
+
+		return true;
+	}
+
+	inline bool getFromQueue(UltimaConnector::SymbolRegistrationDTO& packet)
+	{
+		return getFromQueue(packet, symbolRegQ);
+	}
 };

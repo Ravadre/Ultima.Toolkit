@@ -85,9 +85,11 @@ void UltimaClient::reconnect()
 void UltimaClient::doWrite()
 {
 	const auto& b = sendBuffers.front();
+	LOG(INFO) << "Sending " << b.size() << " B";
 	socket.async_send(boost::asio::buffer(b, b.size()),
 		[this](const boost::system::error_code& ec, size_t sent)
 	{
+		LOG(INFO) << "handle write " << ec.message() << " " << sent;
 		this->handleWrite(ec, sent);
 	});
 }

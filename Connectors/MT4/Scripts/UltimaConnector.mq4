@@ -22,7 +22,7 @@ extern int SlippageDivider = 1;
 extern string SlippageDividers = "";
 extern string BrokerAlias = "";
 
-CChart chart;
+CChart gChart;
 
 bool isRunning;
 string registeredInstruments [];
@@ -32,7 +32,7 @@ double asks [];
 int OnInit()
 {
 	Print("[Debug] OnInit");
-	SetupChart(chart);
+	SetupChart(gChart);
 
 	isRunning = false;
 
