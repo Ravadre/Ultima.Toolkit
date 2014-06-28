@@ -7,15 +7,12 @@ using namespace boost::asio;
 using namespace Ultima::MT4::Packets;
 
 shared_ptr<UltimaClient> client;
-string companyName;
 
 extern "C"
 {
 	bool API Initialize(const wchar_t* dataPath, const wchar_t* company, const wchar_t* server)
 	{
 		auto _dataPath = ToString(dataPath);
-
-		companyName = ToString(company);
 
 		if (_dataPath.back() != '\\')
 			_dataPath += '\\';
@@ -25,9 +22,8 @@ extern "C"
 		el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Filename, _dataPath.c_str());
 
 		LOG(INFO) << "Initialize called";
-		string address = ToString(server);
 		client = make_shared<UltimaClient>();
-		client->connect(address);
+		client->connect(ToString(company), ToString(server));
 		
 		return true;
 	}

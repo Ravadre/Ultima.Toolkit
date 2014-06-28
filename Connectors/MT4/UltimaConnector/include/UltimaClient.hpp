@@ -52,11 +52,13 @@ private:
 	void registerHandlers();
 
 	void reconnect();
+
+	std::string companyName;
 public:
 	UltimaClient();
 	~UltimaClient();
 
-	void connect(const std::string& address);
+	void connect(const std::string& companyName, const std::string& address);
 	inline int getCommandsCount() { return commandsInQueues; }
 	inline bool waitForCommand(int timeoutMs)
 	{

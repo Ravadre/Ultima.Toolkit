@@ -29,8 +29,9 @@ UltimaClient::~UltimaClient()
 		this->thread.join();
 }
 
-void UltimaClient::connect(const std::string& address)
+void UltimaClient::connect(const string& companyName, const string& address)
 {
+	this->companyName = companyName;
 	this->address = address;
 	this->reconnect();
 }
@@ -69,6 +70,10 @@ void UltimaClient::reconnect()
 				this->socket.set_option(tcp::no_delay(true));
 
 				this->sendBuffers.clear();
+
+				LoginDTO login;
+				login.set_company(companyName);
+				this->send<MessageId::Login>(login);
 
 				doRead();
 			}
