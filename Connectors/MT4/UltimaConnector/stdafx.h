@@ -20,5 +20,6 @@
 #include <vector>
 
 #include "Data.hpp"
+#include "MessageId.hpp"
 
 std::string ToString(const wchar_t* str);

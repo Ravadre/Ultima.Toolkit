@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClInclude Include="include\Data.hpp" />
     <ClInclude Include="include\easylogging++.h" />
+    <ClInclude Include="include\MessageId.hpp" />
     <ClInclude Include="include\Protocol.pb.h" />
     <ClInclude Include="include\UltimaClient.hpp" />
     <ClInclude Include="stdafx.h" />

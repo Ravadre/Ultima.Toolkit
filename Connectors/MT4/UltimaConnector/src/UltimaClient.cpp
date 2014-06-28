@@ -4,9 +4,10 @@
 using namespace std;
 using namespace boost::asio;
 using namespace boost::asio::ip;
+using namespace UltimaConnector;
 
 UltimaClient::UltimaClient()
-	: io(), thread(), socket(io), timer(io)
+	: io(), thread(), socket(io), timer(io), connecting(false)
 {
 	this->buffer.reserve(2048);
 
@@ -16,6 +17,8 @@ UltimaClient::UltimaClient()
 		this->io.run();
 		LOG(INFO) << "io service stopped";
 	});
+
+	registerHandlers();
 }
 
 UltimaClient::~UltimaClient()
@@ -29,6 +32,11 @@ UltimaClient::~UltimaClient()
 void UltimaClient::connect(const std::string& address)
 {
 	this->address = address;
+	this->reconnect();
+}
+
+void UltimaClient::reconnect()
+{
 	stringstream ss(address);
 	string item;
 	vector<string> v;
@@ -42,17 +50,25 @@ void UltimaClient::connect(const std::string& address)
 	if (v.size() == 0) throw exception("Invalid address");
 	if (v.size() < 2) v.push_back("6300");
 
-	io.dispatch([this,v]() 
+	io.dispatch([this, v]()
 	{
+		if (connecting)
+			return;
+		connecting = true;
+
 		tcp::resolver res(io);
 		auto resolved = res.resolve(tcp::resolver::query(v[0], v[1]));
 
-		async_connect(socket, resolved, [this](boost::system::error_code ec, tcp::resolver::iterator) 
+		async_connect(socket, resolved, [this](boost::system::error_code ec, tcp::resolver::iterator)
 		{
+			this->connecting = false;
+
 			if (!ec)
 			{
 				LOG(INFO) << "Connected to " << this->address;
 				this->socket.set_option(tcp::no_delay(true));
+
+				this->sendBuffers.clear();
 
 				doRead();
 			}
@@ -64,9 +80,31 @@ void UltimaClient::connect(const std::string& address)
 		});
 
 	});
-	//res.resolve()
+}
 
+void UltimaClient::doWrite()
+{
+	const auto& b = sendBuffers.front();
+	socket.async_send(boost::asio::buffer(b, b.size()),
+		[this](const boost::system::error_code& ec, size_t sent)
+	{
+		this->handleWrite(ec, sent);
+	});
+}
 
+void UltimaClient::handleWrite(const boost::system::error_code& ec, size_t sent)
+{
+	if (ec)
+	{
+		this->reconnect();
+		return;
+	}
+
+	sendBuffers.pop_front();
+	if (sendBuffers.size() > 0)
+	{
+		doWrite();
+	}
 }
 
 void UltimaClient::postReconnect()
@@ -77,7 +115,7 @@ void UltimaClient::postReconnect()
 	{
 		if (!ec)
 		{
-			this->connect(this->address);
+			this->reconnect();
 		}
 	});
 }
@@ -88,14 +126,17 @@ void UltimaClient::doRead()
 	this->socket.async_read_some(boost::asio::buffer(this->buffer, this->buffer.capacity()),
 		[this](const boost::system::error_code& ec, size_t received)
 	{
-		if (!ec)
+		if (ec)
 		{
-			recvBuffer.insert(recvBuffer.end(), buffer.begin(), buffer.begin() + received);
-
-			handlePackets();
-
-			doRead();
+			this->reconnect();
+			return;
 		}
+
+		recvBuffer.insert(recvBuffer.end(), buffer.begin(), buffer.begin() + received);
+
+		handlePackets();
+
+		doRead();
 	});
 }
 
@@ -104,7 +145,7 @@ void UltimaClient::handlePackets()
 	while (recvBuffer.size() >= 8)
 	{
 		const int* d = reinterpret_cast<const int*>(recvBuffer.data());
-		int length = *d;
+		size_t length = *(size_t*)d;
 		int msgType = *(d + 1);
 
 		if (recvBuffer.size() >= length)
@@ -123,4 +164,32 @@ void UltimaClient::handlePackets()
 			recvBuffer.erase(recvBuffer.begin(), recvBuffer.begin() + length);
 		}
 	}
+}
+
+void UltimaClient::registerHandlers()
+{
+	this->handlers[(int) MessageId::SymbolRegister] = [this](const char* buffer, size_t length)
+	{
+		pushToQueue(buffer, length, symbolRegQ);
+	};
+	this->handlers[(int) MessageId::CloseOrder] = [this](const char* buffer, size_t length)
+	{
+		pushToQueue(buffer, length, closeOrderQ);
+	};
+	this->handlers[(int) MessageId::OpenOrder] = [this](const char* buffer, size_t length)
+	{
+		pushToQueue(buffer, length, openOrderQ);
+	};
+	this->handlers[(int) MessageId::ModifyOrder] = [this](const char* buffer, size_t length)
+	{
+		pushToQueue(buffer, length, modifyOrderQ);
+	};
+	this->handlers[(int) MessageId::CloseOrderBy] = [this](const char* buffer, size_t length)
+	{
+		pushToQueue(buffer, length, closeOrderByQ);
+	};
+	this->handlers[(int) MessageId::HistoryOrdersRequest] = [this](const char* buffer, size_t length)
+	{
+		pushToQueue(buffer, length, requestHistoryQ);
+	};
 }

@@ -4,15 +4,18 @@
 
 using namespace std;
 using namespace boost::asio;
+using namespace UltimaConnector;
 
 shared_ptr<UltimaClient> client;
+string companyName;
 
 extern "C"
 {
 	bool API Initialize(const wchar_t* dataPath, const wchar_t* company, const wchar_t* server)
 	{
 		auto _dataPath = ToString(dataPath);
-		auto _company = ToString(company);
+
+		companyName = ToString(company);
 
 		if (_dataPath.back() != '\\')
 			_dataPath += '\\';
@@ -79,21 +82,73 @@ extern "C"
 
 	void API ReportCommand(int command, CommandResult result, int order)
 	{
+		CommandResultDTO packet;
+		packet.set_command(command);
+		packet.set_order(order);
+		packet.set_result((int)result);
 
+		client->send<MessageId::Command>(packet);
 	}
 
 	void API UpdatePrice(const Tick* tick)
 	{
+		PriceDTO packet;
+		packet.set_symbol(tick->Symbol);
+		packet.set_bid(tick->Bid);
+		packet.set_ask(tick->Ask);
 
+		client->send<MessageId::Tick>(packet);
 	}
 
 	void API UpdateOrders(int orderCount, MT4Order* orders)
 	{
+		UpdateOrdersDTO d;
 
+		for (int i = 0; i < orderCount; ++i)
+		{
+			auto o = d.add_orders();
+			auto& so = orders[i];
+
+			o->set_symbol(so.Symbol);
+			o->set_order(so.Order);
+			o->set_tradecommand(so.TradeCommand);
+			o->set_volume(so.Lots);
+			o->set_openprice(so.OpenPrice);
+			o->set_stoploss(so.StopLoss);
+			o->set_takeprofit(so.TakeProfit);
+			o->set_closeprice(so.ClosePrice);
+			o->set_profit(so.Profit);
+			o->set_pointprofit(so.PointProfit);
+			o->set_opentime((int)(so.OpenTime));
+		}
+
+		client->send<MessageId::OpenedOrders>(d);
 	}
 
 	void API UpdateHistory(int command, int orderCount, MT4Order* orders)
 	{
+		OrdersHistoryDTO d;
+		d.set_command(command);
 
+		for (int i = 0; i < orderCount; ++i)
+		{
+			auto o = d.add_orders();
+			auto& so = orders[i];
+
+			o->set_symbol(so.Symbol);
+			o->set_order(so.Order);
+			o->set_tradecommand(so.TradeCommand);
+			o->set_volume(so.Lots);
+			o->set_openprice(so.OpenPrice);
+			o->set_stoploss(so.StopLoss);
+			o->set_takeprofit(so.TakeProfit);
+			o->set_closeprice(so.ClosePrice);
+			o->set_profit(so.Profit);
+			o->set_pointprofit(so.PointProfit);
+			o->set_opentime((int) (so.OpenTime));
+			o->set_closetime((int) (so.CloseTime));
+		}
+
+		client->send<MessageId::OrdersHistory>(d);
 	}
 }
