@@ -1,4 +1,4 @@
-package UltimaConnector;
+package Ultima.MT4.Packets;
 
 option optimize_for = LITE_RUNTIME;
 

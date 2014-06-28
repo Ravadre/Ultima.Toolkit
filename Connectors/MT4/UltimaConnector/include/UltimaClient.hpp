@@ -11,6 +11,8 @@
 #include "Protocol.pb.h"
 #include "MessageId.hpp"
 
+using namespace Ultima::MT4::Packets;
+
 class UltimaClient
 {
 private:
@@ -30,12 +32,12 @@ private:
 	std::atomic<uint32_t> commandsInQueues;
 	std::mutex cmdMutex;	
 	std::condition_variable cmdCond;
-	std::deque<UltimaConnector::SymbolRegistrationDTO> symbolRegQ;
-	std::deque<UltimaConnector::CloseOrderCommandDTO> closeOrderQ;
-	std::deque<UltimaConnector::CloseOrderByCommandDTO> closeOrderByQ;
-	std::deque<UltimaConnector::OpenOrderCommandDTO> openOrderQ;
-	std::deque<UltimaConnector::ModifyOrderCommandDTO> modifyOrderQ;
-	std::deque<UltimaConnector::RequestHistoryDTO> requestHistoryQ;
+	std::deque<SymbolRegistrationDTO> symbolRegQ;
+	std::deque<CloseOrderCommandDTO> closeOrderQ;
+	std::deque<CloseOrderByCommandDTO> closeOrderByQ;
+	std::deque<OpenOrderCommandDTO> openOrderQ;
+	std::deque<ModifyOrderCommandDTO> modifyOrderQ;
+	std::deque<RequestHistoryDTO> requestHistoryQ;
 
 	std::vector<char> lastSentOpenedOrdersPacket;
 
@@ -131,32 +133,32 @@ public:
 		return true;
 	}
 
-	inline bool getFromQueue(UltimaConnector::SymbolRegistrationDTO& packet)
+	inline bool getFromQueue(SymbolRegistrationDTO& packet)
 	{
 		return getFromQueue(packet, symbolRegQ);
 	}
 
-	inline bool getFromQueue(UltimaConnector::CloseOrderCommandDTO& packet)
+	inline bool getFromQueue(CloseOrderCommandDTO& packet)
 	{
 		return getFromQueue(packet, closeOrderQ);
 	}
 
-	inline bool getFromQueue(UltimaConnector::CloseOrderByCommandDTO& packet)
+	inline bool getFromQueue(CloseOrderByCommandDTO& packet)
 	{
 		return getFromQueue(packet, closeOrderByQ);
 	}
 
-	inline bool getFromQueue(UltimaConnector::OpenOrderCommandDTO& packet)
+	inline bool getFromQueue(OpenOrderCommandDTO& packet)
 	{
 		return getFromQueue(packet, openOrderQ);
 	}
 
-	inline bool getFromQueue(UltimaConnector::ModifyOrderCommandDTO& packet)
+	inline bool getFromQueue(ModifyOrderCommandDTO& packet)
 	{
 		return getFromQueue(packet, modifyOrderQ);
 	}
 
-	inline bool getFromQueue(UltimaConnector::RequestHistoryDTO& packet)
+	inline bool getFromQueue(RequestHistoryDTO& packet)
 	{
 		return getFromQueue(packet, requestHistoryQ);
 	}

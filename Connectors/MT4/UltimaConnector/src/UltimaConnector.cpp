@@ -4,7 +4,7 @@
 
 using namespace std;
 using namespace boost::asio;
-using namespace UltimaConnector;
+using namespace Ultima::MT4::Packets;
 
 shared_ptr<UltimaClient> client;
 string companyName;

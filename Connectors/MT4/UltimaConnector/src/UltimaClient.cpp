@@ -4,7 +4,7 @@
 using namespace std;
 using namespace boost::asio;
 using namespace boost::asio::ip;
-using namespace UltimaConnector;
+using namespace Ultima::MT4::Packets;
 
 UltimaClient::UltimaClient()
 	: io(), thread(), socket(io), timer(io), connecting(false)

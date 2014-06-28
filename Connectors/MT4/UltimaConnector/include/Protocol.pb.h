@@ -25,7 +25,9 @@
 #include <google/protobuf/extension_set.h>
 // @@protoc_insertion_point(includes)
 
-namespace UltimaConnector {
+namespace Ultima {
+namespace MT4 {
+namespace Packets {
 
 // Internal implementation detail -- do not call these.
 void  protobuf_AddDesc_Protocol_2eproto();
@@ -113,7 +115,7 @@ class LoginDTO : public ::google::protobuf::MessageLite {
   inline ::std::string* release_company();
   inline void set_allocated_company(::std::string* company);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.LoginDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.LoginDTO)
  private:
   inline void set_has_company();
   inline void clear_has_company();
@@ -208,7 +210,7 @@ class SymbolRegistrationDTO : public ::google::protobuf::MessageLite {
   inline bool register_() const;
   inline void set_register_(bool value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.SymbolRegistrationDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.SymbolRegistrationDTO)
  private:
   inline void set_has_symbol();
   inline void clear_has_symbol();
@@ -313,7 +315,7 @@ class PriceDTO : public ::google::protobuf::MessageLite {
   inline double ask() const;
   inline void set_ask(double value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.PriceDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.PriceDTO)
  private:
   inline void set_has_symbol();
   inline void clear_has_symbol();
@@ -496,7 +498,7 @@ class OpenOrderCommandDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 lastchanceretryspanms() const;
   inline void set_lastchanceretryspanms(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.OpenOrderCommandDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.OpenOrderCommandDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -657,7 +659,7 @@ class ModifyOrderCommandDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 retryspanms() const;
   inline void set_retryspanms(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.ModifyOrderCommandDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.ModifyOrderCommandDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -779,7 +781,7 @@ class CloseOrderCommandDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 retryspanms() const;
   inline void set_retryspanms(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.CloseOrderCommandDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.CloseOrderCommandDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -899,7 +901,7 @@ class CloseOrderByCommandDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 retryspanms() const;
   inline void set_retryspanms(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.CloseOrderByCommandDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.CloseOrderByCommandDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -1069,7 +1071,7 @@ class OrderInfoDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 opentime() const;
   inline void set_opentime(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.OrderInfoDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.OrderInfoDTO)
  private:
   inline void set_has_order();
   inline void clear_has_order();
@@ -1175,22 +1177,22 @@ class UpdateOrdersDTO : public ::google::protobuf::MessageLite {
 
   // accessors -------------------------------------------------------
 
-  // repeated .UltimaConnector.OrderInfoDTO orders = 1;
+  // repeated .Ultima.MT4.Packets.OrderInfoDTO orders = 1;
   inline int orders_size() const;
   inline void clear_orders();
   static const int kOrdersFieldNumber = 1;
-  inline const ::UltimaConnector::OrderInfoDTO& orders(int index) const;
-  inline ::UltimaConnector::OrderInfoDTO* mutable_orders(int index);
-  inline ::UltimaConnector::OrderInfoDTO* add_orders();
-  inline const ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO >&
+  inline const ::Ultima::MT4::Packets::OrderInfoDTO& orders(int index) const;
+  inline ::Ultima::MT4::Packets::OrderInfoDTO* mutable_orders(int index);
+  inline ::Ultima::MT4::Packets::OrderInfoDTO* add_orders();
+  inline const ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::OrderInfoDTO >&
       orders() const;
-  inline ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO >*
+  inline ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::OrderInfoDTO >*
       mutable_orders();
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.UpdateOrdersDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.UpdateOrdersDTO)
  private:
 
-  ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO > orders_;
+  ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::OrderInfoDTO > orders_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -1282,7 +1284,7 @@ class CommandResultDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 order() const;
   inline void set_order(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.CommandResultDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.CommandResultDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -1371,7 +1373,7 @@ class RequestHistoryDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 command() const;
   inline void set_command(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.RequestHistoryDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.RequestHistoryDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
@@ -1536,7 +1538,7 @@ class HistoryOrderInfoDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 closetime() const;
   inline void set_closetime(::google::protobuf::int32 value);
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.HistoryOrderInfoDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.HistoryOrderInfoDTO)
  private:
   inline void set_has_order();
   inline void clear_has_order();
@@ -1652,24 +1654,24 @@ class OrdersHistoryDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 command() const;
   inline void set_command(::google::protobuf::int32 value);
 
-  // repeated .UltimaConnector.HistoryOrderInfoDTO orders = 2;
+  // repeated .Ultima.MT4.Packets.HistoryOrderInfoDTO orders = 2;
   inline int orders_size() const;
   inline void clear_orders();
   static const int kOrdersFieldNumber = 2;
-  inline const ::UltimaConnector::HistoryOrderInfoDTO& orders(int index) const;
-  inline ::UltimaConnector::HistoryOrderInfoDTO* mutable_orders(int index);
-  inline ::UltimaConnector::HistoryOrderInfoDTO* add_orders();
-  inline const ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO >&
+  inline const ::Ultima::MT4::Packets::HistoryOrderInfoDTO& orders(int index) const;
+  inline ::Ultima::MT4::Packets::HistoryOrderInfoDTO* mutable_orders(int index);
+  inline ::Ultima::MT4::Packets::HistoryOrderInfoDTO* add_orders();
+  inline const ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::HistoryOrderInfoDTO >&
       orders() const;
-  inline ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO >*
+  inline ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::HistoryOrderInfoDTO >*
       mutable_orders();
 
-  // @@protoc_insertion_point(class_scope:UltimaConnector.OrdersHistoryDTO)
+  // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.OrdersHistoryDTO)
  private:
   inline void set_has_command();
   inline void clear_has_command();
 
-  ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO > orders_;
+  ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::HistoryOrderInfoDTO > orders_;
   ::google::protobuf::int32 command_;
 
   mutable int _cached_size_;
@@ -3025,27 +3027,27 @@ inline void OrderInfoDTO::set_opentime(::google::protobuf::int32 value) {
 
 // UpdateOrdersDTO
 
-// repeated .UltimaConnector.OrderInfoDTO orders = 1;
+// repeated .Ultima.MT4.Packets.OrderInfoDTO orders = 1;
 inline int UpdateOrdersDTO::orders_size() const {
   return orders_.size();
 }
 inline void UpdateOrdersDTO::clear_orders() {
   orders_.Clear();
 }
-inline const ::UltimaConnector::OrderInfoDTO& UpdateOrdersDTO::orders(int index) const {
+inline const ::Ultima::MT4::Packets::OrderInfoDTO& UpdateOrdersDTO::orders(int index) const {
   return orders_.Get(index);
 }
-inline ::UltimaConnector::OrderInfoDTO* UpdateOrdersDTO::mutable_orders(int index) {
+inline ::Ultima::MT4::Packets::OrderInfoDTO* UpdateOrdersDTO::mutable_orders(int index) {
   return orders_.Mutable(index);
 }
-inline ::UltimaConnector::OrderInfoDTO* UpdateOrdersDTO::add_orders() {
+inline ::Ultima::MT4::Packets::OrderInfoDTO* UpdateOrdersDTO::add_orders() {
   return orders_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO >&
+inline const ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::OrderInfoDTO >&
 UpdateOrdersDTO::orders() const {
   return orders_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::UltimaConnector::OrderInfoDTO >*
+inline ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::OrderInfoDTO >*
 UpdateOrdersDTO::mutable_orders() {
   return &orders_;
 }
@@ -3488,27 +3490,27 @@ inline void OrdersHistoryDTO::set_command(::google::protobuf::int32 value) {
   command_ = value;
 }
 
-// repeated .UltimaConnector.HistoryOrderInfoDTO orders = 2;
+// repeated .Ultima.MT4.Packets.HistoryOrderInfoDTO orders = 2;
 inline int OrdersHistoryDTO::orders_size() const {
   return orders_.size();
 }
 inline void OrdersHistoryDTO::clear_orders() {
   orders_.Clear();
 }
-inline const ::UltimaConnector::HistoryOrderInfoDTO& OrdersHistoryDTO::orders(int index) const {
+inline const ::Ultima::MT4::Packets::HistoryOrderInfoDTO& OrdersHistoryDTO::orders(int index) const {
   return orders_.Get(index);
 }
-inline ::UltimaConnector::HistoryOrderInfoDTO* OrdersHistoryDTO::mutable_orders(int index) {
+inline ::Ultima::MT4::Packets::HistoryOrderInfoDTO* OrdersHistoryDTO::mutable_orders(int index) {
   return orders_.Mutable(index);
 }
-inline ::UltimaConnector::HistoryOrderInfoDTO* OrdersHistoryDTO::add_orders() {
+inline ::Ultima::MT4::Packets::HistoryOrderInfoDTO* OrdersHistoryDTO::add_orders() {
   return orders_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO >&
+inline const ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::HistoryOrderInfoDTO >&
 OrdersHistoryDTO::orders() const {
   return orders_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::UltimaConnector::HistoryOrderInfoDTO >*
+inline ::google::protobuf::RepeatedPtrField< ::Ultima::MT4::Packets::HistoryOrderInfoDTO >*
 OrdersHistoryDTO::mutable_orders() {
   return &orders_;
 }
@@ -3516,7 +3518,9 @@ OrdersHistoryDTO::mutable_orders() {
 
 // @@protoc_insertion_point(namespace_scope)
 
-}  // namespace UltimaConnector
+}  // namespace Packets
+}  // namespace MT4
+}  // namespace Ultima
 
 // @@protoc_insertion_point(global_scope)
 
