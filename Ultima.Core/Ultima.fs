@@ -2,6 +2,11 @@
 
 open Ultima.MT4.Packets
 
-type Test() = 
-    let l = LoginDTO()
+type Ultima() = 
+    let p = LoginDTO()
+    
+    member this.Start() = 
+        ()
 
+    member this.Stop() = 
+        ()

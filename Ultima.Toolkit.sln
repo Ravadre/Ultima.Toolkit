@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ultima.MT4.Packets", "Conne
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ultima.Core.API", "Ultima.Core.API\Ultima.Core.API.fsproj", "{38D18689-EE5E-4154-8868-A1266D3767A0}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ultima", "Ultima\Ultima.fsproj", "{07988F21-67D4-4CC2-AB35-94ACBF07B546}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,16 @@ Global
 		{38D18689-EE5E-4154-8868-A1266D3767A0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{38D18689-EE5E-4154-8868-A1266D3767A0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{38D18689-EE5E-4154-8868-A1266D3767A0}.Release|Win32.ActiveCfg = Release|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
