@@ -14,7 +14,7 @@ type PluginInfo = {
 }
 
 type IPlugin = 
-    abstract Initialize: unit -> unit
+    abstract Initialize: services: IUltimaServices -> unit
     abstract Run: unit -> unit
     abstract Stop: unit -> unit
     
@@ -63,7 +63,7 @@ type PluginManager() =
                  runningPlugins.Remove( (plugin, task) ) |> ignore
 
 
-    member this.Start(pluginPath: string) = async {
+    member this.Start(pluginPath: string, services: IUltimaServices) = async {
         do! Async.SwitchToActor(context)
         log.Trace "1. Plugin start on %s" (Executor.GetCurrentName())
         
@@ -71,7 +71,7 @@ type PluginManager() =
             let plugin = LoadPlugin(pluginPath)
             let task = Task.Factory.StartNew( 
                         (fun () -> 
-                            plugin.Initialize()
+                            plugin.Initialize(services)
                             plugin.Run()), 
                         TaskCreationOptions.LongRunning)
             (plugin, task) |> HookTaskEnd

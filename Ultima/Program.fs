@@ -1,6 +1,7 @@
 ﻿namespace Ultima
 
 open System
+open System.IO
 open System.ServiceProcess
 
 open NLog.FSharp
@@ -34,6 +35,7 @@ module Program =
             log.Info("Starting Ultima service")
                         
             u.Start()
+            u.LoadPluginsFromDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins"))
 
             base.OnStart(argv)
 
@@ -56,6 +58,7 @@ module Program =
         | false -> 
             let u = new Ultima()
             u.Start()
+            u.LoadPluginsFromDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins"))
             printfn "Press Ctrl+C to quit"
             let running = ref true;
             
