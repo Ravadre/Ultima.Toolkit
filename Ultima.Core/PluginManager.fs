@@ -8,22 +8,6 @@ open Stacks
 open Stacks.Actors
 open NLog.FSharp
 
-type PluginInfo = {
-    Name: string
-    Version: Version
-}
-
-type IPlugin = 
-    abstract Initialize: services: IUltimaServices -> unit
-    abstract Run: unit -> unit
-    abstract Stop: unit -> unit
-    
-    abstract Info: PluginInfo with get
-
-    abstract StatusChanged: IObservable<string> with get
-
-
-
 type PluginManager() = 
     let log = Logger()    
     let context = ActorContext("Plugin manager")
@@ -34,10 +18,14 @@ type PluginManager() =
         let asm = Assembly.LoadFrom(pluginPath)
         
         let t = asm.GetTypes()
-                |> Seq.find(fun t -> t.IsPublic &&
-                                     t.IsClass &&
-                                     typeof<IPlugin>.IsAssignableFrom(t))
-        Activator.CreateInstance(t) :?> IPlugin
+                |> Seq.tryFind(fun t -> t.IsPublic &&
+                                        t.IsClass &&
+                                        typeof<IPlugin>.IsAssignableFrom(t))
+        match t with
+        | Some t -> Some(Activator.CreateInstance(t) :?> IPlugin)
+        | None -> log.Info "%s is not an Ultima plugin" pluginPath
+                  None
+
 
     let HookTaskEnd (plugin: IPlugin, task: Task) = 
         task.ContinueWith( (fun (t: Task) -> 
@@ -68,14 +56,13 @@ type PluginManager() =
         log.Trace "1. Plugin start on %s" (Executor.GetCurrentName())
         
         try
-            let plugin = LoadPlugin(pluginPath)
-            let task = Task.Factory.StartNew( 
-                        (fun () -> 
-                            plugin.Initialize(services)
-                            plugin.Run()), 
-                        TaskCreationOptions.LongRunning)
-            (plugin, task) |> HookTaskEnd
-            runningPlugins.Add( (plugin, task) )
+            match LoadPlugin(pluginPath) with
+            | None -> ()
+            | Some plugin ->
+                plugin.Initialize(services)
+                let task = plugin.Run()
+                (plugin, task) |> HookTaskEnd
+                runningPlugins.Add( (plugin, task) )
         with
         | exn -> log.Error "Cannot start plugin %s because exception was thrown: %O"
                     pluginPath exn

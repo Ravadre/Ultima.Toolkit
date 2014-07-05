@@ -46,6 +46,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ultima.Core.API", "Ultima.C
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ultima", "Ultima\Ultima.fsproj", "{07988F21-67D4-4CC2-AB35-94ACBF07B546}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SamplePlugins", "SamplePlugins", "{4A2E2058-6295-4015-997B-CA1E95288F6D}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TickLogger", "SamplePlugins\TickLogger\TickLogger.fsproj", "{266664A4-3424-4C0F-8D57-B5121595A896}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -116,6 +120,16 @@ Global
 		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{07988F21-67D4-4CC2-AB35-94ACBF07B546}.Release|Win32.ActiveCfg = Release|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{266664A4-3424-4C0F-8D57-B5121595A896}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -129,5 +143,6 @@ Global
 		{B5EF872F-9609-49ED-9C46-00E3637C20B8} = {CC3FB89D-415A-4B47-A345-823B98D8CEF6}
 		{1BAF596F-4CF1-42C2-BB92-75886025D422} = {CC3FB89D-415A-4B47-A345-823B98D8CEF6}
 		{B9090990-F2F5-43EC-9293-7C39EF5A8478} = {CC3FB89D-415A-4B47-A345-823B98D8CEF6}
+		{266664A4-3424-4C0F-8D57-B5121595A896} = {4A2E2058-6295-4015-997B-CA1E95288F6D}
 	EndGlobalSection
 EndGlobal
