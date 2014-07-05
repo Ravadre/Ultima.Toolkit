@@ -51,6 +51,7 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <Compile Include="StacksExtensions.fs" />
     <Compile Include="PluginManager.fs" />
     <Compile Include="Ultima.fs" />
     <None Include="packages.config" />
