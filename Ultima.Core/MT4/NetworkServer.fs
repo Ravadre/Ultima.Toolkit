@@ -11,29 +11,7 @@ open Stacks
 open Stacks.Tcp
 open NLog.FSharp
 
-type NetworkServerOpts = {
-    Port: int
-}
-
 type MT4Socket = ReactiveMessageClient<IMT4PacketHandler>
-
-type MT4Client(socket: MT4Socket, company: string) = 
-    let mutable cmdId = 0
-    let socket = socket
-    let company = company
-
-    let GetId() = System.Threading.Interlocked.Increment(&cmdId)
-
-    member this.OnPrice = socket.Packets.Price
-    member this.OnCommandResult = socket.Packets.CommandResult
-    member this.OnOrders = socket.Packets.UpdateOrders
-    member this.OnHistory = socket.Packets.HistoryOrderInfo
-    member this.Disconnected = socket.Disconnected
-
-    member this.Company = company
-
-
-
 
 type NetworkServer(opts: NetworkServerOpts) = 
     let log = Logger()
@@ -48,31 +26,35 @@ type NetworkServer(opts: NetworkServerOpts) =
 
     let clientConnected = new Subject<MT4Client>()
 
-    member this.ClientConnected with get() = clientConnected.AsObservable()
-    member this.Started with get() = server.Started
-    member this.Stopped with get() = server.Stopped
+    interface INetworkServer with
+        member this.ClientConnected with get() = clientConnected.AsObservable()
+        member this.Started with get() = server.Started
+        member this.Stopped with get() = server.Stopped
 
-    member this.Start() = 
-        connectedSub := server.Connected.Subscribe(this.OnConnected)
-        server.Start()
+        member this.Start() = 
+            connectedSub := server.Connected.Subscribe(this.OnConnected)
+            server.Start()
+            log.Info "Network server started"
 
 
-    member this.Stop() = 
-        clientConnected.Dispose()
-        (!connectedSub).Dispose()
-        server.Stop()
+        member this.Stop() = 
+            log.Info "Network server stopping"
+            clientConnected.Dispose()
+            (!connectedSub).Dispose()
+            server.Stop()
 
-    member this.GetConnectedClients() =
-        exec.PostTask(fun () -> clients
-                                |> Seq.map (fun kv -> kv.Value)
-                                |> Array.ofSeq)
-        |> Async.AwaitTask
+        member this.GetConnectedClients() =
+            exec.PostTask(fun () -> clients
+                                    |> Seq.map (fun kv -> kv.Value)
+                                    |> Array.ofSeq)
+            |> Async.AwaitTask
 
 
     member private this.OnConnected(c) = 
         let c = MT4Socket(FramedClient(c), ProtoBufStacksSerializer())
 
         c.Packets.Login.Subscribe(fun l ->
+            log.Info "Client %s registering as %s" (c.RemoteEndPoint.ToString()) (l.company)
             this.RegisterClient(l.company, c)
         ) |> ignore
         c.Disconnected.Subscribe(fun (e: exn) ->

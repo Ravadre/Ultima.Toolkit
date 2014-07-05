@@ -1,7 +1,5 @@
 ﻿namespace Ultima
 
 type IUltimaServices =
-    interface
-    
-    end 
+    abstract MT4NetworkServer: MT4.INetworkServer with get
     

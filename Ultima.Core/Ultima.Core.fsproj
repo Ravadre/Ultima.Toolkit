@@ -53,9 +53,9 @@
   <ItemGroup>
     <Compile Include="StacksExtensions.fs" />
     <Compile Include="PluginManager.fs" />
-    <Compile Include="Ultima.fs" />
     <None Include="packages.config" />
     <Compile Include="MT4\NetworkServer.fs" />
+    <Compile Include="Ultima.fs" />
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>

@@ -2,21 +2,29 @@
 
 open System
 open System.IO
+open System.Reactive
+open System.Reactive.Linq
 open Ultima.MT4.Packets
 open NLog.FSharp
 
-type UltimaServices() = 
-    interface IUltimaServices
+type UltimaServices(mt4NetServer: MT4.INetworkServer) = 
+    interface IUltimaServices with
+        member this.MT4NetworkServer = mt4NetServer
 
 type Ultima() = 
     let log = Logger()
+
     let pluginManager = PluginManager()
-    let services = UltimaServices() :> IUltimaServices
+    let mt4NetServer = MT4.NetworkServer( { Port = 6300 }) :> MT4.INetworkServer
+    let services = UltimaServices(mt4NetServer) :> IUltimaServices
 
     member this.Start() = 
+        mt4NetServer.Start()
         ()
 
     member this.Stop() = 
+        mt4NetServer.Stop()
+        mt4NetServer.Stopped.Wait() |> ignore
         ()
 
     member this.LoadPluginsFromDirectory(dir: string) = 
