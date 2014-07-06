@@ -24,11 +24,16 @@ type TickLogger() =
         
         member x.Run(): Task = 
             log.Info("Run called")
+
             runTask.Task :> Task
         
+
+
         member x.StatusChanged: System.IObservable<string> = 
             statusChanged.AsObservable()
         
+
+
         member x.Stop(): unit = 
             log.Info("Stop called")
             runTask.SetResult()

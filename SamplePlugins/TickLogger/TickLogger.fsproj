@@ -53,6 +53,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Connectors\MT4\Ultima.MT4.Packets\Ultima.MT4.Packets.csproj">
+      <Name>Ultima.MT4.Packets</Name>
+      <Project>{b9090990-f2f5-43ec-9293-7c39ef5a8478}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
@@ -63,6 +68,18 @@
     </Reference>
     <Reference Include="NLog.FSharp">
       <HintPath>..\..\packages\NLog.FSharp.3.0.0\lib\net40\NLog.FSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Stacks">
+      <HintPath>..\..\packages\Stacks.0.8.1.0\lib\net45\Stacks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Stacks.ProtoBuf">
+      <HintPath>..\..\packages\Stacks.ProtoBuf.0.8.0.0\lib\net45\Stacks.ProtoBuf.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -87,6 +104,10 @@
     </Reference>
     <Reference Include="System.Reactive.PlatformServices">
       <HintPath>..\..\packages\Rx-PlatformServices.2.2.4\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow">
+      <HintPath>..\..\packages\Microsoft.Tpl.Dataflow.4.5.14\lib\portable-net45+win8\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
