@@ -24,6 +24,17 @@ type TickLogger() =
         
         member x.Run(): Task = 
             log.Info("Run called")
+            services.MT4NetworkServer.ClientConnected.Subscribe(fun c ->
+                c.OnPrice.Subscribe(fun p ->
+                    printfn "Received tick %s - %f / %f" (p.symbol) (p.bid) (p.ask))
+                |> ignore
+
+                c.RegisterSymbol("EURUSD")
+                c.RegisterSymbol("XAUUSD")
+                c.RegisterSymbol("EURPLN")
+                
+            ) |> ignore
+
 
             runTask.Task :> Task
         

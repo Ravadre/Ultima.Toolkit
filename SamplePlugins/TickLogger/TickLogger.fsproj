@@ -112,7 +112,7 @@
     </Reference>
   </ItemGroup>
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetDir)*.dll" "$(ProjectDir)..\..\Ultima\bin\Debug\plugins\"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "$(ProjectDir)..\..\Ultima\bin\Debug\plugins\$(TargetFileName)"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -9,7 +9,7 @@ using namespace Ultima::MT4::Packets;
 UltimaClient::UltimaClient()
 	: io(), thread(), socket(io), timer(io), connecting(false)
 {
-	this->buffer.reserve(2048);
+	this->buffer.resize(2048);
 
 	work = make_shared<io_service::work>(io);
 	this->thread = std::thread([this]() { 
@@ -90,11 +90,9 @@ void UltimaClient::reconnect()
 void UltimaClient::doWrite()
 {
 	const auto& b = sendBuffers.front();
-	LOG(INFO) << "Sending " << b.size() << " B";
 	socket.async_send(boost::asio::buffer(b, b.size()),
 		[this](const boost::system::error_code& ec, size_t sent)
 	{
-		LOG(INFO) << "handle write " << ec.message() << " " << sent;
 		this->handleWrite(ec, sent);
 	});
 }
@@ -130,7 +128,7 @@ void UltimaClient::postReconnect()
 
 void UltimaClient::doRead()
 {
-	this->socket.async_read_some(boost::asio::buffer(this->buffer, this->buffer.capacity()),
+	this->socket.async_read_some(boost::asio::buffer(this->buffer, this->buffer.size()),
 		[this](const boost::system::error_code& ec, size_t received)
 	{
 		if (ec)
@@ -139,9 +137,10 @@ void UltimaClient::doRead()
 			return;
 		}
 
-		recvBuffer.insert(recvBuffer.end(), buffer.begin(), buffer.begin() + received);
-
-		handlePackets();
+		if (received > 0) {
+			recvBuffer.insert(recvBuffer.end(), buffer.begin(), buffer.begin() + received);
+			handlePackets();
+		}
 
 		doRead();
 	});
@@ -165,6 +164,7 @@ void UltimaClient::handlePackets()
 			}
 			else
 			{
+				LOG(INFO) << "Received packet with type: " << msgType;
 				handler->second((const char*) (d+2), length - 8);
 			}
 

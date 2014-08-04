@@ -27,6 +27,18 @@ type MT4Client(socket: MT4Socket, company: string) =
 
     member this.Company = company
 
+    member this.RegisterSymbol(symbol: string) = 
+        let packet = SymbolRegistrationDTO()
+        packet.register <- true
+        packet.symbol <- symbol
+        socket.Send(packet)
+
+    member this.UnregisterSymbol(symbol: string) = 
+        let packet = SymbolRegistrationDTO()
+        packet.register <- false
+        packet.symbol <- symbol
+        socket.Send(packet)
+
 
 type INetworkServer = 
 
