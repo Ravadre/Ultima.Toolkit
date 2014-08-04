@@ -7,24 +7,30 @@ open System.Reactive.Linq
 open Ultima.MT4.Packets
 open NLog.FSharp
 
-type UltimaServices(mt4NetServer: MT4.INetworkServer) = 
+type UltimaServices(mt4NetServer: MT4.INetworkServer, config: IConfig) = 
     interface IUltimaServices with
         member this.MT4NetworkServer = mt4NetServer
+        member this.Config = config
 
 type Ultima() = 
     let log = Logger()
 
     let pluginManager = PluginManager()
-    let mt4NetServer = MT4.NetworkServer( { Port = 6300 }) :> MT4.INetworkServer
-    let services = UltimaServices(mt4NetServer) :> IUltimaServices
+    let mt4NetServer = MT4.NetworkServer()
+    let config = Config(File.ReadAllText("ultima.json"))
+    let services = UltimaServices(mt4NetServer, config) :> IUltimaServices
+
+    member this.Initialize() = 
+        (mt4NetServer :> IUltimaService).Initialize(services)
+        ()
 
     member this.Start() = 
-        mt4NetServer.Start()
+        (mt4NetServer :> IUltimaService).Start()
         ()
 
     member this.Stop() = 
-        mt4NetServer.Stop()
-        mt4NetServer.Stopped.Wait() |> ignore
+        (mt4NetServer :> IUltimaService).Stop()
+        (mt4NetServer :> MT4.INetworkServer).Stopped.Wait() |> ignore
         ()
 
     member this.LoadPluginsFromDirectory(dir: string) = 

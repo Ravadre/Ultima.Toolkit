@@ -10,14 +10,24 @@ open Ultima.MT4.Packets
 open Stacks
 open Stacks.Tcp
 open NLog.FSharp
+open Ultima
 
 type MT4Socket = ReactiveMessageClient<IMT4PacketHandler>
 
-type NetworkServer(opts: NetworkServerOpts) = 
+type NetServerConfig() =
+    [<DefaultValue>] 
+    val mutable bind: string
+    [<DefaultValue>]
+    val mutable port: int
+
+type NetworkServer() as ns = 
     let log = Logger()
 
     let exec = ActionBlockExecutor("MT4 network server")
-    let server = SocketServer(exec, IPEndPoint(IPAddress.Any, opts.Port))
+
+    [<DefaultValue>]
+    val mutable server: SocketServer
+    //let server = SocketServer(exec, IPEndPoint(IPAddress.Any, opts.Port))
 
     let connectedSub = ref null
 
@@ -26,28 +36,43 @@ type NetworkServer(opts: NetworkServerOpts) =
 
     let clientConnected = new Subject<MT4Client>()
 
+    member this.Initialize(services: IUltimaServices) = 
+        let cfg = services.Config.GetSection<NetServerConfig>("mt4Connector")
+        this.server <- SocketServer(exec, IPEndPoint(IPAddress.Parse(cfg.bind), cfg.port))
+        ()
+
+    member this.Start() = 
+        connectedSub := this.server.Connected.Subscribe(this.OnConnected)
+        this.server.Start()
+        log.Info "Network server started (%s)" (this.server.BindEndPoint.ToString())
+
+    member this.Stop() = 
+        log.Info "Network server stopping"
+        clientConnected.Dispose()
+        (!connectedSub).Dispose()
+        this.server.Stop()
+
     interface INetworkServer with
         member this.ClientConnected with get() = clientConnected.AsObservable()
-        member this.Started with get() = server.Started
-        member this.Stopped with get() = server.Stopped
-
-        member this.Start() = 
-            connectedSub := server.Connected.Subscribe(this.OnConnected)
-            server.Start()
-            log.Info "Network server started"
-
-
-        member this.Stop() = 
-            log.Info "Network server stopping"
-            clientConnected.Dispose()
-            (!connectedSub).Dispose()
-            server.Stop()
+        member this.Started with get() = this.server.Started
+        member this.Stopped with get() = this.server.Stopped
 
         member this.GetConnectedClients() =
             exec.PostTask(fun () -> clients
                                     |> Seq.map (fun kv -> kv.Value)
                                     |> Array.ofSeq)
             |> Async.AwaitTask
+
+
+    interface IUltimaService with
+        member this.Initialize(services: IUltimaServices) = 
+            ns.Initialize(services)
+
+        member this.Start() = 
+            ns.Start()
+
+        member this.Stop() = 
+            ns.Stop()
 
 
     member private this.OnConnected(c) = 

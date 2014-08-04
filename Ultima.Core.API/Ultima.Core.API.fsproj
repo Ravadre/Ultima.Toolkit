@@ -49,6 +49,7 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <Compile Include="IConfig.fs" />
     <Compile Include="MT4\INetworkServer.fs" />
     <Compile Include="Ultima.fs" />
     <Compile Include="Plugins.fs" />

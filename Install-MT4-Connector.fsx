@@ -75,13 +75,16 @@ Target "Deploy" (fun () ->
             KillMetaTrader(mt4Path)
 
         let srcScriptDir = "Connectors\\MT4\\Scripts\\"
+        let filesDir = "files\\"
 
         let filesToCopy = 
             [ srcScriptDir @@ "Common.mqh", dd @@ "Include\\Common.mqh";
               srcScriptDir @@ "UltimaConnector.Common.mqh", dd @@ "Include\\UltimaConnector.Common.mqh";
               srcScriptDir @@ "UltimaConnector.mqh", dd @@ "Include\\UltimaConnector.mqh";
+              srcScriptDir @@ "UltimaConnector.Native.mqh", dd @@ "Include\\UltimaConnector.Native.mqh";
               srcScriptDir @@ "Common.mq4", dd @@ "Libraries\\Common.mq4";
-              srcScriptDir @@ "UltimaConnector.mq4", dd @@ "Experts\\UltimaConnector.mq4"
+              srcScriptDir @@ "UltimaConnector.mq4", dd @@ "Experts\\UltimaConnector.mq4";
+              filesDir @@ "logo64.ico", dd @@ "Images\\logo64.ico";
             ]
         
         for src, dst in filesToCopy do

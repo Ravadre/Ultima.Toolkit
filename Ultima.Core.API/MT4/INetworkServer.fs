@@ -34,6 +34,4 @@ type INetworkServer =
     abstract Started : IObservable<Unit> with get
     abstract Stopped : IObservable<Unit> with get
 
-    abstract Start: unit -> unit
-    abstract Stop: unit -> unit
     abstract GetConnectedClients: unit -> Async<MT4Client[]>

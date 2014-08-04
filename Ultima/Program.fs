@@ -59,6 +59,7 @@ module Program =
             Console.SetWindowSize(140, 25)
 
             let u = new Ultima()
+            u.Initialize()
             u.Start()
             u.LoadPluginsFromDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "plugins"))
             printfn "Press Ctrl+C to quit"
