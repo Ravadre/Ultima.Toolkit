@@ -27,7 +27,6 @@ type NetworkServer() as ns =
 
     [<DefaultValue>]
     val mutable server: SocketServer
-    //let server = SocketServer(exec, IPEndPoint(IPAddress.Any, opts.Port))
 
     let connectedSub = ref null
 

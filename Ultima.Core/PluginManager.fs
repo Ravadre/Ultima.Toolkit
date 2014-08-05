@@ -61,6 +61,7 @@ type PluginManager() =
             | Some plugin ->
                 plugin.Initialize(services)
                 let task = plugin.Run()
+                log.Info "Plugin %s (%s) running" (plugin.Info.Name) (plugin.Info.Version.ToString())
                 (plugin, task) |> HookTaskEnd
                 runningPlugins.Add( (plugin, task) )
         with

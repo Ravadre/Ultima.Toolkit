@@ -87,7 +87,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Stacks">
-      <HintPath>..\packages\Stacks.0.8.1.0\lib\net45\Stacks.dll</HintPath>
+      <HintPath>..\packages\Stacks.0.9.1-beta1\lib\net45\Stacks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Stacks.ProtoBuf">

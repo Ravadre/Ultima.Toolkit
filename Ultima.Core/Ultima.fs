@@ -7,7 +7,8 @@ open System.Reactive.Linq
 open Ultima.MT4.Packets
 open NLog.FSharp
 
-type UltimaServices(mt4NetServer: MT4.INetworkServer, config: IConfig) = 
+type UltimaServices(mt4NetServer: MT4.INetworkServer, 
+                    config: IConfig) = 
     interface IUltimaServices with
         member this.MT4NetworkServer = mt4NetServer
         member this.Config = config
