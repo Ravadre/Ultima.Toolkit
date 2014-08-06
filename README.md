@@ -47,6 +47,6 @@ Sample plugin (TickLogger) will be loaded and started.
 Copyright and License
 ---------------------
 ----------
-Copyright 2014 Marcin Deptu≥a
+Copyright 2014 Marcin Deptu≈Ça
 
 Licensed under the [MIT License](/LICENSE)
