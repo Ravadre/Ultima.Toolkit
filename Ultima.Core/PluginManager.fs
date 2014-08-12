@@ -1,6 +1,7 @@
 ﻿namespace Ultima
 
 open System
+open System.Threading
 open System.Threading.Tasks
 open System.Reflection
 open System.Collections.Generic
@@ -16,8 +17,7 @@ type PluginManager() =
     let runningPlugins = List<IPlugin * Task>()
 
     let LoadPlugin(pluginPath: string) = 
-        let asm = Assembly.LoadFrom(pluginPath)
-        
+        let asm = Assembly.LoadFile(pluginPath)
         let t = asm.GetTypes()
                 |> Seq.tryFind(fun t -> t.IsPublic &&
                                         t.IsClass &&
@@ -26,7 +26,6 @@ type PluginManager() =
         | Some t -> Some(Activator.CreateInstance(t) :?> IPlugin)
         | None -> log.Info "%s is not an Ultima plugin" pluginPath
                   None
-
 
     let HookTaskEnd (plugin: IPlugin, task: Task) = 
         task.ContinueWith( (fun (t: Task) -> 
@@ -80,7 +79,25 @@ type PluginManager() =
         return !s
     }
 
-    member __.StopAll() = async {
+    member __.SignalStop(name: string) = context.RunAsync(async {
+        match runningPlugins |> Seq.tryFind(fun (p,_) -> p.Info.Name = name) with
+        | Some x -> TryStopPlugin(x)
+        | None -> failwithf "No plugin %s running" name
+    })
+
+    member __.Stop(name: string, cancel: CancellationToken) = 
+        context.RunAsync(async {
+            match runningPlugins |> Seq.tryFind(fun (p,_) -> p.Info.Name = name) with
+            | Some x -> TryStopPlugin(x)
+            | None -> failwithf "No plugin %s running" name
+
+            while (runningPlugins 
+                   |> Seq.tryFind(fun (p,_) -> p.Info.Name = name)).IsSome do
+                do! Async.Sleep(50)
+                cancel.ThrowIfCancellationRequested()
+        })
+
+    member __.SignalStopAll() = async {
         do! Async.SwitchToActor(context)
         log.Trace "2. Stop all on %s" (Executor.GetCurrentName())
 
