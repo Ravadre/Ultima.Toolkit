@@ -51,7 +51,7 @@ type PluginManager() =
                  runningPlugins.Remove( (plugin, task) ) |> ignore
 
 
-    member this.Start(pluginPath: string, services: IUltimaServices) = async {
+    member __.Start(pluginPath: string, services: IUltimaServices) = async {
         do! Async.SwitchToActor(context)
         log.Trace "1. Plugin start on %s" (Executor.GetCurrentName())
         
@@ -69,7 +69,7 @@ type PluginManager() =
                     pluginPath exn
     }
 
-    member this.StopAll() = async {
+    member __.StopAll() = async {
         do! Async.SwitchToActor(context)
         log.Trace "2. Stop all on %s" (Executor.GetCurrentName())
 

@@ -13,13 +13,13 @@ module Program =
     }
 
     let ParseArgs argv =
-        let args : Arguments = { 
+        let mutable args : Arguments = { 
             RunService = false }
 
         for a in argv do
             match a with
-            | "/s" -> let args = { args with 
-                                    RunService = true }
+            | "/s" -> args <- { args with 
+                                   RunService = true }
                       ()
             | _ -> printfn "Error: unknown argument %s" a; Environment.Exit(1)
         args
@@ -31,7 +31,7 @@ module Program =
         let log = Logger()
         let u = new Ultima()
 
-        override this.OnStart(argv: string[]) = 
+        override __.OnStart(argv: string[]) = 
             log.Info("Starting Ultima service")
                         
             u.Start()
@@ -40,7 +40,7 @@ module Program =
             base.OnStart(argv)
 
 
-        override this.OnStop() = 
+        override __.OnStop() = 
             log.Info("Ultima service is stopping")
 
             u.Stop()

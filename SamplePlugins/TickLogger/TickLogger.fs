@@ -16,13 +16,13 @@ type TickLogger() =
     let statusChanged = new Subject<string>()
 
     interface IPlugin with
-        member x.Info: PluginInfo = info
+        member __.Info: PluginInfo = info
         
-        member x.Initialize(s: IUltimaServices): unit = 
+        member __.Initialize(s: IUltimaServices): unit = 
             log.Info("Initialize called")
             services <- s
         
-        member x.Run(): Task = 
+        member __.Run(): Task = 
             log.Info("Run called")
             services.MT4NetworkServer.ClientConnected.Subscribe(fun c ->
                 c.OnPrice.Subscribe(fun p ->
@@ -40,12 +40,12 @@ type TickLogger() =
         
 
 
-        member x.StatusChanged: System.IObservable<string> = 
+        member __.StatusChanged: System.IObservable<string> = 
             statusChanged.AsObservable()
         
 
 
-        member x.Stop(): unit = 
+        member __.Stop(): unit = 
             log.Info("Stop called")
             runTask.SetResult()
         
