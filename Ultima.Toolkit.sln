@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{49156BD8-E703-49A1-B401-82970D8DF1B6}"
 EndProject
@@ -49,6 +49,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SamplePlugins", "SamplePlugins", "{4A2E2058-6295-4015-997B-CA1E95288F6D}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "TickLogger", "SamplePlugins\TickLogger\TickLogger.fsproj", "{266664A4-3424-4C0F-8D57-B5121595A896}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{631893D4-21C0-46F0-867F-98DCB7FA9DC7}"
+	ProjectSection(SolutionItems) = preProject
+		Build.fsx = Build.fsx
+		Install-MT4-Connector.fsx = Install-MT4-Connector.fsx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
