@@ -90,8 +90,8 @@
       <HintPath>..\packages\Stacks.0.9.1-beta1\lib\net45\Stacks.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Stacks.ProtoBuf">
-      <HintPath>..\packages\Stacks.ProtoBuf.0.8.0.0\lib\net45\Stacks.ProtoBuf.dll</HintPath>
+    <Reference Include="Stacks.FSharp">
+      <HintPath>..\packages\Stacks.FSharp.0.9.1-beta1\lib\net45\Stacks.FSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />

@@ -6,6 +6,7 @@ open System.Reflection
 open System.Collections.Generic
 open Stacks
 open Stacks.Actors
+open Stacks.FSharp
 open NLog.FSharp
 
 type PluginManager() = 
@@ -31,8 +32,7 @@ type PluginManager() =
         task.ContinueWith( (fun (t: Task) -> 
             let wf = async {
                         do! Async.SwitchToActor(context)
-                        log.Trace "3. hook task end callback on %s" (Executor.GetCurrentName())
-
+             
                         match t.Exception with
                         | null -> log.Info "Plugin %s finished gracefully" (plugin.Info.Name)
                         | exn -> log.Error "Plugin %s finished with exception: %O" (plugin.Info.Name) exn
@@ -53,20 +53,31 @@ type PluginManager() =
 
     member __.Start(pluginPath: string, services: IUltimaServices) = async {
         do! Async.SwitchToActor(context)
-        log.Trace "1. Plugin start on %s" (Executor.GetCurrentName())
         
+        let rec TryLoadPlugin path exts = 
+            match exts with
+            | [] -> PluginConfig(null) :> IPluginConfig
+            | ext :: r -> let f = System.IO.Path.ChangeExtension(path, ext)
+                          let cfg = PluginConfig.LoadFromFile(f)
+                          match cfg.HasConfiguration with
+                          | true -> cfg
+                          | false -> TryLoadPlugin path r
+        let s = ref false
         try
             match LoadPlugin(pluginPath) with
             | None -> ()
             | Some plugin ->
-                plugin.Initialize(services)
+                let pluginCfg = TryLoadPlugin pluginPath [".json"; ".cfg"; ".config"]
+                plugin.Initialize(services, pluginCfg)
                 let task = plugin.Run()
                 log.Info "Plugin %s (%s) running" (plugin.Info.Name) (plugin.Info.Version.ToString())
                 (plugin, task) |> HookTaskEnd
                 runningPlugins.Add( (plugin, task) )
+                s := true
         with
         | exn -> log.Error "Cannot start plugin %s because exception was thrown: %O"
                     pluginPath exn
+        return !s
     }
 
     member __.StopAll() = async {
@@ -76,3 +87,8 @@ type PluginManager() =
         runningPlugins
         |> Seq.iter TryStopPlugin
     }
+
+    member __.GetRunningPlugins() = 
+        context.RunAsync(async {
+            return List.ofSeq (runningPlugins)
+        })

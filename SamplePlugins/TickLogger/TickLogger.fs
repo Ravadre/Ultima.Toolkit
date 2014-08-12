@@ -18,7 +18,7 @@ type TickLogger() =
     interface IPlugin with
         member __.Info: PluginInfo = info
         
-        member __.Initialize(s: IUltimaServices): unit = 
+        member __.Initialize(s: IUltimaServices, _: IPluginConfig): unit = 
             log.Info("Initialize called")
             services <- s
         

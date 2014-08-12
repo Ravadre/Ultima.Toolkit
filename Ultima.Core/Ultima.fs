@@ -35,11 +35,10 @@ type Ultima() =
         if not(Directory.Exists dir) then
             log.Warn "Directory %s does not exists. Plugins won't be loaded" dir
         else
-            Directory.EnumerateFiles(dir)
+            Directory.EnumerateFiles(dir, "*.dll")
             |> Seq.iter(fun file ->
                 try
-                    log.Info "Starting plugin %s" file
-                    Async.RunSynchronously <| pluginManager.Start(file, services)    
-                    log.Info "Plugin started"
+                    if Async.RunSynchronously <| pluginManager.Start(file, services) then 
+                        log.Info "Plugin started"
                 with
                 | _ -> log.Warn "Could not start plugin %s" file)        

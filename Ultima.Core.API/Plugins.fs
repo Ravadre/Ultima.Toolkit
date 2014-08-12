@@ -9,7 +9,7 @@ type PluginInfo = {
 }
 
 type IPlugin = 
-    abstract Initialize: services: IUltimaServices -> unit
+    abstract Initialize: services: IUltimaServices * config: IPluginConfig -> unit
     abstract Run: unit -> Task
     abstract Stop: unit -> unit
     
