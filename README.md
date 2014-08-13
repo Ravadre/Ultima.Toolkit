@@ -26,11 +26,16 @@ How to use?
 
 Connectors - connectors are plugins for broker platforms, so that they can connect to main Ultima server.
 
-For MT4, MQL4 scripts located in Connectors/Scripts. They need to be copied to appropriate directories (see [Install-MT4-Connector.fsx](Install-MT4-Connector.fsx)) for more info. Also, UltimaConnector is a c++ plugin, which is needed by MT4 terminal. To build it, Boost 1.55 is needed.
+For MT4, MQL4 scripts located in Connectors/Scripts. They need to be copied to appropriate directories (see [Install-MT4-Connector.fsx](Install-MT4-Connector.fsx)) for more info. Also, UltimaConnector is a c++ plugin, which is needed by MT4 terminal.
 
 Sample server, which starts Ultima on port 6300 is located in Ultima project. It supports running from console or as a Windows service.
 
 To write plugins, reference Ultima.Core.API for an API and copy dlls and their references (without Ultima.Core.API) to plugins/ subdirectory. They will be loaded on Ultima server start.
+
+
+####Build requirements####
+ * Boost, ver. 1.55.0
+ * Protobuf, ver. 2.5.0
 
 
 For quick and easy install:
