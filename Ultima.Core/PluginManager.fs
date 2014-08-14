@@ -13,7 +13,7 @@ open NLog.FSharp
 type PluginManager() = 
     let log = Logger()    
     let context = ActorContext("Plugin manager")
-
+    let configExtensions = [".json"; ".cfg"; ".config"]
     let runningPlugins = List<IPlugin * Task>()
 
     let LoadPlugin(pluginPath: string) = 
@@ -66,7 +66,7 @@ type PluginManager() =
             match LoadPlugin(pluginPath) with
             | None -> ()
             | Some plugin ->
-                let pluginCfg = TryLoadPlugin pluginPath [".json"; ".cfg"; ".config"]
+                let pluginCfg = TryLoadPlugin pluginPath configExtensions
                 plugin.Initialize(services, pluginCfg)
                 let task = plugin.Run()
                 log.Info "Plugin %s (%s) running" (plugin.Info.Name) (plugin.Info.Version.ToString())
