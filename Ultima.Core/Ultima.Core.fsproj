@@ -59,6 +59,8 @@
     <Compile Include="MT4\NetworkServer.fs" />
     <Compile Include="Ultima.fs" />
     <None Include="app.config" />
+    <Compile Include="Notification\XmppConfig.fs" />
+    <Compile Include="Notification\XmppClient.fs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ultima.Core.API\Ultima.Core.API.fsproj">
@@ -69,6 +71,9 @@
     <Reference Include="mscorlib" />
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="netlib.Dns">
+      <HintPath>..\lib\jabber-net\netlib.Dns.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -121,6 +126,9 @@
     <Reference Include="System.Threading.Tasks.Dataflow">
       <HintPath>..\packages\Microsoft.Tpl.Dataflow.4.5.14\lib\portable-net45+win8\System.Threading.Tasks.Dataflow.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="zlib.net">
+      <HintPath>..\lib\jabber-net\zlib.net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

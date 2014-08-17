@@ -3,6 +3,7 @@
 
 #Local command scripts
 /_*.cmd
+Ultima/_ultima.json
 
 #Tools
 Tools/FAKE/*
