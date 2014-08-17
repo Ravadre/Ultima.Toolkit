@@ -5,10 +5,12 @@ open System.Reactive.Linq
 open NLog.FSharp
 
 type UltimaServices(mt4NetServer: MT4.INetworkServer, 
-                    config: IConfig) = 
+                    config: IConfig,
+                    xmpp: IXmppClient) = 
     interface IUltimaServices with
         member _t.MT4NetworkServer = mt4NetServer
         member _t.Config = config
+        member __.Xmpp = xmpp
 
 type Ultima() = 
     let log = Logger()
@@ -16,19 +18,23 @@ type Ultima() =
     let pluginManager = PluginManager()
     let mt4NetServer = MT4.NetworkServer()
     let config = Config(File.ReadAllText("ultima.json"))
-    let services = UltimaServices(mt4NetServer, config) :> IUltimaServices
+    let xmpp = XmppClient()
+    let services = UltimaServices(mt4NetServer, config, xmpp) :> IUltimaServices
 
     member __.Initialize() = 
         (mt4NetServer :> IUltimaService).Initialize(services)
+        (xmpp :> IUltimaService).Initialize(services)
         ()
 
     member __.Start() = 
         (mt4NetServer :> IUltimaService).Start()
+        (xmpp :> IUltimaService).Start()
         ()
 
     member __.Stop() = 
-        (mt4NetServer :> IUltimaService).Stop()
+        (mt4NetServer :> IUltimaService).Stop().Wait()
         (mt4NetServer :> MT4.INetworkServer).Stopped.Wait() |> ignore
+        (xmpp :> IUltimaService).Stop().Wait()
         ()
 
     member __.LoadPluginsFromDirectory(dir: string) = 

@@ -72,6 +72,7 @@ type NetworkServer() as ns =
 
         member this.Stop() = 
             ns.Stop()
+            System.Threading.Tasks.Task.FromResult(())
 
 
     member private this.OnConnected(c) = 

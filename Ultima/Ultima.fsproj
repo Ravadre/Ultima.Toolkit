@@ -63,9 +63,7 @@
     <None Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ultima.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="ultima.json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Connectors\MT4\Ultima.MT4.Packets\Ultima.MT4.Packets.csproj">

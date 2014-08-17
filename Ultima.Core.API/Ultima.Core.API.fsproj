@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="IConfig.fs" />
     <Compile Include="UltimaLogger.fs" />
+    <Compile Include="Notification\IXmppClient.fs" />
     <Compile Include="MT4\INetworkServer.fs" />
     <Compile Include="Ultima.fs" />
     <Compile Include="Plugins.fs" />
