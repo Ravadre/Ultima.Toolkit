@@ -1,6 +1,5 @@
 ﻿namespace Ultima
 
 type IXmppClient =
-    interface
-    end
+    abstract Send: message: string -> unit
 

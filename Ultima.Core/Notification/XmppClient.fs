@@ -2,6 +2,7 @@
 
 open Stacks.FSharp
 open Stacks.Actors
+open System.Collections.Generic
 open agsXMPP
 open agsXMPP.protocol.client
 
@@ -9,12 +10,15 @@ type XmppClient() as this =
     let log = UltimaLogger()
     let actor = ActorContext()
 
+    let clients = List<string>()
+
     [<DefaultValue>]
     val mutable config: XmppConfigSection
     [<DefaultValue>]
     val mutable con: XmppClientConnection
 
-    let AuthError(e: agsXMPP.Xml.Dom.Element) = 
+    let AuthError(_) = 
+        log.Error "xmpp service auth error"
         ()
 
     let Login() = 
@@ -25,7 +29,7 @@ type XmppClient() as this =
         }) |> Async.StartImmediate
 
     let Disconnect(error: exn) = 
-        log.Info "xmpp service disconnected"
+        log.Warn "xmpp service disconnected. Error: %O" error
 
         actor.RunAsync(async {
             do! Async.Sleep(10000)
@@ -38,12 +42,22 @@ type XmppClient() as this =
             log.Info "Received xmpp message [%s@%s]: %s" 
                 msg.From.User msg.From.Server msg.Body
 
-    interface IXmppClient
+    interface IXmppClient with
+        member __.Send(message: string): unit = 
+            actor.RunAsync(async {
+                clients
+                |> Seq.iter(fun client ->
+                    this.con.Send(agsXMPP.protocol.client.Message(client, MessageType.chat, message)))
+            }) |> Async.StartImmediate
+        
 
     interface IUltimaService with
         member this.Initialize(services) =    
             this.config <- services.Config.GetSection<XmppConfigSection>("xmpp")
             this.con <- XmppClientConnection()
+
+            clients.AddRange(this.config.Subscribers)
+
             ()
         
         member this.Start() = 
