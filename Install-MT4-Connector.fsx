@@ -8,12 +8,17 @@ open System.Diagnostics
 let pluginDir = if (getBuildParamOrDefault "Mode" "Debug")
                     .Equals("Release", StringComparison.OrdinalIgnoreCase) 
                 then "Release" else "Debug"
+let mt4DataFolder = getBuildParamOrDefault "MT4DataFolder" 
+                        (Environment.GetFolderPath(
+                            Environment.SpecialFolder.ApplicationData) @@ "MetaQuotes\\Terminal")
+let originDiskMap = getBuildParamOrDefault "OriginDiskMap" ""
+let mt4Path = getBuildParam "MT4Path"
 
 let NormalizeDir d = 
     Path.GetFullPath(d).TrimEnd('\\', '/')
 
 let findDataDir mt4Path = 
-    let r = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) @@ "MetaQuotes\\Terminal"
+    let r = mt4DataFolder
 
     Directory.EnumerateDirectories(r)
     |> Seq.tryFind (fun sd ->
@@ -21,6 +26,13 @@ let findDataDir mt4Path =
         let p = if File.Exists(f) then File.ReadAllText(f) else ""
 
         if p <> "" then
+            let p = if originDiskMap = "" then 
+                        p 
+                    else 
+                        logfn "Mapping %s" p
+                        let t = originDiskMap + ":" + (p.Split(':').[1])
+                        logfn "Mapped data dir from %s to %s" p t
+                        t
             NormalizeDir(mt4Path) = NormalizeDir(p)
         else 
             false
@@ -56,8 +68,6 @@ let StartMetaTrader(directory) =
 
 
 Target "Deploy" (fun () ->
-    let mt4Path = getBuildParam "MT4Path"
-
     if mt4Path = "" then 
         failwith "MT4Path parameter is obligatory"
 
