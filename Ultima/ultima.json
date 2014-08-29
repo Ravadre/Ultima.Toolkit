@@ -6,6 +6,7 @@
         },
         "xmpp": {
             "enabled": false,
+            "presense": "Rock'n'Roll",
             "account": "XMPP_ACCOUNT",
             "password": "XMPP_PASSWORD",
             "subscribers": [ "user1", "user2" ]

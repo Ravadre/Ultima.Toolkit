@@ -25,7 +25,7 @@ type XmppClient() as this =
         log.Info "xmpp service logged in"
 
         actor.RunAsync(async {
-            this.con.Send(Presence(ShowType.chat, "Rock'n'Roll"))
+            this.con.Send(Presence(ShowType.chat, this.config.Presense))
         }) |> Async.StartImmediate
 
     let Disconnect(error: exn) = 
