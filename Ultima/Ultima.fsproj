@@ -37,53 +37,6 @@
     <DocumentationFile>bin\Release\Ultima.XML</DocumentationFile>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NLog.FSharp">
-      <HintPath>..\packages\NLog.FSharp.3.0.0\lib\net40\NLog.FSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.ServiceProcess" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Program.fs" />
-    <None Include="packages.config" />
-    <None Include="NLog.xsd" />
-    <None Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="ultima.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Connectors\MT4\Ultima.MT4.Packets\Ultima.MT4.Packets.csproj">
-      <Name>Ultima.MT4.Packets</Name>
-      <Project>{b9090990-f2f5-43ec-9293-7c39ef5a8478}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Ultima.Core.API\Ultima.Core.API.fsproj">
-      <Name>Ultima.Core.API</Name>
-      <Project>{38d18689-ee5e-4154-8868-a1266d3767a0}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\Ultima.Core\Ultima.Core.fsproj">
-      <Name>Ultima.Core</Name>
-      <Project>{59990802-af5d-4f25-939a-dd494f3d0abb}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App.config" />
-  </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
   </PropertyGroup>
@@ -100,6 +53,50 @@
     </Otherwise>
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
+  <ItemGroup>
+    <Compile Include="Program.fs" />
+    <None Include="packages.config" />
+    <None Include="NLog.xsd" />
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="ultima.json" />
+    <Content Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib" />
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog.FSharp">
+      <HintPath>..\packages\NLog.FSharp.3.0.0\lib\net40\NLog.FSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.ServiceProcess" />
+    <ProjectReference Include="..\Connectors\MT4\Ultima.MT4.Packets\Ultima.MT4.Packets.csproj">
+      <Name>Ultima.MT4.Packets</Name>
+      <Project>{b9090990-f2f5-43ec-9293-7c39ef5a8478}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ultima.Core.API\Ultima.Core.API.fsproj">
+      <Name>Ultima.Core.API</Name>
+      <Project>{38d18689-ee5e-4154-8868-a1266d3767a0}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Ultima.Core\Ultima.Core.fsproj">
+      <Name>Ultima.Core</Name>
+      <Project>{59990802-af5d-4f25-939a-dd494f3d0abb}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+  </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
