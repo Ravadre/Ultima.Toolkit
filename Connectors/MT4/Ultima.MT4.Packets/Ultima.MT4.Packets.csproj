@@ -35,7 +35,7 @@
     </Reference>
     <Reference Include="Stacks, Version=0.9.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\packages\Stacks.0.9.1-beta1\lib\net45\Stacks.dll</HintPath>
+      <HintPath>..\..\..\packages\Stacks.0.9.1-beta2\lib\net45\Stacks.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
