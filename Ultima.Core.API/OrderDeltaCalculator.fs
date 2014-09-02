@@ -30,9 +30,9 @@ type OrderDeltaCalculator() =
     
     let mutable currentOrders = List<OrderInfoDTO>()
 
-    let orderOpened = new Subject<string * OrderInfoDTO>()
-    let orderClosed = new Subject<string * OrderInfoDTO>()
-    let orderModified = new Subject<string * OrderInfoDTO * OrderInfoDTO * OrderModifications>()
+    let orderOpened = new Subject<OrderInfoDTO>()
+    let orderClosed = new Subject<OrderInfoDTO>()
+    let orderModified = new Subject<OrderInfoDTO * OrderInfoDTO * OrderModifications>()
     
     let GetOrderModifications (co: OrderInfoDTO) (no: OrderInfoDTO) = 
         let mutable mods = 0
@@ -59,7 +59,7 @@ type OrderDeltaCalculator() =
     member __.Reset() = currentOrders.Clear()
 
 
-    member __.UpdateOrders (broker: string) (orders: List<OrderInfoDTO>) = 
+    member __.UpdateOrders (orders: List<OrderInfoDTO>) = 
         orders.Sort(Comparison(fun (l: OrderInfoDTO) r -> l.order - r.order))
 
         let mutable coe = currentOrders.GetEnumerator()
@@ -70,25 +70,25 @@ type OrderDeltaCalculator() =
 
         while cGot || nGot do
             if not(nGot) then
-                orderClosed.OnNext(broker, coe.Current)
+                orderClosed.OnNext(coe.Current)
                 cGot <- coe.MoveNext()
             elif not(cGot) then
-                orderOpened.OnNext(broker, noe.Current)
+                orderOpened.OnNext(noe.Current)
                 nGot <- noe.MoveNext()
             else
                 let co = coe.Current
                 let no = noe.Current
 
                 if co.order < no.order then
-                    orderClosed.OnNext(broker, co)
+                    orderClosed.OnNext(co)
                     cGot <- coe.MoveNext()
                 elif co.order > no.order then
-                    orderOpened.OnNext(broker, no)
+                    orderOpened.OnNext(no)
                     nGot <- noe.MoveNext()
                 else
                     let mods = GetOrderModifications co no
                     if mods <> 0 then
-                        orderModified.OnNext(broker, co, no, enum<OrderModifications>(mods))
+                        orderModified.OnNext(co, no, enum<OrderModifications>(mods))
                     cGot <- coe.MoveNext()
                     nGot <- noe.MoveNext()
         
