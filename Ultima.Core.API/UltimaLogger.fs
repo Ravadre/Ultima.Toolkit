@@ -1,6 +1,5 @@
 ﻿namespace Ultima
 
-open System
 open NLog.FSharp
 
 type UltimaLogger(name: string) = 
@@ -14,41 +13,41 @@ type UltimaLogger(name: string) =
         UltimaLogger(callerType.Name)
 
 
-    member this.Trace(message) = 
+    member __.Trace(message) = 
         log.Trace message
-    member this.Debug(message) = 
+    member __.Debug(message) = 
         log.Debug message
-    member this.Info(message) = 
+    member __.Info(message) = 
         log.Info message
-    member this.Warn(message) = 
+    member __.Warn(message) = 
         log.Warn message
-    member this.Error(message) = 
+    member __.Error(message) = 
         log.Error message
-    member this.Fatal(message) = 
+    member __.Fatal(message) = 
         log.Fatal message
 
-    member this.TraceMsg(message) = 
+    member __.TraceMsg(message) = 
         log.Trace "%s" message
-    member this.DebugMsg(message) = 
+    member __.DebugMsg(message) = 
         log.Debug "%s" message
-    member this.InfoMsg(message) = 
+    member __.InfoMsg(message) = 
         log.Info "%s" message
-    member this.WarnMsg(message) = 
+    member __.WarnMsg(message) = 
         log.Warn "%s" message
-    member this.ErrorMsg(message) =
+    member __.ErrorMsg(message) =
         log.Error "%s" message
-    member this.FatalMsg(message) = 
+    member __.FatalMsg(message) = 
         log.Fatal "%s" message
 
-    member this.TraceFormat(message, [<System.ParamArrayAttribute>] param) = 
+    member __.TraceFormat(message, [<System.ParamArrayAttribute>] param) = 
         log.Trace "%s" (System.String.Format(message, param))
-    member this.DebugFormat(message, [<System.ParamArrayAttribute>] param) = 
+    member __.DebugFormat(message, [<System.ParamArrayAttribute>] param) = 
         log.Debug "%s" (System.String.Format(message, param))
-    member this.InfoFormat(message, [<System.ParamArrayAttribute>] param) = 
+    member __.InfoFormat(message, [<System.ParamArrayAttribute>] param) = 
         log.Info "%s" (System.String.Format(message, param))
-    member this.WarnFormat(message, [<System.ParamArrayAttribute>] param) = 
+    member __.WarnFormat(message, [<System.ParamArrayAttribute>] param) = 
         log.Warn "%s" (System.String.Format(message, param))
-    member this.ErrorFormat(message, [<System.ParamArrayAttribute>] param) = 
+    member __.ErrorFormat(message, [<System.ParamArrayAttribute>] param) = 
         log.Error "%s" (System.String.Format(message, param))
-    member this.FatalFormat(message, [<System.ParamArrayAttribute>] param) = 
+    member __.FatalFormat(message, [<System.ParamArrayAttribute>] param) = 
         log.Fatal "%s" (System.String.Format(message, param))
