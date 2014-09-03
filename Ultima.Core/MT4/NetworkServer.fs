@@ -52,11 +52,11 @@ type NetworkServer() as ns =
         this.server.Stop()
 
     interface INetworkServer with
-        member this.ClientConnected with get() = clientConnected.AsObservable()
+        member __.ClientConnected with get() = clientConnected.AsObservable()
         member this.Started with get() = this.server.Started
         member this.Stopped with get() = this.server.Stopped
 
-        member this.GetConnectedClients() =
+        member __.GetConnectedClients() =
             exec.PostTask(fun () -> clients
                                     |> Seq.map (fun kv -> kv.Value)
                                     |> Array.ofSeq)
@@ -64,13 +64,13 @@ type NetworkServer() as ns =
 
 
     interface IUltimaService with
-        member this.Initialize(services: IUltimaServices) = 
+        member __.Initialize(services: IUltimaServices) = 
             ns.Initialize(services)
 
-        member this.Start() = 
+        member __.Start() = 
             ns.Start()
 
-        member this.Stop() = 
+        member __.Stop() = 
             ns.Stop()
             System.Threading.Tasks.Task.FromResult(())
 
@@ -89,7 +89,7 @@ type NetworkServer() as ns =
         temporarySockets.Add(c)
         ()
 
-    member private this.RegisterClient(company: string, c) = 
+    member private __.RegisterClient(company: string, c) = 
         match clients.ContainsKey(company) with
         | true ->   
             log.Warn "Already has connection with company %s registered. Dropping client %s"

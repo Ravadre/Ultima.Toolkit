@@ -2,8 +2,11 @@
 
 open System
 open System.Reactive
+open System.Collections.Generic
 open Stacks
+open System.Reactive.Linq
 open Stacks.Tcp
+open Ultima
 open Ultima.MT4.Packets
 
 type NetworkServerOpts = {
@@ -21,7 +24,7 @@ type MT4Client(socket: MT4Socket, company: string) =
 
     member this.OnPrice = socket.Packets.Price
     member this.OnCommandResult = socket.Packets.CommandResult
-    member this.OnOrders = socket.Packets.UpdateOrders
+    member this.OnOrders = socket.Packets.UpdateOrders.Select(fun o -> List<_>(o.orders |> Seq.map(fun x -> x.ToOrder())))
     member this.OnHistory = socket.Packets.HistoryOrderInfo
     member this.Disconnected = socket.Disconnected
 

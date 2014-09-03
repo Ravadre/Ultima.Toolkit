@@ -28,26 +28,26 @@ module OrderExtensions =
 
 type OrderDeltaCalculator() = 
     
-    let mutable currentOrders = List<OrderInfoDTO>()
+    let mutable currentOrders = List<Order>()
 
-    let orderOpened = new Subject<OrderInfoDTO>()
-    let orderClosed = new Subject<OrderInfoDTO>()
-    let orderModified = new Subject<OrderInfoDTO * OrderInfoDTO * OrderModifications>()
+    let orderOpened = new Subject<Order>()
+    let orderClosed = new Subject<Order>()
+    let orderModified = new Subject<Order * Order * OrderModifications>()
     
-    let GetOrderModifications (co: OrderInfoDTO) (no: OrderInfoDTO) = 
+    let GetOrderModifications (co: Order) (no: Order) = 
         let mutable mods = 0
 
-        if co.openPrice <> no.openPrice then
+        if co.OpenPrice <> no.OpenPrice then
             mods <- mods ||| int(OrderModifications.OpenPrice)
-        if co.stopLoss <> no.stopLoss then
+        if co.StopLoss <> no.StopLoss then
             mods <- mods ||| int(OrderModifications.StopLoss)
-        if co.takeProfit <> no.takeProfit then
+        if co.TakeProfit <> no.TakeProfit then
             mods <- mods ||| int(OrderModifications.TakeProfit)
-        if co.tradeCommand <> no.tradeCommand then
+        if co.Type <> no.Type then
             mods <- mods ||| int(OrderModifications.Type)
-        if co.volume <> no.volume then
+        if co.Volume <> no.Volume then
             mods <- mods ||| int(OrderModifications.Volume)
-        if co.profit <> no.profit then
+        if co.Profit <> no.Profit then
             mods <- mods ||| int(OrderModifications.Profit)
         mods
 
@@ -59,8 +59,8 @@ type OrderDeltaCalculator() =
     member __.Reset() = currentOrders.Clear()
 
 
-    member __.UpdateOrders (orders: List<OrderInfoDTO>) = 
-        orders.Sort(Comparison(fun (l: OrderInfoDTO) r -> l.order - r.order))
+    member __.UpdateOrders (orders: List<Order>) = 
+        orders.Sort(Comparison(fun (l: Order) r -> int(l.Id - r.Id)))
 
         let mutable coe = currentOrders.GetEnumerator()
         let mutable noe = orders.GetEnumerator()
@@ -79,10 +79,10 @@ type OrderDeltaCalculator() =
                 let co = coe.Current
                 let no = noe.Current
 
-                if co.order < no.order then
+                if co.Id < no.Id then
                     orderClosed.OnNext(co)
                     cGot <- coe.MoveNext()
-                elif co.order > no.order then
+                elif co.Id > no.Id then
                     orderOpened.OnNext(no)
                     nGot <- noe.MoveNext()
                 else

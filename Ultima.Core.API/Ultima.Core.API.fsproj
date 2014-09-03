@@ -49,6 +49,7 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
+    <Compile Include="Orders.fs" />
     <Compile Include="OrderDeltaCalculator.fs" />
     <Compile Include="IConfig.fs" />
     <Compile Include="UltimaLogger.fs" />
@@ -58,7 +59,6 @@
     <Compile Include="Plugins.fs" />
     <None Include="packages.config" />
     <Content Include="app.config" />
-    <Compile Include="Orders.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="mscorlib" />
