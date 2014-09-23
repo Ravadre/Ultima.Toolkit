@@ -22,21 +22,21 @@ type MT4Client(socket: MT4Socket, company: string) =
 
     let GetId() = System.Threading.Interlocked.Increment(&cmdId)
 
-    member this.OnPrice = socket.Packets.Price
-    member this.OnCommandResult = socket.Packets.CommandResult
-    member this.OnOrders = socket.Packets.UpdateOrders.Select(fun o -> List<_>(o.orders |> Seq.map(fun x -> x.ToOrder())))
-    member this.OnHistory = socket.Packets.HistoryOrderInfo
-    member this.Disconnected = socket.Disconnected
+    member __.OnPrice = socket.Packets.Price
+    member __.OnCommandResult = socket.Packets.CommandResult
+    member __.OnOrders = socket.Packets.UpdateOrders.Select(fun o -> List<_>(o.orders |> Seq.map(fun x -> x.ToOrder())))
+    member __.OnHistory = socket.Packets.HistoryOrderInfo
+    member __.Disconnected = socket.Disconnected
 
-    member this.Company = company
+    member __.Company = company
 
-    member this.RegisterSymbol(symbol: string) = 
+    member __.RegisterSymbol(symbol: string) = 
         let packet = SymbolRegistrationDTO()
         packet.register <- true
         packet.symbol <- symbol
         socket.Send(packet)
 
-    member this.UnregisterSymbol(symbol: string) = 
+    member __.UnregisterSymbol(symbol: string) = 
         let packet = SymbolRegistrationDTO()
         packet.register <- false
         packet.symbol <- symbol

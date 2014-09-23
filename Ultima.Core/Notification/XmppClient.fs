@@ -3,6 +3,8 @@
 open Stacks.FSharp
 open Stacks.Actors
 open System.Collections.Generic
+open System.Reactive.Subjects
+open System.Reactive.Linq
 open agsXMPP
 open agsXMPP.protocol.client
 
@@ -11,6 +13,8 @@ type XmppClient() as this =
     let actor = ActorContext()
 
     let clients = List<string>()
+
+    let messageReceived = new Subject<XmppMessage>()
 
     [<DefaultValue>]
     val mutable config: XmppConfigSection
@@ -41,6 +45,8 @@ type XmppClient() as this =
            not(System.String.IsNullOrWhiteSpace(msg.Body)) then
             log.Info "Received xmpp message [%s@%s]: %s" 
                 msg.From.User msg.From.Server msg.Body
+            messageReceived.OnNext({ Sender = msg.From.User + "@" + msg.From.Server;
+                                     Message = msg.Body })
 
     interface IXmppClient with
         member __.Send(message: string): unit = 
@@ -49,6 +55,8 @@ type XmppClient() as this =
                 |> Seq.iter(fun client ->
                     this.con.Send(agsXMPP.protocol.client.Message(client, MessageType.chat, message)))
             }) |> Async.StartImmediate
+
+        member __.MessageReceived = messageReceived.AsObservable()
         
 
     interface IUltimaService with
