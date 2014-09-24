@@ -21,6 +21,8 @@ type Order =
         StopLoss: float;
         TakeProfit: float;
         CurrentPrice: float;
+        Commission: float;
+        Swap: float;
         Profit: float;
         PointProfit: int;
         OpenTime: DateTime;
@@ -50,5 +52,7 @@ module OrderDTOExtensions =
               TakeProfit = t.takeProfit
               CurrentPrice = t.closePrice
               Profit = t.profit
+              Commission = t.commission
+              Swap = t.swap
               PointProfit = t.pointProfit
               OpenTime = epoch.AddSeconds(float t.openTime) }

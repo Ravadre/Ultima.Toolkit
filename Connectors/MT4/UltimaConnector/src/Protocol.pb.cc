@@ -2272,6 +2272,8 @@ const int OrderInfoDTO::kStopLossFieldNumber;
 const int OrderInfoDTO::kTakeProfitFieldNumber;
 const int OrderInfoDTO::kClosePriceFieldNumber;
 const int OrderInfoDTO::kProfitFieldNumber;
+const int OrderInfoDTO::kCommissionFieldNumber;
+const int OrderInfoDTO::kSwapFieldNumber;
 const int OrderInfoDTO::kPointProfitFieldNumber;
 const int OrderInfoDTO::kOpenTimeFieldNumber;
 #endif  // !_MSC_VER
@@ -2301,6 +2303,8 @@ void OrderInfoDTO::SharedCtor() {
   takeprofit_ = 0;
   closeprice_ = 0;
   profit_ = 0;
+  commission_ = 0;
+  swap_ = 0;
   pointprofit_ = 0;
   opentime_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -2359,6 +2363,8 @@ void OrderInfoDTO::Clear() {
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     profit_ = 0;
+    commission_ = 0;
+    swap_ = 0;
     pointprofit_ = 0;
     opentime_ = 0;
   }
@@ -2508,12 +2514,44 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(80)) goto parse_pointProfit;
+        if (input->ExpectTag(81)) goto parse_commission;
         break;
       }
 
-      // required int32 pointProfit = 10;
+      // required double commission = 10;
       case 10: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+         parse_commission:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &commission_)));
+          set_has_commission();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(89)) goto parse_swap;
+        break;
+      }
+
+      // required double swap = 11;
+      case 11: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+         parse_swap:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
+                 input, &swap_)));
+          set_has_swap();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(96)) goto parse_pointProfit;
+        break;
+      }
+
+      // required int32 pointProfit = 12;
+      case 12: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_pointProfit:
@@ -2524,12 +2562,12 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(88)) goto parse_openTime;
+        if (input->ExpectTag(104)) goto parse_openTime;
         break;
       }
 
-      // required int32 openTime = 11;
-      case 11: {
+      // required int32 openTime = 13;
+      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
          parse_openTime:
@@ -2607,14 +2645,24 @@ void OrderInfoDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteDouble(9, this->profit(), output);
   }
 
-  // required int32 pointProfit = 10;
-  if (has_pointprofit()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->pointprofit(), output);
+  // required double commission = 10;
+  if (has_commission()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(10, this->commission(), output);
   }
 
-  // required int32 openTime = 11;
+  // required double swap = 11;
+  if (has_swap()) {
+    ::google::protobuf::internal::WireFormatLite::WriteDouble(11, this->swap(), output);
+  }
+
+  // required int32 pointProfit = 12;
+  if (has_pointprofit()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->pointprofit(), output);
+  }
+
+  // required int32 openTime = 13;
   if (has_opentime()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->opentime(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->opentime(), output);
   }
 
 }
@@ -2676,14 +2724,24 @@ int OrderInfoDTO::ByteSize() const {
       total_size += 1 + 8;
     }
 
-    // required int32 pointProfit = 10;
+    // required double commission = 10;
+    if (has_commission()) {
+      total_size += 1 + 8;
+    }
+
+    // required double swap = 11;
+    if (has_swap()) {
+      total_size += 1 + 8;
+    }
+
+    // required int32 pointProfit = 12;
     if (has_pointprofit()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->pointprofit());
     }
 
-    // required int32 openTime = 11;
+    // required int32 openTime = 13;
     if (has_opentime()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
@@ -2734,6 +2792,12 @@ void OrderInfoDTO::MergeFrom(const OrderInfoDTO& from) {
     if (from.has_profit()) {
       set_profit(from.profit());
     }
+    if (from.has_commission()) {
+      set_commission(from.commission());
+    }
+    if (from.has_swap()) {
+      set_swap(from.swap());
+    }
     if (from.has_pointprofit()) {
       set_pointprofit(from.pointprofit());
     }
@@ -2750,7 +2814,7 @@ void OrderInfoDTO::CopyFrom(const OrderInfoDTO& from) {
 }
 
 bool OrderInfoDTO::IsInitialized() const {
-  if ((_has_bits_[0] & 0x000007ff) != 0x000007ff) return false;
+  if ((_has_bits_[0] & 0x00001fff) != 0x00001fff) return false;
 
   return true;
 }
@@ -2766,6 +2830,8 @@ void OrderInfoDTO::Swap(OrderInfoDTO* other) {
     std::swap(takeprofit_, other->takeprofit_);
     std::swap(closeprice_, other->closeprice_);
     std::swap(profit_, other->profit_);
+    std::swap(commission_, other->commission_);
+    std::swap(swap_, other->swap_);
     std::swap(pointprofit_, other->pointprofit_);
     std::swap(opentime_, other->opentime_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);

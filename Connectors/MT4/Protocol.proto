@@ -76,8 +76,10 @@ message OrderInfoDTO
 	required double takeProfit = 7;
 	required double closePrice = 8;
 	required double profit = 9;
-	required int32 pointProfit = 10;
-	required int32 openTime = 11;
+	required double commission = 10;
+	required double swap = 11;
+	required int32 pointProfit = 12;
+	required int32 openTime = 13;
 }
 
 message UpdateOrdersDTO

@@ -1057,17 +1057,31 @@ class OrderInfoDTO : public ::google::protobuf::MessageLite {
   inline double profit() const;
   inline void set_profit(double value);
 
-  // required int32 pointProfit = 10;
+  // required double commission = 10;
+  inline bool has_commission() const;
+  inline void clear_commission();
+  static const int kCommissionFieldNumber = 10;
+  inline double commission() const;
+  inline void set_commission(double value);
+
+  // required double swap = 11;
+  inline bool has_swap() const;
+  inline void clear_swap();
+  static const int kSwapFieldNumber = 11;
+  inline double swap() const;
+  inline void set_swap(double value);
+
+  // required int32 pointProfit = 12;
   inline bool has_pointprofit() const;
   inline void clear_pointprofit();
-  static const int kPointProfitFieldNumber = 10;
+  static const int kPointProfitFieldNumber = 12;
   inline ::google::protobuf::int32 pointprofit() const;
   inline void set_pointprofit(::google::protobuf::int32 value);
 
-  // required int32 openTime = 11;
+  // required int32 openTime = 13;
   inline bool has_opentime() const;
   inline void clear_opentime();
-  static const int kOpenTimeFieldNumber = 11;
+  static const int kOpenTimeFieldNumber = 13;
   inline ::google::protobuf::int32 opentime() const;
   inline void set_opentime(::google::protobuf::int32 value);
 
@@ -1091,6 +1105,10 @@ class OrderInfoDTO : public ::google::protobuf::MessageLite {
   inline void clear_has_closeprice();
   inline void set_has_profit();
   inline void clear_has_profit();
+  inline void set_has_commission();
+  inline void clear_has_commission();
+  inline void set_has_swap();
+  inline void clear_has_swap();
   inline void set_has_pointprofit();
   inline void clear_has_pointprofit();
   inline void set_has_opentime();
@@ -1105,11 +1123,13 @@ class OrderInfoDTO : public ::google::protobuf::MessageLite {
   double takeprofit_;
   double closeprice_;
   double profit_;
+  double commission_;
+  double swap_;
   ::google::protobuf::int32 pointprofit_;
   ::google::protobuf::int32 opentime_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Protocol_2eproto_impl();
@@ -2979,15 +2999,59 @@ inline void OrderInfoDTO::set_profit(double value) {
   profit_ = value;
 }
 
-// required int32 pointProfit = 10;
-inline bool OrderInfoDTO::has_pointprofit() const {
+// required double commission = 10;
+inline bool OrderInfoDTO::has_commission() const {
   return (_has_bits_[0] & 0x00000200u) != 0;
 }
-inline void OrderInfoDTO::set_has_pointprofit() {
+inline void OrderInfoDTO::set_has_commission() {
   _has_bits_[0] |= 0x00000200u;
 }
-inline void OrderInfoDTO::clear_has_pointprofit() {
+inline void OrderInfoDTO::clear_has_commission() {
   _has_bits_[0] &= ~0x00000200u;
+}
+inline void OrderInfoDTO::clear_commission() {
+  commission_ = 0;
+  clear_has_commission();
+}
+inline double OrderInfoDTO::commission() const {
+  return commission_;
+}
+inline void OrderInfoDTO::set_commission(double value) {
+  set_has_commission();
+  commission_ = value;
+}
+
+// required double swap = 11;
+inline bool OrderInfoDTO::has_swap() const {
+  return (_has_bits_[0] & 0x00000400u) != 0;
+}
+inline void OrderInfoDTO::set_has_swap() {
+  _has_bits_[0] |= 0x00000400u;
+}
+inline void OrderInfoDTO::clear_has_swap() {
+  _has_bits_[0] &= ~0x00000400u;
+}
+inline void OrderInfoDTO::clear_swap() {
+  swap_ = 0;
+  clear_has_swap();
+}
+inline double OrderInfoDTO::swap() const {
+  return swap_;
+}
+inline void OrderInfoDTO::set_swap(double value) {
+  set_has_swap();
+  swap_ = value;
+}
+
+// required int32 pointProfit = 12;
+inline bool OrderInfoDTO::has_pointprofit() const {
+  return (_has_bits_[0] & 0x00000800u) != 0;
+}
+inline void OrderInfoDTO::set_has_pointprofit() {
+  _has_bits_[0] |= 0x00000800u;
+}
+inline void OrderInfoDTO::clear_has_pointprofit() {
+  _has_bits_[0] &= ~0x00000800u;
 }
 inline void OrderInfoDTO::clear_pointprofit() {
   pointprofit_ = 0;
@@ -3001,15 +3065,15 @@ inline void OrderInfoDTO::set_pointprofit(::google::protobuf::int32 value) {
   pointprofit_ = value;
 }
 
-// required int32 openTime = 11;
+// required int32 openTime = 13;
 inline bool OrderInfoDTO::has_opentime() const {
-  return (_has_bits_[0] & 0x00000400u) != 0;
+  return (_has_bits_[0] & 0x00001000u) != 0;
 }
 inline void OrderInfoDTO::set_has_opentime() {
-  _has_bits_[0] |= 0x00000400u;
+  _has_bits_[0] |= 0x00001000u;
 }
 inline void OrderInfoDTO::clear_has_opentime() {
-  _has_bits_[0] &= ~0x00000400u;
+  _has_bits_[0] &= ~0x00001000u;
 }
 inline void OrderInfoDTO::clear_opentime() {
   opentime_ = 0;

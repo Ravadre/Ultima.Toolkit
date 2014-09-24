@@ -395,15 +395,29 @@ namespace Ultima.MT4.Packets
       get { return _profit; }
       set { _profit = value; }
     }
+    private double _commission;
+    [global::ProtoBuf.ProtoMember(10, IsRequired = true, Name=@"commission", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public double commission
+    {
+      get { return _commission; }
+      set { _commission = value; }
+    }
+    private double _swap;
+    [global::ProtoBuf.ProtoMember(11, IsRequired = true, Name=@"swap", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public double swap
+    {
+      get { return _swap; }
+      set { _swap = value; }
+    }
     private int _pointProfit;
-    [global::ProtoBuf.ProtoMember(10, IsRequired = true, Name=@"pointProfit", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::ProtoBuf.ProtoMember(12, IsRequired = true, Name=@"pointProfit", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public int pointProfit
     {
       get { return _pointProfit; }
       set { _pointProfit = value; }
     }
     private int _openTime;
-    [global::ProtoBuf.ProtoMember(11, IsRequired = true, Name=@"openTime", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    [global::ProtoBuf.ProtoMember(13, IsRequired = true, Name=@"openTime", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public int openTime
     {
       get { return _openTime; }

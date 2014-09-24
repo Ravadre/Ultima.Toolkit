@@ -86,6 +86,8 @@ struct MT4Order
 	double TakeProfit;
 	double ClosePrice;
 	double Profit;
+	double Commission;
+	double Swap;
 	int PointProfit;
 	int64_t OpenTime;
 	int64_t CloseTime;

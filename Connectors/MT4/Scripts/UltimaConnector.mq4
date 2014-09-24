@@ -1,4 +1,4 @@
-#define VERSION "1.6"
+#define VERSION "1.7"
 
 #property copyright "Marcin Deptu³a"
 #property link ""

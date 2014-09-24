@@ -181,6 +181,8 @@ extern "C"
 			o->set_takeprofit(so.TakeProfit);
 			o->set_closeprice(so.ClosePrice);
 			o->set_profit(so.Profit);
+			o->set_commission(so.Commission);
+			o->set_swap(so.Swap);
 			o->set_pointprofit(so.PointProfit);
 			o->set_opentime((int)(so.OpenTime));
 		}

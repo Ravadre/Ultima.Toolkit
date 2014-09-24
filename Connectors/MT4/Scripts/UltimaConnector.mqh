@@ -451,6 +451,8 @@ void RequestOrderHistory(int command)
 		orders[i].OpenPrice = OrderOpenPrice();
 		orders[i].ClosePrice = OrderClosePrice();
 		orders[i].Profit = OrderProfit();
+		orders[i].Commission = OrderCommission();
+		orders[i].Swap = OrderSwap();
 		orders[i].StopLoss = OrderStopLoss();
 		orders[i].TakeProfit = OrderTakeProfit();
 		orders[i].Lots = OrderLots();
