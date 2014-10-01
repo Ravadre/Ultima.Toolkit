@@ -101,7 +101,10 @@ void UltimaClient::handleWrite(const boost::system::error_code& ec, size_t sent)
 {
 	if (ec)
 	{
-		this->reconnect();
+		auto lec = ec;
+		this->socket.shutdown(socket_base::shutdown_both, lec);
+		this->socket.close(lec);
+		this->postReconnect();
 		return;
 	}
 
@@ -133,7 +136,10 @@ void UltimaClient::doRead()
 	{
 		if (ec)
 		{
-			this->reconnect();
+			auto lec = ec;
+			this->socket.shutdown(socket_base::shutdown_both, lec);
+			this->socket.close(lec);
+			this->postReconnect();
 			return;
 		}
 

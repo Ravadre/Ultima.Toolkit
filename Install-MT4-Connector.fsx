@@ -13,30 +13,39 @@ let mt4DataFolder = getBuildParamOrDefault "MT4DataFolder"
                             Environment.SpecialFolder.ApplicationData) @@ "MetaQuotes\\Terminal")
 let originDiskMap = getBuildParamOrDefault "OriginDiskMap" ""
 let mt4Path = getBuildParam "MT4Path"
+let portable = getBuildParamOrDefault "Portable" "false"
+let isPortable = bool.Parse(portable.ToLowerInvariant())
+
+do
+    if isPortable then printfn "Running in portable mode"
 
 let NormalizeDir d = 
     Path.GetFullPath(d).TrimEnd('\\', '/')
 
 let findDataDir mt4Path = 
-    let r = mt4DataFolder
+    if not(isPortable) then
+        let r = mt4DataFolder
 
-    Directory.EnumerateDirectories(r)
-    |> Seq.tryFind (fun sd ->
-        let f = sd @@ "origin.txt"
-        let p = if File.Exists(f) then File.ReadAllText(f) else ""
+        Directory.EnumerateDirectories(r)
+        |> Seq.tryFind (fun sd ->
+            let f = sd @@ "origin.txt"
+            let p = if File.Exists(f) then File.ReadAllText(f) else ""
 
-        if p <> "" then
-            let p = if originDiskMap = "" then 
-                        p 
-                    else 
-                        logfn "Mapping %s" p
-                        let t = originDiskMap + ":" + (p.Split(':').[1])
-                        logfn "Mapped data dir from %s to %s" p t
-                        t
-            NormalizeDir(mt4Path) = NormalizeDir(p)
-        else 
-            false
-    )
+            if p <> "" then
+                let p = if originDiskMap = "" then 
+                            p 
+                        else 
+                            logfn "Mapping %s" p
+                            let t = originDiskMap + ":" + (p.Split(':').[1])
+                            logfn "Mapped data dir from %s to %s" p t
+                            t
+                NormalizeDir(mt4Path) = NormalizeDir(p)
+            else 
+                false
+        )
+    else
+        Some mt4Path 
+
   
 let IsMetaTraderRunning() = 
     let terminals = Process.GetProcessesByName("terminal")
@@ -62,7 +71,7 @@ let StartMetaTrader(directory) =
     let terminalPath = directory @@ "terminal.exe"
 
     logfn "Starting Meta Trader..."
-    let proc = Process.Start(terminalPath)
+    let proc = Process.Start(terminalPath, (if isPortable then "/portable" else ""))
     proc.WaitForInputIdle() |> ignore
     logfn "done"
 
