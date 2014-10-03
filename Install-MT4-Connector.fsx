@@ -14,7 +14,10 @@ let mt4DataFolder = getBuildParamOrDefault "MT4DataFolder"
 let originDiskMap = getBuildParamOrDefault "OriginDiskMap" ""
 let mt4Path = getBuildParam "MT4Path"
 let portable = getBuildParamOrDefault "Portable" "false"
+let clean = getBuildParamOrDefault "Clean" "false"
+
 let isPortable = bool.Parse(portable.ToLowerInvariant())
+let isClean = bool.Parse(clean.ToLowerInvariant())
 
 do
     if isPortable then printfn "Running in portable mode"
@@ -23,7 +26,7 @@ let NormalizeDir d =
     Path.GetFullPath(d).TrimEnd('\\', '/')
 
 let findDataDir mt4Path = 
-    if not(isPortable) then
+    if not(isPortable) && not(isClean) then
         let r = mt4DataFolder
 
         Directory.EnumerateDirectories(r)
@@ -81,7 +84,10 @@ Target "Deploy" (fun () ->
         failwith "MT4Path parameter is obligatory"
 
     if not(Directory.Exists(mt4Path)) then
-        failwithf "Directory %s does not exists" mt4Path
+        if isClean then
+            Directory.CreateDirectory(mt4Path) |> ignore
+        else
+            failwithf "Directory %s does not exists" mt4Path
 
     match findDataDir mt4Path with
     | None -> failwithf "No data directory found for %s" mt4Path
@@ -92,6 +98,13 @@ Target "Deploy" (fun () ->
         let restartMt4 = IsMetaTraderRunning()
         if (restartMt4) then
             KillMetaTrader(mt4Path)
+
+        if isClean then
+            Directory.CreateDirectory(dd) |> ignore
+            Directory.CreateDirectory(dd @@ "Include\\") |> ignore
+            Directory.CreateDirectory(dd @@ "Libraries\\") |> ignore
+            Directory.CreateDirectory(dd @@ "Experts\\") |> ignore
+            Directory.CreateDirectory(dd @@ "Images\\") |> ignore
 
         let srcScriptDir = "Connectors\\MT4\\Scripts\\"
         let filesDir = "files\\"
