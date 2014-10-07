@@ -28,14 +28,14 @@ type XmppClient() as this =
     let Login() = 
         log.Info "xmpp service logged in"
 
-        actor.RunAsync(async {
+        actor.MakeAsync(async {
             this.con.Send(Presence(ShowType.chat, this.config.Presense))
         }) |> Async.StartImmediate
 
     let Disconnect(error: exn) = 
         log.Warn "xmpp service disconnected. Error: %O" error
 
-        actor.RunAsync(async {
+        actor.MakeAsync(async {
             do! Async.Sleep(10000)
             this.con.Open()
         }) |> Async.StartImmediate
@@ -50,7 +50,7 @@ type XmppClient() as this =
 
     interface IXmppClient with
         member __.Send(message: string): unit = 
-            actor.RunAsync(async {
+            actor.MakeAsync(async {
                 clients
                 |> Seq.iter(fun client ->
                     this.con.Send(agsXMPP.protocol.client.Message(client, MessageType.chat, message)))
@@ -70,7 +70,7 @@ type XmppClient() as this =
         
         member this.Start() = 
             if this.config.Enabled = true then
-                actor.RunAsync(async {
+                actor.MakeAsync(async {
                     let jid = Jid(this.config.Account)
                     let c = this.con
                     c.Server <- jid.Server
@@ -89,7 +89,7 @@ type XmppClient() as this =
             ()
 
         member __.Stop() = 
-            actor.RunAsync(async {
+            actor.MakeAsync(async {
                 if this.config.Enabled = true then
                     try
                         this.con.Send(Presence(ShowType.NONE, ""))

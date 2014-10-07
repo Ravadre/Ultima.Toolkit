@@ -106,14 +106,14 @@ type PluginManager() =
         return !s
     }
 
-    member __.SignalStop(name: string) = context.RunAsync(async {
+    member __.SignalStop(name: string) = context.MakeAsync(async {
         match runningPlugins |> Seq.tryFind(fun (p,_) -> p.Info.Name = name) with
         | Some x -> TryStopPlugin(x)
         | None -> failwithf "No plugin %s running" name
     })
 
     member __.Stop(name: string, cancel: CancellationToken) = 
-        context.RunAsync(async {
+        context.MakeAsync(async {
             match runningPlugins |> Seq.tryFind(fun (p,_) -> p.Info.Name = name) with
             | Some x -> TryStopPlugin(x)
             | None -> failwithf "No plugin %s running" name
@@ -133,6 +133,6 @@ type PluginManager() =
     }
 
     member __.GetRunningPlugins() = 
-        context.RunAsync(async {
+        context.MakeAsync(async {
             return List.ofSeq (runningPlugins)
         })
