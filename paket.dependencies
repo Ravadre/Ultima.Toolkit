@@ -1,0 +1,7 @@
+source https://nuget.org/api/v2
+
+nuget Newtonsoft.Json ~> 6.0.5
+nuget NLog.Config ~> 3.1.0.0
+nuget NLog.FSharp ~> 3.1.0
+nuget Rx-Main ~> 2.2.5
+nuget Stacks.FSharp ~> 1.0.0

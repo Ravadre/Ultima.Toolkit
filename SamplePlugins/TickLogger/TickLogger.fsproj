@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="TickLogger.fs" />
-    <None Include="packages.config" />
+    <None Include="paket.references" />
     <Content Include="app.config" />
   </ItemGroup>
   <ItemGroup>
@@ -67,26 +67,6 @@
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
     </Reference>
-    <Reference Include="NLog">
-      <HintPath>..\..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NLog.FSharp">
-      <HintPath>..\..\packages\NLog.FSharp.3.0.0\lib\net40\NLog.FSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Stacks">
-      <HintPath>..\..\packages\Stacks.0.9.1-beta2\lib\net45\Stacks.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Stacks.ProtoBuf">
-      <HintPath>..\..\packages\Stacks.ProtoBuf.0.8.0.0\lib\net45\Stacks.ProtoBuf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -95,26 +75,6 @@
       <Project>{38d18689-ee5e-4154-8868-a1266d3767a0}</Project>
       <Private>True</Private>
     </ProjectReference>
-    <Reference Include="System.Reactive.Core">
-      <HintPath>..\..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Interfaces">
-      <HintPath>..\..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.Linq">
-      <HintPath>..\..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reactive.PlatformServices">
-      <HintPath>..\..\packages\Rx-PlatformServices.2.2.5\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Dataflow">
-      <HintPath>..\..\packages\Microsoft.Tpl.Dataflow.4.5.23\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -123,4 +83,708 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Dataflow">
+          <HintPath>..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Dataflow">
+          <HintPath>..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net45+win8+wp8+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Dataflow">
+          <HintPath>..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net45+win8+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Dataflow">
+          <HintPath>..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Windows' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Dataflow">
+          <HintPath>..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Dataflow">
+          <HintPath>..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.1'">
+      <ItemGroup>
+        <Reference Include="System.Threading.Tasks.Dataflow">
+          <HintPath>..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="NLog">
+          <HintPath>..\..\packages\NLog\lib\net35\NLog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
+      <ItemGroup>
+        <Reference Include="NLog">
+          <HintPath>..\..\packages\NLog\lib\net35\NLog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="NLog">
+          <HintPath>..\..\packages\NLog\lib\net40\NLog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="NLog">
+          <HintPath>..\..\packages\NLog\lib\net45\NLog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="NLog">
+          <HintPath>..\..\packages\NLog\lib\net45\NLog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(SilverlightVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="NLog">
+          <HintPath>..\..\packages\NLog\lib\sl4\NLog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(SilverlightVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="NLog">
+          <HintPath>..\..\packages\NLog\lib\sl5\NLog.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="NLog.FSharp">
+          <HintPath>..\..\packages\NLog.FSharp\lib\net40\NLog.FSharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="NLog.FSharp">
+          <HintPath>..\..\packages\NLog.FSharp\lib\net40\NLog.FSharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="NLog.FSharp">
+          <HintPath>..\..\packages\NLog.FSharp\lib\net40\NLog.FSharp.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v2.0'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\net20\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\net35\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0' And $(TargetFrameworkProfile) == 'Client'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\net35\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\net40\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\net40\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\net40\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'sl4+net40+wp7+win8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\portable-sl4+net40+wp7+windows8\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Windows' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\portable-sl4+net40+wp7+windows8\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == '7.1'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\sl4-windowsphone71\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\windowsphone8\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(SilverlightVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\packages\protobuf-net\lib\sl4\protobuf-net.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\net40\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\net45\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\net45\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net40+sl5+win8+wp8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\portable-net40+sl5+win8+wp8\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net45+netcore45+wp8+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\portable-net45+winrt45+wp8+wpa81\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'win8+net45+wp8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\portable-windows8+net45+wp8\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'win81+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\portable-win81+wpa81\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Windows' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\windows8\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\windowsphone8\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.1'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\portable-net45+winrt45+wp8+wpa81\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(SilverlightVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Core">
+          <HintPath>..\..\packages\Rx-Core\lib\sl5\System.Reactive.Core.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\net40\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net40+sl5+win8+wp8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\portable-net40+sl5+win8+wp8\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net45+netcore45+wp8+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\portable-net45+winrt45+wp8+wpa81\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'win8+net45+wp8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\portable-windows8+net45+wp8\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'win81+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\portable-win81+wpa81\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Windows' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\windows8\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\windowsphone8\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.1'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\portable-net45+winrt45+wp8+wpa81\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(SilverlightVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Interfaces">
+          <HintPath>..\..\packages\Rx-Interfaces\lib\sl5\System.Reactive.Interfaces.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\net40\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\net45\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\net45\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net40+sl5+win8+wp8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\portable-net40+sl5+win8+wp8\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net45+netcore45+wp8+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\portable-net45+winrt45+wp8+wpa81\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'win8+net45+wp8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\portable-windows8+net45+wp8\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'win81+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\portable-win81+wpa81\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Windows' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\windows8\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\windowsphone8\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.1'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\portable-net45+winrt45+wp8+wpa81\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(SilverlightVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.Linq">
+          <HintPath>..\..\packages\Rx-Linq\lib\sl5\System.Reactive.Linq.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\net40\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\net45\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net40+sl5+win8+wp8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\portable-net40+sl5+win8+wp8\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'net45+netcore45+wp8+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\portable-net45+winrt45+wp8+wpa81\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'win8+net45+wp8' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\portable-windows8+net45+wp8\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable' And $(TargetFrameworkProfile) == 'win81+wpa81' And $(TargetPlatformIdentifier) == 'Portable' And $(TargetPlatformVersion) == '7.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\portable-win81+wpa81\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Windows' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\windows8\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\windowsphone8\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'WindowsPhoneApp' And $(TargetPlatformVersion) == 'v8.1'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\portable-net45+winrt45+wp8+wpa81\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == 'Silverlight' And $(SilverlightVersion) == 'v5.0'">
+      <ItemGroup>
+        <Reference Include="System.Reactive.PlatformServices">
+          <HintPath>..\..\packages\Rx-PlatformServices\lib\sl5\System.Reactive.PlatformServices.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="Stacks">
+          <HintPath>..\..\packages\Stacks\lib\net45\Stacks.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="Stacks">
+          <HintPath>..\..\packages\Stacks\lib\net45\Stacks.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Choose>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5'">
+      <ItemGroup>
+        <Reference Include="Stacks.ProtoBuf">
+          <HintPath>..\..\packages\Stacks.ProtoBuf\lib\net45\Stacks.ProtoBuf.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(TargetFrameworkIdentifier) == '.NETFramework' And $(TargetFrameworkVersion) == 'v4.5.1'">
+      <ItemGroup>
+        <Reference Include="Stacks.ProtoBuf">
+          <HintPath>..\..\packages\Stacks.ProtoBuf\lib\net45\Stacks.ProtoBuf.dll</HintPath>
+          <Private>True</Private>
+          <Paket>True</Paket>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>
