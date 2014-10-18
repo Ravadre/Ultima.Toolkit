@@ -1,14 +1,7 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{D71383CA-F2C2-44A1-9D1D-E232266F81FD}"
- ProjectSection(SolutionItems) = preProject
-		..\Ultima.Toolkit\paket.dependencies = ..\Ultima.Toolkit\paket.dependencies
-		..\Ultima.Toolkit\paket.lock = ..\Ultima.Toolkit\paket.lock
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{49156BD8-E703-49A1-B401-82970D8DF1B6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MT4Sync", "Utils\MT4Sync\MT4Sync\MT4Sync.vcxproj", "{26096F77-AC83-4E30-A85B-B6AEB5E065F7}"
@@ -156,5 +149,8 @@ Global
 		{1BAF596F-4CF1-42C2-BB92-75886025D422} = {CC3FB89D-415A-4B47-A345-823B98D8CEF6}
 		{B9090990-F2F5-43EC-9293-7C39EF5A8478} = {CC3FB89D-415A-4B47-A345-823B98D8CEF6}
 		{266664A4-3424-4C0F-8D57-B5121595A896} = {4A2E2058-6295-4015-997B-CA1E95288F6D}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

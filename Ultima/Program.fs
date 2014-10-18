@@ -56,7 +56,10 @@ module Program =
         match args.RunService with
         | true -> ServiceBase.Run(new UltimaService())
         | false -> 
-            Console.SetWindowSize(140, 25)
+            try
+                Console.SetWindowSize(140, 25)
+            with
+            | _ -> ()
 
             let u = new Ultima()
             u.Initialize()
