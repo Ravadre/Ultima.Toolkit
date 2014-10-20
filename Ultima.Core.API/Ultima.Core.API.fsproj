@@ -78,7 +78,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Stacks">
-      <HintPath>..\packages\Stacks.1.1.0-beta1\lib\net45\Stacks.dll</HintPath>
+      <HintPath>..\packages\Stacks.1.1.0-beta2\lib\net45\Stacks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Stacks.FSharp">
