@@ -16,6 +16,7 @@ struct DebugState
 	bool IsGeneratingTicks;
 	bool GenerateInLock;
 	int PriceOffset;
+	int PriceSpread;
 };
 
 void SetupChart(CChart& chart)

@@ -114,6 +114,7 @@ Target "Deploy" (fun () ->
               srcScriptDir @@ "UltimaConnector.Common.mqh", dd @@ "Include\\UltimaConnector.Common.mqh";
               srcScriptDir @@ "UltimaConnector.mqh", dd @@ "Include\\UltimaConnector.mqh";
               srcScriptDir @@ "UltimaConnector.Native.mqh", dd @@ "Include\\UltimaConnector.Native.mqh";
+              srcScriptDir @@ "UltimaConnector.UI.mqh", dd @@ "Include\\UltimaConnector.UI.mqh";
               srcScriptDir @@ "Common.mq4", dd @@ "Libraries\\Common.mq4";
               srcScriptDir @@ "UltimaConnector.mq4", dd @@ "Experts\\UltimaConnector.mq4";
               filesDir @@ "logo64.ico", dd @@ "Images\\logo64.ico";

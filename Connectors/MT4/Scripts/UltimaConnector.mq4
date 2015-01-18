@@ -182,7 +182,15 @@ void OnChartEvent(const int id, const long& lparam, const double& dparam, const 
 		{
 			debugState.PriceOffset -= 1;
 		}
-		
+		else if (sparam == "dp_pricespread_up_btn")
+		{
+			debugState.PriceSpread += 1;
+		}
+		else if (sparam == "dp_pricespread_down_btn")
+		{
+			debugState.PriceSpread -= 1;
+		}
+				
 		UnlockButtons();
 	}
 }
@@ -218,6 +226,11 @@ void GenerateDebugTicks()
 		t.Bid += ((MathRand() % 10) - 4) * MarketInfo(symbolws, MODE_POINT);
 		t.Ask += ((MathRand() % 10) - 4) * MarketInfo(symbolws, MODE_POINT);
 	  
+	  	double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
+	  		
+	  	t.Bid -= hSpread;
+	  	t.Ask += hSpread;
+  
 		if (t.Ask < t.Bid)
 			t.Ask = t.Bid;
 	  
@@ -244,6 +257,14 @@ void GenerateDebugLockedTicks()
 		
 		t.Bid = MarketInfo(symbolws, MODE_BID) + debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
 		t.Ask = MarketInfo(symbolws, MODE_ASK) + debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
+	  
+	  	double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
+	  		
+	  	t.Bid -= hSpread;
+	  	t.Ask += hSpread;
+	  		
+	  	if (t.Ask < t.Bid)
+	  		t.Ask = t.Bid;
 	  
 		if (t.Bid == bids[i])
 		{
@@ -275,9 +296,17 @@ void UpdateTicks()
    		{
    			t.Bid += debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
 	  		t.Ask += debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
+	  		
+	  		double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
+	  		
+	  		t.Bid -= hSpread;
+	  		t.Ask += hSpread;
+	  		
+	  		if (t.Ask < t.Bid)
+	  			t.Ask = t.Bid;
    		}
-   
-		if (t.Bid != bids[i] ||
+   		
+   		if (t.Bid != bids[i] ||
 			t.Ask != asks[i])
 		{
 			StringToCharArray(symbol, t.Symbol);
