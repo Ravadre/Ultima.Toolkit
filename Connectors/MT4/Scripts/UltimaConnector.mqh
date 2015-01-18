@@ -1,5 +1,6 @@
 #property copyright "Marcin Deptu³a"
-#property link      ""
+#property link      "https://github.com/Ravadre"
+#property strict
 
 #include <Common.mqh>
 

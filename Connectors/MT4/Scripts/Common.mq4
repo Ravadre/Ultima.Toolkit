@@ -1,11 +1,6 @@
-//+------------------------------------------------------------------+
-//|                                       UltimaConnector.Common.mq4 |
-//|                                                   Marcin Deptu³a |
-//|                                                                  |
-//+------------------------------------------------------------------+
 #property library
 #property copyright "Marcin Deptu³a"
-#property link      ""
+#property link      "https://github.com/Ravadre"
 #property version   "1.00"
 #property strict
 

@@ -1,15 +1,22 @@
-#define VERSION "1.7"
+#define VERSION "1.8"
 
 #property copyright "Marcin Deptu³a"
-#property link ""
+#property link "https://github.com/Ravadre"
 #property strict
 #property icon "\\Images\\logo64.ico"
 #property version VERSION
 
+// Global states shared by headers
+#include <UltimaConnector.Common.mqh>
+
+DebugState debugState;
+
+
+
 #include <stdlib.mqh>
 #include <Charts/Chart.mqh>
 #include <UltimaConnector.Native.mqh>
-#include <UltimaConnector.Common.mqh>
+#include <UltimaConnector.UI.mqh>
 #include <UltimaConnector.mqh>
 
 
@@ -17,6 +24,7 @@
 
 input ScriptExecMode ExecutionMode = Instant;
 input string ServerAddress = "127.0.0.1:6300";
+input bool DebugMode = false;
 extern string SymbolSuffix = "";
 extern int SlippageDivider = 1;
 extern string SlippageDividers = "";
@@ -32,6 +40,7 @@ double asks [];
 int OnInit()
 {
 	Print("[Debug] OnInit");
+	MathSrand(GetTickCount());
 	SetupChart(gChart);
 
 	isRunning = false;
@@ -47,8 +56,14 @@ int OnInit()
 		Alert("Expert Advisors disabled");
 		return(INIT_FAILED);
 	}
-
-	CreateVersionLabel(VERSION);
+ 
+	debugState.IsDebugging = DebugMode;
+	debugState.IsGeneratingTicks = false;
+	debugState.GenerateInLock = false;
+	debugState.PriceOffset = 0;
+	
+	CreateUI();
+	RefreshDebugState();
 
 	string company = AccountCompany();
 	if (StringLen(BrokerAlias) > 0)
@@ -68,9 +83,14 @@ int OnInit()
 	ArrayResize(bids, 0);
 	ArrayResize(asks, 0);
 
+ 	if (!EventSetMillisecondTimer(66))
+ 	{
+ 		Alert("Could not start the timer");
+		return(INIT_FAILED); 		
+ 	}
+	
 	isRunning = true;
-
-	Run();
+	
 	return(0);
 }
 
@@ -78,80 +98,194 @@ void OnDeinit(const int reason)
 {
 	Print("[Debug] OnDeinit. Reason: " + GetUninitReasonText(reason));
 
-	DeleteVersionLabel();
-
+	DestroyUI();
+	
 	Print("[Debug] Calling DeInitialize...");
 	DeInitialize();
 	Print("[Debug] OK");
 
+	EventKillTimer();
 	isRunning = false;
 	return;
 }
 
 void OnTick()
 {
+}
+
+void OnTimer()
+{
+	if (isRunning == false)
+	{
+		Print("[Debug] Timer called, but isRunning = false");
+		return;
+	}
+
+	if (IsStopped())
+	{
+		Print("[Debug] " + __FUNCTION__ + ": IsStopped() = true");
+		return;
+	}
+	
+	RefreshDebugState();
+
+	if (WaitForCommand(1))
+	{
+		HandleRegisterCommands();
+		HandleCloseOrderCommands();
+		HandleCloseOrderByCommands();
+		HandleOpenOrderCommands();
+		HandleModifyOrderCommands();
+		HandleRequestOrderHistoryCommands();
+	}
+
+	RefreshRates();
+
+	
+	if (!debugState.IsGeneratingTicks ||
+		!debugState.IsDebugging)
+	{
+		UpdateTicks();
+	}
+	else
+	{
+		if (debugState.GenerateInLock)
+			GenerateDebugLockedTicks();
+		else
+			GenerateDebugTicks();
+	}
+
+	UpdateOrdersImpl();
+
 	return;
 }
 
-int Run()
+void OnChartEvent(const int id, const long& lparam, const double& dparam, const string& sparam)
 {
-	Print("[Debug] Run called");
-
-	string symbol;
-	string symbolws;
-	int arLen;
-	int i;
-
-	if (isRunning == false)
+	if (id == CHARTEVENT_OBJECT_CLICK)
 	{
-		Print("[Debug] Run called, but isRunning = false");
-		return(0);
+		if (sparam == "dp_genticks_btn") 
+		{
+			debugState.IsGeneratingTicks = !debugState.IsGeneratingTicks;     
+			Print("[Debug] Generating ticks options = ", debugState.IsGeneratingTicks);  
+		}
+		else if (sparam == "dp_lockticks_btn")
+		{
+			debugState.GenerateInLock = !debugState.GenerateInLock;
+			Print("[Debug] Generate ticks in lock = ", debugState.GenerateInLock);
+		}
+		else if (sparam == "dp_priceoffset_up_btn")
+		{
+			debugState.PriceOffset += 1;
+		}
+		else if (sparam == "dp_priceoffset_down_btn")
+		{
+			debugState.PriceOffset -= 1;
+		}
+		
+		UnlockButtons();
 	}
+}
 
-	while (true)
+uint lastDebugTicksUpdate = 0;
+void GenerateDebugTicks()
+{
+	uint tc = GetTickCount();
+	if (tc - lastDebugTicksUpdate < 250)
+		return;
+	lastDebugTicksUpdate = tc;
+
+	int arLen = ArraySize(registeredInstruments);
+	for (int i = 0; i < arLen; i++)
 	{
-		if (IsStopped())
+		string symbol = registeredInstruments[i];
+		string symbolws = SymbolWS(symbol);
+   
+		Tick t;
+	  
+		if (bids[i] == 0 || asks[i] == 0)
 		{
-			Print("[Debug] " + __FUNCTION__ + ": IsStopped() = true");
-			return(0);
-		}
-
-		if (WaitForCommand(50))
-		{
-			HandleRegisterCommands();
-			HandleCloseOrderCommands();
-			HandleCloseOrderByCommands();
-			HandleOpenOrderCommands();
-			HandleModifyOrderCommands();
-			HandleRequestOrderHistoryCommands();
-		}
-
-		RefreshRates();
-
-		arLen = ArraySize(registeredInstruments);
-		for (i = 0; i < arLen; i++)
-		{
-			symbol = registeredInstruments[i];
-			symbolws = SymbolWS(symbol);
-
-			Tick t;
-			StringToCharArray(symbol, t.Symbol);
 			t.Bid = MarketInfo(symbolws, MODE_BID);
-			t.Ask = MarketInfo(symbolws, MODE_ASK);
-
-			if (t.Bid != bids[i] ||
-				t.Ask != asks[i])
-			{
-				bids[i] = t.Bid;
-				asks[i] = t.Ask;
-				UpdatePrice(t);
-			}
+			t.Ask = MarketInfo(symbolws, MODE_ASK);	
 		}
+		else
+		{
+			t.Bid = bids[i];
+			t.Ask = asks[i];
+		}
+	  
+		StringToCharArray(symbol, t.Symbol);
+		t.Bid += ((MathRand() % 10) - 4) * MarketInfo(symbolws, MODE_POINT);
+		t.Ask += ((MathRand() % 10) - 4) * MarketInfo(symbolws, MODE_POINT);
+	  
+		if (t.Ask < t.Bid)
+			t.Ask = t.Bid;
+	  
+		bids[i] = t.Bid;
+		asks[i] = t.Ask;
+		UpdatePrice(t);
+	} 
+}
 
-		UpdateOrdersImpl();
+void GenerateDebugLockedTicks()
+{
+	uint tc = GetTickCount();
+	if (tc - lastDebugTicksUpdate < 250)
+		return;
+	lastDebugTicksUpdate = tc;
+	
+	int arLen = ArraySize(registeredInstruments);
+	for (int i = 0; i < arLen; i++)
+	{
+		string symbol = registeredInstruments[i];
+		string symbolws = SymbolWS(symbol);
+   
+		Tick t;
+		
+		t.Bid = MarketInfo(symbolws, MODE_BID) + debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
+		t.Ask = MarketInfo(symbolws, MODE_ASK) + debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
+	  
+		if (t.Bid == bids[i])
+		{
+			t.Bid = t.Bid + MarketInfo(symbolws, MODE_POINT);
+			t.Ask = t.Ask + MarketInfo(symbolws, MODE_POINT);
+		}
+			  	
+		StringToCharArray(symbol, t.Symbol);
+		bids[i] = t.Bid;
+		asks[i] = t.Ask;
+		UpdatePrice(t);
+	} 
+	
+}
+
+void UpdateTicks()
+{
+	int arLen = ArraySize(registeredInstruments);
+	for (int i = 0; i < arLen; i++)
+	{
+		string symbol = registeredInstruments[i];
+		string symbolws = SymbolWS(symbol);
+   
+		Tick t;
+		t.Bid = MarketInfo(symbolws, MODE_BID);
+		t.Ask = MarketInfo(symbolws, MODE_ASK);
+   
+   		if (debugState.IsDebugging)
+   		{
+   			t.Bid += debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
+	  		t.Ask += debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
+   		}
+   
+		if (t.Bid != bids[i] ||
+			t.Ask != asks[i])
+		{
+			StringToCharArray(symbol, t.Symbol);
+			bids[i] = t.Bid;
+			asks[i] = t.Ask;
+			UpdatePrice(t);
+		}
 	}
-
-	return(0);
 }
 
 void HandleRegisterCommands()

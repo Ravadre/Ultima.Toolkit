@@ -10,6 +10,14 @@ enum ScriptExecMode
 	Market = 1
 };
 
+struct DebugState
+{
+	bool IsDebugging;
+	bool IsGeneratingTicks;
+	bool GenerateInLock;
+	int PriceOffset;
+};
+
 void SetupChart(CChart& chart)
 {
 	chart.Attach();
@@ -26,20 +34,6 @@ void SetupChart(CChart& chart)
 	chart.ColorGrid(LightSlateGray);
 	chart.Detach();
 }
-
-void CreateVersionLabel(string version)
-{
-	ObjectCreate("version_label", OBJ_LABEL, 0, 0, 0);
-	ObjectSet("version_label", OBJPROP_XDISTANCE, 5);
-	ObjectSet("version_label", OBJPROP_YDISTANCE, 13);
-	ObjectSetText("version_label", StringConcatenate("Ultima connector ver. ", version), 8, "Arial", White);
-}
-
-void DeleteVersionLabel()
-{
-	ObjectDelete("version_label");
-}
-
 
 void WaitForTradeContext()
 {

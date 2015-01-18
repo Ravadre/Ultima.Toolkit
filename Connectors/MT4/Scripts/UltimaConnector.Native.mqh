@@ -4,7 +4,7 @@
 //|                                                                  |
 //+------------------------------------------------------------------+
 #property copyright "Marcin Deptu³a"
-#property link      ""
+#property link      "https://github.com/Ravadre"
 #property strict
 
 enum CommandResult
@@ -13,6 +13,7 @@ enum CommandResult
 	Res_OKPartial = 2,
 	Res_Error = 3
 };
+
 
 struct SymbolRegistrationCommand
 {
