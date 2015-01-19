@@ -38,6 +38,18 @@ type Order =
         | _ -> "invalid"
     
 
+type OpenOrderRequest = 
+    {
+        Symbol: string;
+        Type: OrderType;
+        Volume: float;
+        RequestOpenPrice: float;
+        StopLoss: float;
+        TakeProfit: float;
+        Comment: string;
+        MagicNumber: int;
+    }
+
 [<AutoOpen>]
 module OrderDTOExtensions = 
     let epoch = DateTime(1970, 1, 1)
