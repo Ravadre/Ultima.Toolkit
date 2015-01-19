@@ -403,6 +403,8 @@ void UpdateOrdersImpl()
 		StringToCharArray(SymbolWoS(OrderSymbol()), orders[i].Symbol);
 		orders[i].OpenTime = OrderOpenTime();
 		orders[i].CloseTime = OrderCloseTime();
+		orders[i].Swap = OrderSwap();
+		orders[i].Commission = OrderCommission();
 		
 		if (OrderType() == OP_BUY)
 		{

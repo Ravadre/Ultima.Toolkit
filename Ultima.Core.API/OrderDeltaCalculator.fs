@@ -9,11 +9,14 @@ open System.Reactive.Linq
 [<Flags>]
 type OrderModifications =
 | Profit = 0x1
+| Swap = 0x2
+| Commission = 0x4
 | Type = 0x100
 | StopLoss = 0x200
 | TakeProfit = 0x400
 | Volume = 0x800
 | OpenPrice = 0x1000
+
 
 [<AutoOpen>]
 module OrderExtensions = 
@@ -49,6 +52,10 @@ type OrderDeltaCalculator() =
             mods <- mods ||| int(OrderModifications.Volume)
         if co.Profit <> no.Profit then
             mods <- mods ||| int(OrderModifications.Profit)
+        if co.Swap <> no.Swap then
+            mods <- mods ||| int(OrderModifications.Swap)
+        if co.Commission <> no.Commission then
+            mods <- mods ||| int(OrderModifications.Commission)
         mods
 
 
