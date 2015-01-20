@@ -724,7 +724,6 @@ const int OpenOrderCommandDTO::kCommentFieldNumber;
 const int OpenOrderCommandDTO::kMagicNumberFieldNumber;
 const int OpenOrderCommandDTO::kRetriesFieldNumber;
 const int OpenOrderCommandDTO::kRetrySpanMsFieldNumber;
-const int OpenOrderCommandDTO::kLastChanceRetrySpanMsFieldNumber;
 #endif  // !_MSC_VER
 
 OpenOrderCommandDTO::OpenOrderCommandDTO()
@@ -755,7 +754,6 @@ void OpenOrderCommandDTO::SharedCtor() {
   magicnumber_ = 0;
   retries_ = 0;
   retryspanms_ = 0;
-  lastchanceretryspanms_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -822,7 +820,6 @@ void OpenOrderCommandDTO::Clear() {
     magicnumber_ = 0;
     retries_ = 0;
     retryspanms_ = 0;
-    lastchanceretryspanms_ = 0;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1016,22 +1013,6 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(104)) goto parse_lastChanceRetrySpanMs;
-        break;
-      }
-
-      // required int32 lastChanceRetrySpanMs = 13;
-      case 13: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-         parse_lastChanceRetrySpanMs:
-          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &lastchanceretryspanms_)));
-          set_has_lastchanceretryspanms();
-        } else {
-          goto handle_uninterpreted;
-        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1113,11 +1094,6 @@ void OpenOrderCommandDTO::SerializeWithCachedSizes(
   // required int32 retrySpanMs = 12;
   if (has_retryspanms()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->retryspanms(), output);
-  }
-
-  // required int32 lastChanceRetrySpanMs = 13;
-  if (has_lastchanceretryspanms()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->lastchanceretryspanms(), output);
   }
 
 }
@@ -1204,13 +1180,6 @@ int OpenOrderCommandDTO::ByteSize() const {
           this->retryspanms());
     }
 
-    // required int32 lastChanceRetrySpanMs = 13;
-    if (has_lastchanceretryspanms()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->lastchanceretryspanms());
-    }
-
   }
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -1264,9 +1233,6 @@ void OpenOrderCommandDTO::MergeFrom(const OpenOrderCommandDTO& from) {
     if (from.has_retryspanms()) {
       set_retryspanms(from.retryspanms());
     }
-    if (from.has_lastchanceretryspanms()) {
-      set_lastchanceretryspanms(from.lastchanceretryspanms());
-    }
   }
 }
 
@@ -1277,7 +1243,7 @@ void OpenOrderCommandDTO::CopyFrom(const OpenOrderCommandDTO& from) {
 }
 
 bool OpenOrderCommandDTO::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00001cff) != 0x00001cff) return false;
+  if ((_has_bits_[0] & 0x00000cff) != 0x00000cff) return false;
 
   return true;
 }
@@ -1296,7 +1262,6 @@ void OpenOrderCommandDTO::Swap(OpenOrderCommandDTO* other) {
     std::swap(magicnumber_, other->magicnumber_);
     std::swap(retries_, other->retries_);
     std::swap(retryspanms_, other->retryspanms_);
-    std::swap(lastchanceretryspanms_, other->lastchanceretryspanms_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_cached_size_, other->_cached_size_);
   }

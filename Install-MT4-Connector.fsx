@@ -119,6 +119,19 @@ Target "Deploy" (fun () ->
               srcScriptDir @@ "UltimaConnector.mq4", dd @@ "Experts\\UltimaConnector.mq4";
               filesDir @@ "logo64.ico", dd @@ "Images\\logo64.ico";
             ]
+
+        let filesToDelete = [
+            dd @@ "Libraries\\Common.ex4";
+            dd @@ "Experts\\UltimaConnector.ex4";
+            ]
+
+        for f in filesToDelete do
+            if File.Exists(f) then
+                try
+                    File.Delete(f)
+                    logfn "Deleted %s" f
+                with
+                | e -> logfn "Could not delete %s" f
         
         for src, dst in filesToCopy do
             if not (File.Exists(src)) then

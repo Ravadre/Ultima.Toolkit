@@ -34,7 +34,6 @@ message OpenOrderCommandDTO
 	optional int32 magicNumber = 10;
 	required int32 retries = 11;
 	required int32 retrySpanMs = 12;
-	required int32 lastChanceRetrySpanMs = 13;
 }
 
 message ModifyOrderCommandDTO

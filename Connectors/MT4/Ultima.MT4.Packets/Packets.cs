@@ -173,13 +173,6 @@ namespace Ultima.MT4.Packets
       get { return _retrySpanMs; }
       set { _retrySpanMs = value; }
     }
-    private int _lastChanceRetrySpanMs;
-    [global::ProtoBuf.ProtoMember(13, IsRequired = true, Name=@"lastChanceRetrySpanMs", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public int lastChanceRetrySpanMs
-    {
-      get { return _lastChanceRetrySpanMs; }
-      set { _lastChanceRetrySpanMs = value; }
-    }
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }

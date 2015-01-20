@@ -98,7 +98,6 @@ extern "C"
 
 		cmd->Command = packet.command();
 		strcpy_s(cmd->Comment, packet.comment().c_str());
-		cmd->LastChanceRetrySpanMs = packet.lastchanceretryspanms();
 		cmd->MagicNumber = packet.magicnumber();
 		cmd->OpenPrice = packet.openprice();
 		cmd->Retries = packet.retries();

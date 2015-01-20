@@ -1,4 +1,4 @@
-#define VERSION "1.8"
+#define VERSION "1.9"
 
 #property copyright "Marcin Deptu³a"
 #property link "https://github.com/Ravadre"
@@ -22,12 +22,9 @@ DebugState debugState;
 
 #include <Common.mqh>
 
-input ScriptExecMode ExecutionMode = Instant;
 input string ServerAddress = "127.0.0.1:6300";
 input bool DebugMode = false;
 extern string SymbolSuffix = "";
-extern int SlippageDivider = 1;
-extern string SlippageDividers = "";
 extern string BrokerAlias = "";
 
 CChart gChart;
@@ -83,11 +80,11 @@ int OnInit()
 	ArrayResize(bids, 0);
 	ArrayResize(asks, 0);
 
- 	if (!EventSetMillisecondTimer(66))
- 	{
- 		Alert("Could not start the timer");
+	if (!EventSetMillisecondTimer(66))
+	{
+		Alert("Could not start the timer");
 		return(INIT_FAILED); 		
- 	}
+	}
 	
 	isRunning = true;
 	
@@ -226,10 +223,10 @@ void GenerateDebugTicks()
 		t.Bid += ((MathRand() % 10) - 4) * MarketInfo(symbolws, MODE_POINT);
 		t.Ask += ((MathRand() % 10) - 4) * MarketInfo(symbolws, MODE_POINT);
 	  
-	  	double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
-	  		
-	  	t.Bid -= hSpread;
-	  	t.Ask += hSpread;
+		double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
+			
+		t.Bid -= hSpread;
+		t.Ask += hSpread;
   
 		if (t.Ask < t.Bid)
 			t.Ask = t.Bid;
@@ -258,20 +255,20 @@ void GenerateDebugLockedTicks()
 		t.Bid = MarketInfo(symbolws, MODE_BID) + debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
 		t.Ask = MarketInfo(symbolws, MODE_ASK) + debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
 	  
-	  	double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
-	  		
-	  	t.Bid -= hSpread;
-	  	t.Ask += hSpread;
-	  		
-	  	if (t.Ask < t.Bid)
-	  		t.Ask = t.Bid;
+		double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
+			
+		t.Bid -= hSpread;
+		t.Ask += hSpread;
+			
+		if (t.Ask < t.Bid)
+			t.Ask = t.Bid;
 	  
 		if (t.Bid == bids[i])
 		{
 			t.Bid = t.Bid + MarketInfo(symbolws, MODE_POINT);
 			t.Ask = t.Ask + MarketInfo(symbolws, MODE_POINT);
 		}
-			  	
+				
 		StringToCharArray(symbol, t.Symbol);
 		bids[i] = t.Bid;
 		asks[i] = t.Ask;
@@ -292,21 +289,21 @@ void UpdateTicks()
 		t.Bid = MarketInfo(symbolws, MODE_BID);
 		t.Ask = MarketInfo(symbolws, MODE_ASK);
    
-   		if (debugState.IsDebugging)
-   		{
-   			t.Bid += debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
-	  		t.Ask += debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
-	  		
-	  		double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
-	  		
-	  		t.Bid -= hSpread;
-	  		t.Ask += hSpread;
-	  		
-	  		if (t.Ask < t.Bid)
-	  			t.Ask = t.Bid;
-   		}
-   		
-   		if (t.Bid != bids[i] ||
+		if (debugState.IsDebugging)
+		{
+			t.Bid += debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
+			t.Ask += debugState.PriceOffset * MarketInfo(symbolws, MODE_POINT);
+			
+			double hSpread = debugState.PriceSpread / 2 * MarketInfo(symbolws, MODE_POINT);
+			
+			t.Bid -= hSpread;
+			t.Ask += hSpread;
+			
+			if (t.Ask < t.Bid)
+				t.Ask = t.Bid;
+		}
+		
+		if (t.Bid != bids[i] ||
 			t.Ask != asks[i])
 		{
 			StringToCharArray(symbol, t.Symbol);
@@ -358,7 +355,7 @@ void HandleOpenOrderCommands()
 		OpenPosition(cmd.Command, CharArrayToString(cmd.Symbol), cmd.TradeCommand,
 			cmd.Volume, cmd.OpenPrice, cmd.Slippage, cmd.StopLoss, cmd.TakeProfit,
 			CharArrayToString(cmd.Comment), cmd.MagicNumber,
-			cmd.Retries, cmd.RetrySpanMs, cmd.LastChanceRetrySpanMs);
+			cmd.Retries, cmd.RetrySpanMs);
 	}
 }
 

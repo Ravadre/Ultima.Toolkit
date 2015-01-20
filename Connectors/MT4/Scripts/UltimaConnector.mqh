@@ -14,31 +14,6 @@ string SymbolWoS(string symbol)
 	return (StringSubstr(symbol, 0, StringLen(symbol) - StringLen(SymbolSuffix)));
 }
 
-int CalcSlippage(string symbol, int slippage)
-{
-	int pos = StringFind(SlippageDividers, symbol);
-   
-	if (pos == -1)
-	{
-		return (slippage / SlippageDivider);
-	}
-   
-	int eq = StringFind(SlippageDividers, "=", pos);
-	int del = StringFind(SlippageDividers, ";", pos);
-   
-	if (eq == -1 || del == -1)
-	{
-		Print("[Debug] Invalid slippageDividers");
-		return (slippage / SlippageDivider);
-	}
-   
-	string slip = StringSubstr(SlippageDividers, eq + 1, del - eq - 1);
-   
-	Print("[Debug] Parsed slippageDividers for ", symbol, ", retrieved: ", slip);
-   
-	return (StrToInteger(slip));
-}
-
 void CloseOrder(int command, int order, int retries, int retrySpanMs)
 {
 	bool selected = OrderSelect(order, SELECT_BY_TICKET);
@@ -144,20 +119,21 @@ void CloseSelectedMarketPosition(int command, int order, int retries, int retryS
 void OpenPosition(int command, string symbol, int tradeCmd, double volume, 
 					double price, int slippage, double stopLoss, 
 					double takeProfit, string comment, int magicNumber, 
-					int retries, int retrySpanMs, int lastChanceRetrySpanMs)
+					int retries, int retrySpanMs)
 {
-	Print("Opening new position, cmd: ", tradeCmd, ", symbol: ", symbol);
+	Print("[Trade] Opening new position, cmd: ", tradeCmd, ", symbol: ", symbol, " volume: ", volume,
+			", stopLoss: ", stopLoss);
 	symbol = SymbolWS(symbol);
 
 	if (IsMarket(tradeCmd))
 	{
-		OpenMarketPosition(command, symbol, tradeCmd, volume, price, CalcSlippage(symbol, slippage),
-						   stopLoss, takeProfit, comment, magicNumber, retries, retrySpanMs, lastChanceRetrySpanMs);
+		OpenMarketPosition(command, symbol, tradeCmd, volume, price, slippage,
+						   stopLoss, takeProfit, comment, magicNumber, retries, retrySpanMs);
 	}
 	else if (IsPending(tradeCmd))
 	{
-		OpenPendingPosition(command, symbol, tradeCmd, volume, price, CalcSlippage(symbol, slippage),
-							stopLoss, takeProfit, comment, magicNumber, retries, retrySpanMs, lastChanceRetrySpanMs);
+		OpenPendingPosition(command, symbol, tradeCmd, volume, price, slippage,
+							stopLoss, takeProfit, comment, magicNumber, retries, retrySpanMs);
 	}
 	else
 	{
@@ -167,7 +143,6 @@ void OpenPosition(int command, string symbol, int tradeCmd, double volume,
 
 double GetPriceIfZero(string symbol, int tradeCmd, double price)
 {
-	Print("[Debug] GetPriceIfZero: ", symbol, ", ", tradeCmd, ", ", price);
 	if (MathAbs(price) < 0.0001)
 	{
 		if (tradeCmd == OP_BUY)
@@ -178,8 +153,6 @@ double GetPriceIfZero(string symbol, int tradeCmd, double price)
 		{
 			price = MarketInfo(symbol, MODE_BID);
 		}
-		
-		Print ("[Debug] Opening with 0.0 price, getting current price: ", price);
 	}
 	
 	return (price);
@@ -188,114 +161,60 @@ double GetPriceIfZero(string symbol, int tradeCmd, double price)
 void OpenMarketPosition(int command, string symbol, int tradeCmd, double volume, 
 						double price, int slippage, double stopLoss, 
 						double takeProfit, string comment, int magicNumber, 
-						int retries, int retrySpanMs, int lastChanceRetrySpanMs)
+						int retries, int retrySpanMs)
 {
 	int order = -1;
 	bool selected = false;
 	bool modified = false;
 	int t = 0;
 	double origPrice = 0.0;
+	double realStopLoss = 0.0;
 	
-	if (ExecutionMode == Market)
-	{ 
-		origPrice = price;
-		
-		for(t = 0; t < retries; t++)
-		{  
-			price = GetPriceIfZero(symbol, tradeCmd, origPrice);
-			
-			WaitForTradeContext();
-			order = OrderSend(symbol, tradeCmd, volume, price, slippage, 0.0, 0.0, comment, magicNumber);
-			
-			Print("Open market position try. Cmd: ", command, ", symbol: ", symbol, ", order: ", order,
-				", slippage: ", slippage);
-			
-			if (order >= 0)
-				break;
-			
-			Sleep(retrySpanMs);   
-		}
-	  
-		if (order < 0)
-		{
-			Print("Could not open new position. Error: ", ErrorDescription(GetLastError()));
-			ReportCommand(command, Res_Error, order);
-			return;
-		}
-
-		if (stopLoss > 0 || takeProfit > 0)
-		{
-			selected = OrderSelect(order, SELECT_BY_TICKET);
-
-			if (selected)
-			{	
-				WaitForTradeContext();
-				modified = OrderModify(order, OrderOpenPrice(), stopLoss, takeProfit, 0);
-
-				if (modified == true)
-				{	
-					ReportCommand(command, Res_OK, order);
-				}
-				else
-				{
-					ReportCommand(command, Res_OKPartial, order);
-				}
-			}
-			else
-			{
-				ReportCommand(command, Res_OKPartial, order);	
-			}
-		}
-		else
-		{
-			ReportCommand(command, Res_OK, order);	
-		}
-	}
-	else
+   	origPrice = price;
+  
+	for (t = 0; t < retries; t++) 
 	{
-	   origPrice = price;
-	  
-		for (t = 0; t < retries; t++) 
+		price = GetPriceIfZero(symbol, tradeCmd, origPrice);
+	
+		WaitForTradeContext();
+		order = OrderSend(symbol, tradeCmd, volume, price, slippage, stopLoss, takeProfit, comment, magicNumber);
+	 	 
+		if (order >= 0)
 		{
-			price = GetPriceIfZero(symbol, tradeCmd, origPrice);
-		
-			WaitForTradeContext();
-			order = OrderSend(symbol, tradeCmd, volume, price, slippage, stopLoss, takeProfit, comment, magicNumber);
-		 
-			Print("Open market position try. Cmd: ", command, ", symbol: ", symbol, ", order: ", order,
-				  ", slippage: ", slippage);
-		 
-			if (order >= 0)
-				break;
+			double realOpenPrice = 0.0;
+			if (OrderSelect(order, SELECT_BY_TICKET))
+			{
+				realOpenPrice = OrderOpenPrice();
+				realStopLoss = OrderStopLoss();
+			}
 			
-			Sleep(retrySpanMs);    
-		}
+			Print("[Trade] Position opened successfully. Order: ", order, ", open price: ", realOpenPrice);
+			break;
+		}		
 		
-		if (order < 0)
-		{
-			Sleep(MathMax(0, lastChanceRetrySpanMs - retrySpanMs));
-			WaitForTradeContext();
-			order = OrderSend(symbol, tradeCmd, volume, price, slippage, stopLoss, takeProfit, comment, magicNumber);
-		 
-			Print("Open market position try. Cmd: ", command, ", symbol: ", symbol, ", order: ", order,
-				  ", slippage: ", slippage);    
-		}
-		
-		if (order < 0)
-		{
-			Print("Could not open new position. Error: ", ErrorDescription(GetLastError()));
-			ReportCommand(command, Res_Error, order);
-			return;
-		}
-		
-		ReportCommand(command, Res_OK, order);
+		Sleep(retrySpanMs);    
 	}
+	
+	if (order < 0)
+	{
+		Print("[Trade] Could not open new position. Error: ", ErrorDescription(GetLastError()));
+		ReportCommand(command, Res_Error, order);
+		return;
+	}
+	
+	if (stopLoss != 0.0 && stopLoss != realStopLoss)
+	{
+		Print("[Trade] Stop loss for order ", order, " is not set");
+		ReportCommand(command, Res_OKPartial, order);
+		return;
+	}
+	
+	ReportCommand(command, Res_OK, order);
 }
 
 void OpenPendingPosition(int command, string symbol, int tradeCmd, double volume, 
 						 double openPrice, int slippage, double stopLoss, double takeProfit, 
-						 string comment, int magicNumber, int retries, int retrySpanMs,
-						 int lastChanceRetrySpanMs)
+						 string comment, int magicNumber, int retries, int retrySpanMs)
 {
 	int t = 0;
 	int order = 0;
@@ -307,24 +226,17 @@ void OpenPendingPosition(int command, string symbol, int tradeCmd, double volume
 							  stopLoss, takeProfit, comment, magicNumber, 0);
 							  
 		if (order >= 0)
+		{
+			Print("[Trade] Limit position opened successfully. Order: ", order);
 			break;
+		}
 	   
 		Sleep(retrySpanMs); 
 	}
 	
 	if (order < 0)
 	{
-		Sleep(MathMax(0, lastChanceRetrySpanMs - retrySpanMs));
-		WaitForTradeContext();
-		order = OrderSend(symbol, tradeCmd, volume, openPrice, slippage, 
-						  stopLoss, takeProfit, comment, magicNumber, 0);
-		 
-		Print("Open market position try. Cmd: ", command, ", symbol: ", symbol, ", order: ", order,
-			  ", slippage: ", slippage);    
-	}
-
-	if (order < 0)
-	{
+		Print("[Trade] Could not open new limit position. Error: ", ErrorDescription(GetLastError()));
 		ReportCommand(command, Res_Error, order);			
 		return;
 	}
@@ -342,6 +254,7 @@ void ModifyOrder(int command, int order, double openPrice,
    
 	if (!selected)
 	{
+		Print("[Trade] Could not modify position ", order, ", because it could not be selected.");
 		ReportCommand(command, Res_Error, order);
 		return;
 	}
@@ -352,7 +265,10 @@ void ModifyOrder(int command, int order, double openPrice,
 		modified = OrderModify(order, openPrice, stopLoss, takeProfit, 0);
 	   
 		if (modified)
+		{
+			Print("[Trade] Order ", order, " modified successfully.");
 			break;
+		}	
 		 
 		Sleep(retrySpanMs);   
 	}
@@ -363,13 +279,12 @@ void ModifyOrder(int command, int order, double openPrice,
 	}
 	else
 	{
+		Print("[Trade] Could not modify position ", order, ", error: ", 
+				ErrorDescription(GetLastError()));
 		ReportCommand(command, Res_Error, order);
 	}
 }
 			
-
-
-
 void UpdateOrdersImpl()
 {
 	MT4Order orders[];

@@ -46,7 +46,6 @@ type MT4Client(socket: MT4Socket, company: string) =
         let packet = OpenOrderCommandDTO()
         packet.command <- GetId();
         packet.comment <- order.Comment;
-        packet.lastChanceRetrySpanMs <- 0;
         packet.magicNumber <- order.MagicNumber;
         packet.openPrice <- order.RequestOpenPrice;
         packet.retries <- 1;

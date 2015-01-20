@@ -52,7 +52,6 @@ struct OpenOrderCommand
 	int MagicNumber;
 	int Retries;
 	int RetrySpanMs;
-	int LastChanceRetrySpanMs;
 };
 
 struct ModifyOrderCommand

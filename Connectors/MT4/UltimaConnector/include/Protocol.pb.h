@@ -491,13 +491,6 @@ class OpenOrderCommandDTO : public ::google::protobuf::MessageLite {
   inline ::google::protobuf::int32 retryspanms() const;
   inline void set_retryspanms(::google::protobuf::int32 value);
 
-  // required int32 lastChanceRetrySpanMs = 13;
-  inline bool has_lastchanceretryspanms() const;
-  inline void clear_lastchanceretryspanms();
-  static const int kLastChanceRetrySpanMsFieldNumber = 13;
-  inline ::google::protobuf::int32 lastchanceretryspanms() const;
-  inline void set_lastchanceretryspanms(::google::protobuf::int32 value);
-
   // @@protoc_insertion_point(class_scope:Ultima.MT4.Packets.OpenOrderCommandDTO)
  private:
   inline void set_has_command();
@@ -524,8 +517,6 @@ class OpenOrderCommandDTO : public ::google::protobuf::MessageLite {
   inline void clear_has_retries();
   inline void set_has_retryspanms();
   inline void clear_has_retryspanms();
-  inline void set_has_lastchanceretryspanms();
-  inline void clear_has_lastchanceretryspanms();
 
   ::std::string* symbol_;
   ::google::protobuf::int32 command_;
@@ -539,10 +530,9 @@ class OpenOrderCommandDTO : public ::google::protobuf::MessageLite {
   ::google::protobuf::int32 magicnumber_;
   ::google::protobuf::int32 retries_;
   ::google::protobuf::int32 retryspanms_;
-  ::google::protobuf::int32 lastchanceretryspanms_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(13 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
 
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
   friend void  protobuf_AddDesc_Protocol_2eproto_impl();
@@ -2361,28 +2351,6 @@ inline ::google::protobuf::int32 OpenOrderCommandDTO::retryspanms() const {
 inline void OpenOrderCommandDTO::set_retryspanms(::google::protobuf::int32 value) {
   set_has_retryspanms();
   retryspanms_ = value;
-}
-
-// required int32 lastChanceRetrySpanMs = 13;
-inline bool OpenOrderCommandDTO::has_lastchanceretryspanms() const {
-  return (_has_bits_[0] & 0x00001000u) != 0;
-}
-inline void OpenOrderCommandDTO::set_has_lastchanceretryspanms() {
-  _has_bits_[0] |= 0x00001000u;
-}
-inline void OpenOrderCommandDTO::clear_has_lastchanceretryspanms() {
-  _has_bits_[0] &= ~0x00001000u;
-}
-inline void OpenOrderCommandDTO::clear_lastchanceretryspanms() {
-  lastchanceretryspanms_ = 0;
-  clear_has_lastchanceretryspanms();
-}
-inline ::google::protobuf::int32 OpenOrderCommandDTO::lastchanceretryspanms() const {
-  return lastchanceretryspanms_;
-}
-inline void OpenOrderCommandDTO::set_lastchanceretryspanms(::google::protobuf::int32 value) {
-  set_has_lastchanceretryspanms();
-  lastchanceretryspanms_ = value;
 }
 
 // -------------------------------------------------------------------
