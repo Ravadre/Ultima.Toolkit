@@ -44,18 +44,37 @@ type MT4Client(socket: MT4Socket, company: string) =
 
     member __.OpenOrder(order: OpenOrderRequest) = 
         let packet = OpenOrderCommandDTO()
-        packet.command <- GetId();
-        packet.comment <- order.Comment;
-        packet.magicNumber <- order.MagicNumber;
-        packet.openPrice <- order.RequestOpenPrice;
-        packet.retries <- 1;
-        packet.retrySpanMs <- 0;
-        packet.slippage <- 5;
-        packet.stopLoss <- order.StopLoss;
-        packet.symbol <- order.Symbol;
-        packet.takeProfit <- order.TakeProfit;
-        packet.tradeCommand <- int(order.Type);
-        packet.volume <- order.Volume;
+        packet.command <- GetId()
+        packet.comment <- order.Comment
+        packet.magicNumber <- order.MagicNumber
+        packet.openPrice <- order.RequestOpenPrice
+        packet.retries <- 1
+        packet.retrySpanMs <- 0
+        packet.slippage <- 5
+        packet.stopLoss <- order.StopLoss
+        packet.symbol <- order.Symbol
+        packet.takeProfit <- order.TakeProfit
+        packet.tradeCommand <- int(order.Type)
+        packet.volume <- order.Volume
+
+        socket.Send(packet)
+    
+    member __.CloseOrderBy(order: int, orderBy: int) = 
+        let packet = CloseOrderByCommandDTO()
+        packet.command <- GetId()
+        packet.order <- order
+        packet.orderBy <- orderBy
+        packet.retries <- 1
+        packet.retrySpanMs <- 0
+            
+        socket.Send(packet)
+
+    member __.CloseOrder(order: int) = 
+        let packet = CloseOrderCommandDTO()
+        packet.command <- GetId()
+        packet.order <- order
+        packet.retries <- 1
+        packet.retrySpanMs <- 0
 
         socket.Send(packet)
 

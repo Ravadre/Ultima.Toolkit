@@ -50,6 +50,7 @@ type OpenOrderRequest =
         MagicNumber: int;
     }
 
+
 [<AutoOpen>]
 module OrderDTOExtensions = 
     let epoch = DateTime(1970, 1, 1)
