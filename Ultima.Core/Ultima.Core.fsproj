@@ -843,11 +843,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>..\packages\NLog.3.1.0.0\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog.FSharp">
-      <HintPath>..\packages\NLog.FSharp.3.1.0\lib\net40\NLog.FSharp.dll</HintPath>
+      <HintPath>..\packages\NLog.FSharp.3.2.0\lib\net40\NLog.FSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="protobuf-net">
@@ -855,11 +855,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Stacks">
-      <HintPath>..\packages\Stacks.1.3.2\lib\net45\Stacks.dll</HintPath>
+      <HintPath>..\packages\Stacks.1.3.4-beta1\lib\net45\Stacks.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Stacks.FSharp">
-      <HintPath>..\packages\Stacks.FSharp.1.3.2\lib\net45\Stacks.FSharp.dll</HintPath>
+      <HintPath>..\packages\Stacks.FSharp.1.3.4-beta1\lib\net45\Stacks.FSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
