@@ -78,6 +78,19 @@ type MT4Client(socket: MT4Socket, company: string) =
 
         socket.Send(packet)
 
+    member __.ModifyOrder(request: ModifyOrderRequest) = 
+        let packet = ModifyOrderCommandDTO()
+
+        packet.command <- GetId()
+        packet.retries <- 1
+        packet.retrySpanMs <- 0
+        packet.openPrice <- request.OpenPrice
+        packet.order <- request.Order
+        packet.stopLoss <- request.StopLoss
+        packet.takeProfit <- request.TakeProfit
+
+        socket.Send(packet)
+
 
 type INetworkServer = 
 

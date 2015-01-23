@@ -50,6 +50,13 @@ type OpenOrderRequest =
         MagicNumber: int;
     }
 
+type ModifyOrderRequest = 
+    {
+        Order: int;
+        OpenPrice: float;
+        StopLoss: float;
+        TakeProfit: float;
+    }
 
 [<AutoOpen>]
 module OrderDTOExtensions = 
