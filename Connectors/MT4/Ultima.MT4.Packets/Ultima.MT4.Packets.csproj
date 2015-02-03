@@ -46,7 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="paket.references" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -71,15 +70,7 @@
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v4.0'">
         </When>
-        <Otherwise>
-          <ItemGroup>
-            <Reference Include="System.Threading.Tasks.Dataflow">
-              <HintPath>..\..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </Otherwise>
+        <Otherwise />
       </Choose>
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable'">

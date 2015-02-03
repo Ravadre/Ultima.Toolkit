@@ -54,8 +54,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="TickLogger.fs" />
-    <None Include="paket.references" />
     <Content Include="app.config" />
+    <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Connectors\MT4\Ultima.MT4.Packets\Ultima.MT4.Packets.csproj">
@@ -75,6 +75,10 @@
       <Project>{38d18689-ee5e-4154-8868-a1266d3767a0}</Project>
       <Private>True</Private>
     </ProjectReference>
+    <Reference Include="System.Threading.Tasks.Dataflow">
+      <HintPath>..\..\packages\Microsoft.Tpl.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -98,15 +102,7 @@
         </When>
         <When Condition="$(TargetFrameworkVersion) == 'v4.0'">
         </When>
-        <Otherwise>
-          <ItemGroup>
-            <Reference Include="System.Threading.Tasks.Dataflow">
-              <HintPath>..\..\packages\Microsoft.Tpl.Dataflow\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
-              <Private>True</Private>
-              <Paket>True</Paket>
-            </Reference>
-          </ItemGroup>
-        </Otherwise>
+        <Otherwise />
       </Choose>
     </When>
     <When Condition="$(TargetFrameworkIdentifier) == '.NETPortable'">
