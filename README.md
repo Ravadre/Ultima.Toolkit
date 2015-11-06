@@ -34,8 +34,9 @@ To write plugins, reference Ultima.Core.API for an API and copy dlls and their r
 
 
 ####Build requirements####
- * Boost, ver. 1.55.0
- * Protobuf, ver. 2.5.0
+ * Boost, ver. 1.59.0
+ * Protobuf, ver. 2.6.1
+ * Visual Studio 2015
 
 
 For quick and easy install:
