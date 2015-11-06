@@ -10,6 +10,7 @@
 #include <google/protobuf/stubs/once.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/wire_format_lite_inl.h>
+#include <google/protobuf/io/zero_copy_stream_impl_lite.h>
 // @@protoc_insertion_point(includes)
 
 namespace Ultima {
@@ -76,7 +77,7 @@ void protobuf_AddDesc_Protocol_2eproto() {
 #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
 GOOGLE_PROTOBUF_DECLARE_ONCE(protobuf_AddDesc_Protocol_2eproto_once_);
 void protobuf_AddDesc_Protocol_2eproto() {
-  ::google::protobuf::::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_Protocol_2eproto_once_,
+  ::google::protobuf::GoogleOnceInit(&protobuf_AddDesc_Protocol_2eproto_once_,
                  &protobuf_AddDesc_Protocol_2eproto_impl);
 }
 #else
@@ -97,6 +98,7 @@ const int LoginDTO::kCompanyFieldNumber;
 LoginDTO::LoginDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.LoginDTO)
 }
 
 void LoginDTO::InitAsDefaultInstance() {
@@ -106,20 +108,23 @@ LoginDTO::LoginDTO(const LoginDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.LoginDTO)
 }
 
 void LoginDTO::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  company_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  company_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 LoginDTO::~LoginDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.LoginDTO)
   SharedDtor();
 }
 
 void LoginDTO::SharedDtor() {
-  if (company_ != &::google::protobuf::internal::kEmptyString) {
+  if (company_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete company_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -151,58 +156,75 @@ LoginDTO* LoginDTO::New() const {
 }
 
 void LoginDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (has_company()) {
-      if (company_ != &::google::protobuf::internal::kEmptyString) {
-        company_->clear();
-      }
+  if (has_company()) {
+    if (company_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
+      company_->clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool LoginDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.LoginDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string company = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_company()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.LoginDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.LoginDTO)
+  return false;
 #undef DO_
 }
 
 void LoginDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.LoginDTO)
   // required string company = 1;
   if (has_company()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->company(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.LoginDTO)
 }
 
 int LoginDTO::ByteSize() const {
@@ -217,6 +239,8 @@ int LoginDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -235,6 +259,7 @@ void LoginDTO::MergeFrom(const LoginDTO& from) {
       set_company(from.company());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void LoginDTO::CopyFrom(const LoginDTO& from) {
@@ -253,6 +278,7 @@ void LoginDTO::Swap(LoginDTO* other) {
   if (other != this) {
     std::swap(company_, other->company_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -272,6 +298,7 @@ const int SymbolRegistrationDTO::kRegisterFieldNumber;
 SymbolRegistrationDTO::SymbolRegistrationDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.SymbolRegistrationDTO)
 }
 
 void SymbolRegistrationDTO::InitAsDefaultInstance() {
@@ -281,21 +308,24 @@ SymbolRegistrationDTO::SymbolRegistrationDTO(const SymbolRegistrationDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.SymbolRegistrationDTO)
 }
 
 void SymbolRegistrationDTO::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   register__ = false;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 SymbolRegistrationDTO::~SymbolRegistrationDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.SymbolRegistrationDTO)
   SharedDtor();
 }
 
 void SymbolRegistrationDTO::SharedDtor() {
-  if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+  if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete symbol_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -327,31 +357,39 @@ SymbolRegistrationDTO* SymbolRegistrationDTO::New() const {
 }
 
 void SymbolRegistrationDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+  if (_has_bits_[0 / 32] & 3) {
     if (has_symbol()) {
-      if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+      if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         symbol_->clear();
       }
     }
     register__ = false;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool SymbolRegistrationDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.SymbolRegistrationDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string symbol = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_symbol()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(16)) goto parse_register;
         break;
@@ -359,40 +397,47 @@ bool SymbolRegistrationDTO::MergePartialFromCodedStream(
 
       // required bool register = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 16) {
          parse_register:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
                  input, &register__)));
           set_has_register_();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.SymbolRegistrationDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.SymbolRegistrationDTO)
+  return false;
 #undef DO_
 }
 
 void SymbolRegistrationDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.SymbolRegistrationDTO)
   // required string symbol = 1;
   if (has_symbol()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->symbol(), output);
   }
 
@@ -401,6 +446,9 @@ void SymbolRegistrationDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->register_(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.SymbolRegistrationDTO)
 }
 
 int SymbolRegistrationDTO::ByteSize() const {
@@ -420,6 +468,8 @@ int SymbolRegistrationDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -441,6 +491,7 @@ void SymbolRegistrationDTO::MergeFrom(const SymbolRegistrationDTO& from) {
       set_register_(from.register_());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void SymbolRegistrationDTO::CopyFrom(const SymbolRegistrationDTO& from) {
@@ -460,6 +511,7 @@ void SymbolRegistrationDTO::Swap(SymbolRegistrationDTO* other) {
     std::swap(symbol_, other->symbol_);
     std::swap(register__, other->register__);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -480,6 +532,7 @@ const int PriceDTO::kAskFieldNumber;
 PriceDTO::PriceDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.PriceDTO)
 }
 
 void PriceDTO::InitAsDefaultInstance() {
@@ -489,22 +542,25 @@ PriceDTO::PriceDTO(const PriceDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.PriceDTO)
 }
 
 void PriceDTO::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
-  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   bid_ = 0;
   ask_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
 PriceDTO::~PriceDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.PriceDTO)
   SharedDtor();
 }
 
 void PriceDTO::SharedDtor() {
-  if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+  if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete symbol_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -536,32 +592,53 @@ PriceDTO* PriceDTO::New() const {
 }
 
 void PriceDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<PriceDTO*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 7) {
+    ZR_(bid_, ask_);
     if (has_symbol()) {
-      if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+      if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         symbol_->clear();
       }
     }
-    bid_ = 0;
-    ask_ = 0;
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool PriceDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.PriceDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required string symbol = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 10) {
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_symbol()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(17)) goto parse_bid;
         break;
@@ -569,15 +646,14 @@ bool PriceDTO::MergePartialFromCodedStream(
 
       // required double bid = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 17) {
          parse_bid:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &bid_)));
           set_has_bid();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(25)) goto parse_ask;
         break;
@@ -585,40 +661,47 @@ bool PriceDTO::MergePartialFromCodedStream(
 
       // required double ask = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 25) {
          parse_ask:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &ask_)));
           set_has_ask();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.PriceDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.PriceDTO)
+  return false;
 #undef DO_
 }
 
 void PriceDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.PriceDTO)
   // required string symbol = 1;
   if (has_symbol()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       1, this->symbol(), output);
   }
 
@@ -632,6 +715,9 @@ void PriceDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteDouble(3, this->ask(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.PriceDTO)
 }
 
 int PriceDTO::ByteSize() const {
@@ -656,6 +742,8 @@ int PriceDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -680,6 +768,7 @@ void PriceDTO::MergeFrom(const PriceDTO& from) {
       set_ask(from.ask());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void PriceDTO::CopyFrom(const PriceDTO& from) {
@@ -700,6 +789,7 @@ void PriceDTO::Swap(PriceDTO* other) {
     std::swap(bid_, other->bid_);
     std::swap(ask_, other->ask_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -729,6 +819,7 @@ const int OpenOrderCommandDTO::kRetrySpanMsFieldNumber;
 OpenOrderCommandDTO::OpenOrderCommandDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.OpenOrderCommandDTO)
 }
 
 void OpenOrderCommandDTO::InitAsDefaultInstance() {
@@ -738,19 +829,21 @@ OpenOrderCommandDTO::OpenOrderCommandDTO(const OpenOrderCommandDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.OpenOrderCommandDTO)
 }
 
 void OpenOrderCommandDTO::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   command_ = 0;
-  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   tradecommand_ = 0;
   volume_ = 0;
   openprice_ = 0;
   stoploss_ = 0;
   takeprofit_ = 0;
   slippage_ = 0;
-  comment_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  comment_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   magicnumber_ = 0;
   retries_ = 0;
   retryspanms_ = 0;
@@ -758,14 +851,15 @@ void OpenOrderCommandDTO::SharedCtor() {
 }
 
 OpenOrderCommandDTO::~OpenOrderCommandDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.OpenOrderCommandDTO)
   SharedDtor();
 }
 
 void OpenOrderCommandDTO::SharedDtor() {
-  if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+  if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete symbol_;
   }
-  if (comment_ != &::google::protobuf::internal::kEmptyString) {
+  if (comment_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete comment_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -797,49 +891,64 @@ OpenOrderCommandDTO* OpenOrderCommandDTO::New() const {
 }
 
 void OpenOrderCommandDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    command_ = 0;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<OpenOrderCommandDTO*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(command_, takeprofit_);
     if (has_symbol()) {
-      if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+      if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         symbol_->clear();
       }
     }
-    tradecommand_ = 0;
-    volume_ = 0;
-    openprice_ = 0;
-    stoploss_ = 0;
-    takeprofit_ = 0;
     slippage_ = 0;
   }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+  if (_has_bits_[8 / 32] & 3840) {
+    ZR_(magicnumber_, retryspanms_);
     if (has_comment()) {
-      if (comment_ != &::google::protobuf::internal::kEmptyString) {
+      if (comment_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         comment_->clear();
       }
     }
-    magicnumber_ = 0;
-    retries_ = 0;
-    retryspanms_ = 0;
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool OpenOrderCommandDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.OpenOrderCommandDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 command = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &command_)));
           set_has_command();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_symbol;
         break;
@@ -847,13 +956,12 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required string symbol = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 18) {
          parse_symbol:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_symbol()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(24)) goto parse_tradeCommand;
         break;
@@ -861,15 +969,14 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 tradeCommand = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 24) {
          parse_tradeCommand:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &tradecommand_)));
           set_has_tradecommand();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(33)) goto parse_volume;
         break;
@@ -877,15 +984,14 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required double volume = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 33) {
          parse_volume:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &volume_)));
           set_has_volume();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(41)) goto parse_openPrice;
         break;
@@ -893,15 +999,14 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required double openPrice = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 41) {
          parse_openPrice:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &openprice_)));
           set_has_openprice();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(49)) goto parse_stopLoss;
         break;
@@ -909,15 +1014,14 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required double stopLoss = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 49) {
          parse_stopLoss:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &stoploss_)));
           set_has_stoploss();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(57)) goto parse_takeProfit;
         break;
@@ -925,15 +1029,14 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required double takeProfit = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 57) {
          parse_takeProfit:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &takeprofit_)));
           set_has_takeprofit();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(64)) goto parse_slippage;
         break;
@@ -941,15 +1044,14 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 slippage = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 64) {
          parse_slippage:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &slippage_)));
           set_has_slippage();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(74)) goto parse_comment;
         break;
@@ -957,13 +1059,12 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // optional string comment = 9;
       case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 74) {
          parse_comment:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_comment()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(80)) goto parse_magicNumber;
         break;
@@ -971,15 +1072,14 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // optional int32 magicNumber = 10;
       case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 80) {
          parse_magicNumber:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &magicnumber_)));
           set_has_magicnumber();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(88)) goto parse_retries;
         break;
@@ -987,15 +1087,14 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 retries = 11;
       case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 88) {
          parse_retries:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &retries_)));
           set_has_retries();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(96)) goto parse_retrySpanMs;
         break;
@@ -1003,37 +1102,44 @@ bool OpenOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 retrySpanMs = 12;
       case 12: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 96) {
          parse_retrySpanMs:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &retryspanms_)));
           set_has_retryspanms();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.OpenOrderCommandDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.OpenOrderCommandDTO)
+  return false;
 #undef DO_
 }
 
 void OpenOrderCommandDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.OpenOrderCommandDTO)
   // required int32 command = 1;
   if (has_command()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->command(), output);
@@ -1041,7 +1147,7 @@ void OpenOrderCommandDTO::SerializeWithCachedSizes(
 
   // required string symbol = 2;
   if (has_symbol()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->symbol(), output);
   }
 
@@ -1077,7 +1183,7 @@ void OpenOrderCommandDTO::SerializeWithCachedSizes(
 
   // optional string comment = 9;
   if (has_comment()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       9, this->comment(), output);
   }
 
@@ -1096,6 +1202,9 @@ void OpenOrderCommandDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->retryspanms(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.OpenOrderCommandDTO)
 }
 
 int OpenOrderCommandDTO::ByteSize() const {
@@ -1181,6 +1290,8 @@ int OpenOrderCommandDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -1234,6 +1345,7 @@ void OpenOrderCommandDTO::MergeFrom(const OpenOrderCommandDTO& from) {
       set_retryspanms(from.retryspanms());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void OpenOrderCommandDTO::CopyFrom(const OpenOrderCommandDTO& from) {
@@ -1263,6 +1375,7 @@ void OpenOrderCommandDTO::Swap(OpenOrderCommandDTO* other) {
     std::swap(retries_, other->retries_);
     std::swap(retryspanms_, other->retryspanms_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -1287,6 +1400,7 @@ const int ModifyOrderCommandDTO::kRetrySpanMsFieldNumber;
 ModifyOrderCommandDTO::ModifyOrderCommandDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.ModifyOrderCommandDTO)
 }
 
 void ModifyOrderCommandDTO::InitAsDefaultInstance() {
@@ -1296,6 +1410,7 @@ ModifyOrderCommandDTO::ModifyOrderCommandDTO(const ModifyOrderCommandDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.ModifyOrderCommandDTO)
 }
 
 void ModifyOrderCommandDTO::SharedCtor() {
@@ -1311,6 +1426,7 @@ void ModifyOrderCommandDTO::SharedCtor() {
 }
 
 ModifyOrderCommandDTO::~ModifyOrderCommandDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.ModifyOrderCommandDTO)
   SharedDtor();
 }
 
@@ -1344,34 +1460,50 @@ ModifyOrderCommandDTO* ModifyOrderCommandDTO::New() const {
 }
 
 void ModifyOrderCommandDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    command_ = 0;
-    order_ = 0;
-    openprice_ = 0;
-    stoploss_ = 0;
-    takeprofit_ = 0;
-    retries_ = 0;
-    retryspanms_ = 0;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<ModifyOrderCommandDTO*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 127) {
+    ZR_(command_, retryspanms_);
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool ModifyOrderCommandDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.ModifyOrderCommandDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 command = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &command_)));
           set_has_command();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(16)) goto parse_order;
         break;
@@ -1379,15 +1511,14 @@ bool ModifyOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 order = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 16) {
          parse_order:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &order_)));
           set_has_order();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(25)) goto parse_openPrice;
         break;
@@ -1395,15 +1526,14 @@ bool ModifyOrderCommandDTO::MergePartialFromCodedStream(
 
       // required double openPrice = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 25) {
          parse_openPrice:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &openprice_)));
           set_has_openprice();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(33)) goto parse_stopLoss;
         break;
@@ -1411,15 +1541,14 @@ bool ModifyOrderCommandDTO::MergePartialFromCodedStream(
 
       // required double stopLoss = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 33) {
          parse_stopLoss:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &stoploss_)));
           set_has_stoploss();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(41)) goto parse_takeProfit;
         break;
@@ -1427,15 +1556,14 @@ bool ModifyOrderCommandDTO::MergePartialFromCodedStream(
 
       // required double takeProfit = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 41) {
          parse_takeProfit:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &takeprofit_)));
           set_has_takeprofit();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(48)) goto parse_retries;
         break;
@@ -1443,15 +1571,14 @@ bool ModifyOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 retries = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 48) {
          parse_retries:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &retries_)));
           set_has_retries();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(56)) goto parse_retrySpanMs;
         break;
@@ -1459,37 +1586,44 @@ bool ModifyOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 retrySpanMs = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 56) {
          parse_retrySpanMs:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &retryspanms_)));
           set_has_retryspanms();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.ModifyOrderCommandDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.ModifyOrderCommandDTO)
+  return false;
 #undef DO_
 }
 
 void ModifyOrderCommandDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.ModifyOrderCommandDTO)
   // required int32 command = 1;
   if (has_command()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->command(), output);
@@ -1525,6 +1659,9 @@ void ModifyOrderCommandDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->retryspanms(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.ModifyOrderCommandDTO)
 }
 
 int ModifyOrderCommandDTO::ByteSize() const {
@@ -1575,6 +1712,8 @@ int ModifyOrderCommandDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -1611,6 +1750,7 @@ void ModifyOrderCommandDTO::MergeFrom(const ModifyOrderCommandDTO& from) {
       set_retryspanms(from.retryspanms());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void ModifyOrderCommandDTO::CopyFrom(const ModifyOrderCommandDTO& from) {
@@ -1635,6 +1775,7 @@ void ModifyOrderCommandDTO::Swap(ModifyOrderCommandDTO* other) {
     std::swap(retries_, other->retries_);
     std::swap(retryspanms_, other->retryspanms_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -1656,6 +1797,7 @@ const int CloseOrderCommandDTO::kRetrySpanMsFieldNumber;
 CloseOrderCommandDTO::CloseOrderCommandDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.CloseOrderCommandDTO)
 }
 
 void CloseOrderCommandDTO::InitAsDefaultInstance() {
@@ -1665,6 +1807,7 @@ CloseOrderCommandDTO::CloseOrderCommandDTO(const CloseOrderCommandDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.CloseOrderCommandDTO)
 }
 
 void CloseOrderCommandDTO::SharedCtor() {
@@ -1677,6 +1820,7 @@ void CloseOrderCommandDTO::SharedCtor() {
 }
 
 CloseOrderCommandDTO::~CloseOrderCommandDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.CloseOrderCommandDTO)
   SharedDtor();
 }
 
@@ -1710,31 +1854,48 @@ CloseOrderCommandDTO* CloseOrderCommandDTO::New() const {
 }
 
 void CloseOrderCommandDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    command_ = 0;
-    order_ = 0;
-    retries_ = 0;
-    retryspanms_ = 0;
-  }
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<CloseOrderCommandDTO*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(command_, retryspanms_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool CloseOrderCommandDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.CloseOrderCommandDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 command = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &command_)));
           set_has_command();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(16)) goto parse_order;
         break;
@@ -1742,15 +1903,14 @@ bool CloseOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 order = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 16) {
          parse_order:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &order_)));
           set_has_order();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(24)) goto parse_retries;
         break;
@@ -1758,15 +1918,14 @@ bool CloseOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 retries = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 24) {
          parse_retries:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &retries_)));
           set_has_retries();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(32)) goto parse_retrySpanMs;
         break;
@@ -1774,37 +1933,44 @@ bool CloseOrderCommandDTO::MergePartialFromCodedStream(
 
       // required int32 retrySpanMs = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 32) {
          parse_retrySpanMs:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &retryspanms_)));
           set_has_retryspanms();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.CloseOrderCommandDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.CloseOrderCommandDTO)
+  return false;
 #undef DO_
 }
 
 void CloseOrderCommandDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.CloseOrderCommandDTO)
   // required int32 command = 1;
   if (has_command()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->command(), output);
@@ -1825,6 +1991,9 @@ void CloseOrderCommandDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->retryspanms(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.CloseOrderCommandDTO)
 }
 
 int CloseOrderCommandDTO::ByteSize() const {
@@ -1860,6 +2029,8 @@ int CloseOrderCommandDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -1887,6 +2058,7 @@ void CloseOrderCommandDTO::MergeFrom(const CloseOrderCommandDTO& from) {
       set_retryspanms(from.retryspanms());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void CloseOrderCommandDTO::CopyFrom(const CloseOrderCommandDTO& from) {
@@ -1908,6 +2080,7 @@ void CloseOrderCommandDTO::Swap(CloseOrderCommandDTO* other) {
     std::swap(retries_, other->retries_);
     std::swap(retryspanms_, other->retryspanms_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -1930,6 +2103,7 @@ const int CloseOrderByCommandDTO::kRetrySpanMsFieldNumber;
 CloseOrderByCommandDTO::CloseOrderByCommandDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.CloseOrderByCommandDTO)
 }
 
 void CloseOrderByCommandDTO::InitAsDefaultInstance() {
@@ -1939,6 +2113,7 @@ CloseOrderByCommandDTO::CloseOrderByCommandDTO(const CloseOrderByCommandDTO& fro
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.CloseOrderByCommandDTO)
 }
 
 void CloseOrderByCommandDTO::SharedCtor() {
@@ -1952,6 +2127,7 @@ void CloseOrderByCommandDTO::SharedCtor() {
 }
 
 CloseOrderByCommandDTO::~CloseOrderByCommandDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.CloseOrderByCommandDTO)
   SharedDtor();
 }
 
@@ -1985,32 +2161,50 @@ CloseOrderByCommandDTO* CloseOrderByCommandDTO::New() const {
 }
 
 void CloseOrderByCommandDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    command_ = 0;
-    order_ = 0;
-    orderby_ = 0;
-    retries_ = 0;
-    retryspanms_ = 0;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<CloseOrderByCommandDTO*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 31) {
+    ZR_(command_, retryspanms_);
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool CloseOrderByCommandDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.CloseOrderByCommandDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 command = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &command_)));
           set_has_command();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(16)) goto parse_order;
         break;
@@ -2018,15 +2212,14 @@ bool CloseOrderByCommandDTO::MergePartialFromCodedStream(
 
       // required int32 order = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 16) {
          parse_order:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &order_)));
           set_has_order();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(24)) goto parse_orderBy;
         break;
@@ -2034,15 +2227,14 @@ bool CloseOrderByCommandDTO::MergePartialFromCodedStream(
 
       // required int32 orderBy = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 24) {
          parse_orderBy:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &orderby_)));
           set_has_orderby();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(32)) goto parse_retries;
         break;
@@ -2050,15 +2242,14 @@ bool CloseOrderByCommandDTO::MergePartialFromCodedStream(
 
       // required int32 retries = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 32) {
          parse_retries:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &retries_)));
           set_has_retries();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(40)) goto parse_retrySpanMs;
         break;
@@ -2066,37 +2257,44 @@ bool CloseOrderByCommandDTO::MergePartialFromCodedStream(
 
       // required int32 retrySpanMs = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 40) {
          parse_retrySpanMs:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &retryspanms_)));
           set_has_retryspanms();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.CloseOrderByCommandDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.CloseOrderByCommandDTO)
+  return false;
 #undef DO_
 }
 
 void CloseOrderByCommandDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.CloseOrderByCommandDTO)
   // required int32 command = 1;
   if (has_command()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->command(), output);
@@ -2122,6 +2320,9 @@ void CloseOrderByCommandDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->retryspanms(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.CloseOrderByCommandDTO)
 }
 
 int CloseOrderByCommandDTO::ByteSize() const {
@@ -2164,6 +2365,8 @@ int CloseOrderByCommandDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -2194,6 +2397,7 @@ void CloseOrderByCommandDTO::MergeFrom(const CloseOrderByCommandDTO& from) {
       set_retryspanms(from.retryspanms());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void CloseOrderByCommandDTO::CopyFrom(const CloseOrderByCommandDTO& from) {
@@ -2216,6 +2420,7 @@ void CloseOrderByCommandDTO::Swap(CloseOrderByCommandDTO* other) {
     std::swap(retries_, other->retries_);
     std::swap(retryspanms_, other->retryspanms_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -2246,6 +2451,7 @@ const int OrderInfoDTO::kOpenTimeFieldNumber;
 OrderInfoDTO::OrderInfoDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.OrderInfoDTO)
 }
 
 void OrderInfoDTO::InitAsDefaultInstance() {
@@ -2255,12 +2461,14 @@ OrderInfoDTO::OrderInfoDTO(const OrderInfoDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.OrderInfoDTO)
 }
 
 void OrderInfoDTO::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   order_ = 0;
-  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   tradecommand_ = 0;
   volume_ = 0;
   openprice_ = 0;
@@ -2276,11 +2484,12 @@ void OrderInfoDTO::SharedCtor() {
 }
 
 OrderInfoDTO::~OrderInfoDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.OrderInfoDTO)
   SharedDtor();
 }
 
 void OrderInfoDTO::SharedDtor() {
-  if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+  if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete symbol_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -2312,46 +2521,58 @@ OrderInfoDTO* OrderInfoDTO::New() const {
 }
 
 void OrderInfoDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    order_ = 0;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<OrderInfoDTO*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(order_, closeprice_);
     if (has_symbol()) {
-      if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+      if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         symbol_->clear();
       }
     }
-    tradecommand_ = 0;
-    volume_ = 0;
-    openprice_ = 0;
-    stoploss_ = 0;
-    takeprofit_ = 0;
-    closeprice_ = 0;
   }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    profit_ = 0;
-    commission_ = 0;
-    swap_ = 0;
-    pointprofit_ = 0;
-    opentime_ = 0;
+  if (_has_bits_[8 / 32] & 7936) {
+    ZR_(profit_, opentime_);
   }
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool OrderInfoDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.OrderInfoDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 order = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &order_)));
           set_has_order();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_symbol;
         break;
@@ -2359,13 +2580,12 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required string symbol = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 18) {
          parse_symbol:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_symbol()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(24)) goto parse_tradeCommand;
         break;
@@ -2373,15 +2593,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required int32 tradeCommand = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 24) {
          parse_tradeCommand:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &tradecommand_)));
           set_has_tradecommand();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(33)) goto parse_volume;
         break;
@@ -2389,15 +2608,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required double volume = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 33) {
          parse_volume:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &volume_)));
           set_has_volume();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(41)) goto parse_openPrice;
         break;
@@ -2405,15 +2623,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required double openPrice = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 41) {
          parse_openPrice:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &openprice_)));
           set_has_openprice();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(49)) goto parse_stopLoss;
         break;
@@ -2421,15 +2638,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required double stopLoss = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 49) {
          parse_stopLoss:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &stoploss_)));
           set_has_stoploss();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(57)) goto parse_takeProfit;
         break;
@@ -2437,15 +2653,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required double takeProfit = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 57) {
          parse_takeProfit:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &takeprofit_)));
           set_has_takeprofit();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(65)) goto parse_closePrice;
         break;
@@ -2453,15 +2668,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required double closePrice = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 65) {
          parse_closePrice:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &closeprice_)));
           set_has_closeprice();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(73)) goto parse_profit;
         break;
@@ -2469,15 +2683,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required double profit = 9;
       case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 73) {
          parse_profit:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &profit_)));
           set_has_profit();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(81)) goto parse_commission;
         break;
@@ -2485,15 +2698,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required double commission = 10;
       case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 81) {
          parse_commission:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &commission_)));
           set_has_commission();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(89)) goto parse_swap;
         break;
@@ -2501,15 +2713,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required double swap = 11;
       case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 89) {
          parse_swap:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &swap_)));
           set_has_swap();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(96)) goto parse_pointProfit;
         break;
@@ -2517,15 +2728,14 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required int32 pointProfit = 12;
       case 12: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 96) {
          parse_pointProfit:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &pointprofit_)));
           set_has_pointprofit();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(104)) goto parse_openTime;
         break;
@@ -2533,37 +2743,44 @@ bool OrderInfoDTO::MergePartialFromCodedStream(
 
       // required int32 openTime = 13;
       case 13: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 104) {
          parse_openTime:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &opentime_)));
           set_has_opentime();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.OrderInfoDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.OrderInfoDTO)
+  return false;
 #undef DO_
 }
 
 void OrderInfoDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.OrderInfoDTO)
   // required int32 order = 1;
   if (has_order()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->order(), output);
@@ -2571,7 +2788,7 @@ void OrderInfoDTO::SerializeWithCachedSizes(
 
   // required string symbol = 2;
   if (has_symbol()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->symbol(), output);
   }
 
@@ -2630,6 +2847,9 @@ void OrderInfoDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(13, this->opentime(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.OrderInfoDTO)
 }
 
 int OrderInfoDTO::ByteSize() const {
@@ -2714,6 +2934,8 @@ int OrderInfoDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -2770,6 +2992,7 @@ void OrderInfoDTO::MergeFrom(const OrderInfoDTO& from) {
       set_opentime(from.opentime());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void OrderInfoDTO::CopyFrom(const OrderInfoDTO& from) {
@@ -2800,6 +3023,7 @@ void OrderInfoDTO::Swap(OrderInfoDTO* other) {
     std::swap(pointprofit_, other->pointprofit_);
     std::swap(opentime_, other->opentime_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -2818,6 +3042,7 @@ const int UpdateOrdersDTO::kOrdersFieldNumber;
 UpdateOrdersDTO::UpdateOrdersDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.UpdateOrdersDTO)
 }
 
 void UpdateOrdersDTO::InitAsDefaultInstance() {
@@ -2827,6 +3052,7 @@ UpdateOrdersDTO::UpdateOrdersDTO(const UpdateOrdersDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.UpdateOrdersDTO)
 }
 
 void UpdateOrdersDTO::SharedCtor() {
@@ -2835,6 +3061,7 @@ void UpdateOrdersDTO::SharedCtor() {
 }
 
 UpdateOrdersDTO::~UpdateOrdersDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.UpdateOrdersDTO)
   SharedDtor();
 }
 
@@ -2870,52 +3097,71 @@ UpdateOrdersDTO* UpdateOrdersDTO::New() const {
 void UpdateOrdersDTO::Clear() {
   orders_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool UpdateOrdersDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.UpdateOrdersDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // repeated .Ultima.MT4.Packets.OrderInfoDTO orders = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 10) {
          parse_orders:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_orders()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(10)) goto parse_orders;
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.UpdateOrdersDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.UpdateOrdersDTO)
+  return false;
 #undef DO_
 }
 
 void UpdateOrdersDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.UpdateOrdersDTO)
   // repeated .Ultima.MT4.Packets.OrderInfoDTO orders = 1;
   for (int i = 0; i < this->orders_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessage(
       1, this->orders(i), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.UpdateOrdersDTO)
 }
 
 int UpdateOrdersDTO::ByteSize() const {
@@ -2928,6 +3174,8 @@ int UpdateOrdersDTO::ByteSize() const {
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
         this->orders(i));
   }
+
+  total_size += unknown_fields().size();
 
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
@@ -2943,6 +3191,7 @@ void UpdateOrdersDTO::CheckTypeAndMergeFrom(
 void UpdateOrdersDTO::MergeFrom(const UpdateOrdersDTO& from) {
   GOOGLE_CHECK_NE(&from, this);
   orders_.MergeFrom(from.orders_);
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void UpdateOrdersDTO::CopyFrom(const UpdateOrdersDTO& from) {
@@ -2953,9 +3202,7 @@ void UpdateOrdersDTO::CopyFrom(const UpdateOrdersDTO& from) {
 
 bool UpdateOrdersDTO::IsInitialized() const {
 
-  for (int i = 0; i < orders_size(); i++) {
-    if (!this->orders(i).IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->orders())) return false;
   return true;
 }
 
@@ -2963,6 +3210,7 @@ void UpdateOrdersDTO::Swap(UpdateOrdersDTO* other) {
   if (other != this) {
     orders_.Swap(&other->orders_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -2983,6 +3231,7 @@ const int CommandResultDTO::kOrderFieldNumber;
 CommandResultDTO::CommandResultDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.CommandResultDTO)
 }
 
 void CommandResultDTO::InitAsDefaultInstance() {
@@ -2992,6 +3241,7 @@ CommandResultDTO::CommandResultDTO(const CommandResultDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.CommandResultDTO)
 }
 
 void CommandResultDTO::SharedCtor() {
@@ -3003,6 +3253,7 @@ void CommandResultDTO::SharedCtor() {
 }
 
 CommandResultDTO::~CommandResultDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.CommandResultDTO)
   SharedDtor();
 }
 
@@ -3036,30 +3287,48 @@ CommandResultDTO* CommandResultDTO::New() const {
 }
 
 void CommandResultDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    command_ = 0;
-    result_ = 0;
-    order_ = 0;
-  }
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<CommandResultDTO*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  ZR_(command_, order_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool CommandResultDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.CommandResultDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 command = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &command_)));
           set_has_command();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(16)) goto parse_result;
         break;
@@ -3067,15 +3336,14 @@ bool CommandResultDTO::MergePartialFromCodedStream(
 
       // required int32 result = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 16) {
          parse_result:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &result_)));
           set_has_result();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(24)) goto parse_order;
         break;
@@ -3083,37 +3351,44 @@ bool CommandResultDTO::MergePartialFromCodedStream(
 
       // required int32 order = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 24) {
          parse_order:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &order_)));
           set_has_order();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.CommandResultDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.CommandResultDTO)
+  return false;
 #undef DO_
 }
 
 void CommandResultDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.CommandResultDTO)
   // required int32 command = 1;
   if (has_command()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->command(), output);
@@ -3129,6 +3404,9 @@ void CommandResultDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->order(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.CommandResultDTO)
 }
 
 int CommandResultDTO::ByteSize() const {
@@ -3157,6 +3435,8 @@ int CommandResultDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -3181,6 +3461,7 @@ void CommandResultDTO::MergeFrom(const CommandResultDTO& from) {
       set_order(from.order());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void CommandResultDTO::CopyFrom(const CommandResultDTO& from) {
@@ -3201,6 +3482,7 @@ void CommandResultDTO::Swap(CommandResultDTO* other) {
     std::swap(result_, other->result_);
     std::swap(order_, other->order_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -3219,6 +3501,7 @@ const int RequestHistoryDTO::kCommandFieldNumber;
 RequestHistoryDTO::RequestHistoryDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.RequestHistoryDTO)
 }
 
 void RequestHistoryDTO::InitAsDefaultInstance() {
@@ -3228,6 +3511,7 @@ RequestHistoryDTO::RequestHistoryDTO(const RequestHistoryDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.RequestHistoryDTO)
 }
 
 void RequestHistoryDTO::SharedCtor() {
@@ -3237,6 +3521,7 @@ void RequestHistoryDTO::SharedCtor() {
 }
 
 RequestHistoryDTO::~RequestHistoryDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.RequestHistoryDTO)
   SharedDtor();
 }
 
@@ -3270,55 +3555,72 @@ RequestHistoryDTO* RequestHistoryDTO::New() const {
 }
 
 void RequestHistoryDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    command_ = 0;
-  }
+  command_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool RequestHistoryDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.RequestHistoryDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 command = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &command_)));
           set_has_command();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.RequestHistoryDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.RequestHistoryDTO)
+  return false;
 #undef DO_
 }
 
 void RequestHistoryDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.RequestHistoryDTO)
   // required int32 command = 1;
   if (has_command()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->command(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.RequestHistoryDTO)
 }
 
 int RequestHistoryDTO::ByteSize() const {
@@ -3333,6 +3635,8 @@ int RequestHistoryDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -3351,6 +3655,7 @@ void RequestHistoryDTO::MergeFrom(const RequestHistoryDTO& from) {
       set_command(from.command());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void RequestHistoryDTO::CopyFrom(const RequestHistoryDTO& from) {
@@ -3369,6 +3674,7 @@ void RequestHistoryDTO::Swap(RequestHistoryDTO* other) {
   if (other != this) {
     std::swap(command_, other->command_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -3398,6 +3704,7 @@ const int HistoryOrderInfoDTO::kCloseTimeFieldNumber;
 HistoryOrderInfoDTO::HistoryOrderInfoDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.HistoryOrderInfoDTO)
 }
 
 void HistoryOrderInfoDTO::InitAsDefaultInstance() {
@@ -3407,12 +3714,14 @@ HistoryOrderInfoDTO::HistoryOrderInfoDTO(const HistoryOrderInfoDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.HistoryOrderInfoDTO)
 }
 
 void HistoryOrderInfoDTO::SharedCtor() {
+  ::google::protobuf::internal::GetEmptyString();
   _cached_size_ = 0;
   order_ = 0;
-  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
+  symbol_ = const_cast< ::std::string*>(&::google::protobuf::internal::GetEmptyStringAlreadyInited());
   tradecommand_ = 0;
   volume_ = 0;
   openprice_ = 0;
@@ -3427,11 +3736,12 @@ void HistoryOrderInfoDTO::SharedCtor() {
 }
 
 HistoryOrderInfoDTO::~HistoryOrderInfoDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.HistoryOrderInfoDTO)
   SharedDtor();
 }
 
 void HistoryOrderInfoDTO::SharedDtor() {
-  if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+  if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
     delete symbol_;
   }
   #ifdef GOOGLE_PROTOBUF_NO_STATIC_INITIALIZER
@@ -3463,45 +3773,56 @@ HistoryOrderInfoDTO* HistoryOrderInfoDTO::New() const {
 }
 
 void HistoryOrderInfoDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    order_ = 0;
+#define OFFSET_OF_FIELD_(f) (reinterpret_cast<char*>(      \
+  &reinterpret_cast<HistoryOrderInfoDTO*>(16)->f) - \
+   reinterpret_cast<char*>(16))
+
+#define ZR_(first, last) do {                              \
+    size_t f = OFFSET_OF_FIELD_(first);                    \
+    size_t n = OFFSET_OF_FIELD_(last) - f + sizeof(last);  \
+    ::memset(&first, 0, n);                                \
+  } while (0)
+
+  if (_has_bits_[0 / 32] & 255) {
+    ZR_(order_, closeprice_);
     if (has_symbol()) {
-      if (symbol_ != &::google::protobuf::internal::kEmptyString) {
+      if (symbol_ != &::google::protobuf::internal::GetEmptyStringAlreadyInited()) {
         symbol_->clear();
       }
     }
-    tradecommand_ = 0;
-    volume_ = 0;
-    openprice_ = 0;
-    stoploss_ = 0;
-    takeprofit_ = 0;
-    closeprice_ = 0;
   }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    profit_ = 0;
-    pointprofit_ = 0;
-    opentime_ = 0;
-    closetime_ = 0;
-  }
+  ZR_(profit_, closetime_);
+
+#undef OFFSET_OF_FIELD_
+#undef ZR_
+
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.HistoryOrderInfoDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 order = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &order_)));
           set_has_order();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_symbol;
         break;
@@ -3509,13 +3830,12 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required string symbol = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 18) {
          parse_symbol:
           DO_(::google::protobuf::internal::WireFormatLite::ReadString(
                 input, this->mutable_symbol()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(24)) goto parse_tradeCommand;
         break;
@@ -3523,15 +3843,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required int32 tradeCommand = 3;
       case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 24) {
          parse_tradeCommand:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &tradecommand_)));
           set_has_tradecommand();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(33)) goto parse_volume;
         break;
@@ -3539,15 +3858,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required double volume = 4;
       case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 33) {
          parse_volume:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &volume_)));
           set_has_volume();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(41)) goto parse_openPrice;
         break;
@@ -3555,15 +3873,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required double openPrice = 5;
       case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 41) {
          parse_openPrice:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &openprice_)));
           set_has_openprice();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(49)) goto parse_stopLoss;
         break;
@@ -3571,15 +3888,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required double stopLoss = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 49) {
          parse_stopLoss:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &stoploss_)));
           set_has_stoploss();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(57)) goto parse_takeProfit;
         break;
@@ -3587,15 +3903,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required double takeProfit = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 57) {
          parse_takeProfit:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &takeprofit_)));
           set_has_takeprofit();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(65)) goto parse_closePrice;
         break;
@@ -3603,15 +3918,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required double closePrice = 8;
       case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 65) {
          parse_closePrice:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &closeprice_)));
           set_has_closeprice();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(73)) goto parse_profit;
         break;
@@ -3619,15 +3933,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required double profit = 9;
       case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED64) {
+        if (tag == 73) {
          parse_profit:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    double, ::google::protobuf::internal::WireFormatLite::TYPE_DOUBLE>(
                  input, &profit_)));
           set_has_profit();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(80)) goto parse_pointProfit;
         break;
@@ -3635,15 +3948,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required int32 pointProfit = 10;
       case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 80) {
          parse_pointProfit:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &pointprofit_)));
           set_has_pointprofit();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(88)) goto parse_openTime;
         break;
@@ -3651,15 +3963,14 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required int32 openTime = 11;
       case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 88) {
          parse_openTime:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &opentime_)));
           set_has_opentime();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(96)) goto parse_closeTime;
         break;
@@ -3667,37 +3978,44 @@ bool HistoryOrderInfoDTO::MergePartialFromCodedStream(
 
       // required int32 closeTime = 12;
       case 12: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 96) {
          parse_closeTime:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &closetime_)));
           set_has_closetime();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.HistoryOrderInfoDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.HistoryOrderInfoDTO)
+  return false;
 #undef DO_
 }
 
 void HistoryOrderInfoDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.HistoryOrderInfoDTO)
   // required int32 order = 1;
   if (has_order()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->order(), output);
@@ -3705,7 +4023,7 @@ void HistoryOrderInfoDTO::SerializeWithCachedSizes(
 
   // required string symbol = 2;
   if (has_symbol()) {
-    ::google::protobuf::internal::WireFormatLite::WriteString(
+    ::google::protobuf::internal::WireFormatLite::WriteStringMaybeAliased(
       2, this->symbol(), output);
   }
 
@@ -3759,6 +4077,9 @@ void HistoryOrderInfoDTO::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(12, this->closetime(), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.HistoryOrderInfoDTO)
 }
 
 int HistoryOrderInfoDTO::ByteSize() const {
@@ -3840,6 +4161,8 @@ int HistoryOrderInfoDTO::ByteSize() const {
     }
 
   }
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -3893,6 +4216,7 @@ void HistoryOrderInfoDTO::MergeFrom(const HistoryOrderInfoDTO& from) {
       set_closetime(from.closetime());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void HistoryOrderInfoDTO::CopyFrom(const HistoryOrderInfoDTO& from) {
@@ -3922,6 +4246,7 @@ void HistoryOrderInfoDTO::Swap(HistoryOrderInfoDTO* other) {
     std::swap(opentime_, other->opentime_);
     std::swap(closetime_, other->closetime_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
@@ -3941,6 +4266,7 @@ const int OrdersHistoryDTO::kOrdersFieldNumber;
 OrdersHistoryDTO::OrdersHistoryDTO()
   : ::google::protobuf::MessageLite() {
   SharedCtor();
+  // @@protoc_insertion_point(constructor:Ultima.MT4.Packets.OrdersHistoryDTO)
 }
 
 void OrdersHistoryDTO::InitAsDefaultInstance() {
@@ -3950,6 +4276,7 @@ OrdersHistoryDTO::OrdersHistoryDTO(const OrdersHistoryDTO& from)
   : ::google::protobuf::MessageLite() {
   SharedCtor();
   MergeFrom(from);
+  // @@protoc_insertion_point(copy_constructor:Ultima.MT4.Packets.OrdersHistoryDTO)
 }
 
 void OrdersHistoryDTO::SharedCtor() {
@@ -3959,6 +4286,7 @@ void OrdersHistoryDTO::SharedCtor() {
 }
 
 OrdersHistoryDTO::~OrdersHistoryDTO() {
+  // @@protoc_insertion_point(destructor:Ultima.MT4.Packets.OrdersHistoryDTO)
   SharedDtor();
 }
 
@@ -3992,29 +4320,35 @@ OrdersHistoryDTO* OrdersHistoryDTO::New() const {
 }
 
 void OrdersHistoryDTO::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    command_ = 0;
-  }
+  command_ = 0;
   orders_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->clear();
 }
 
 bool OrdersHistoryDTO::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
   ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
+  ::google::protobuf::io::StringOutputStream unknown_fields_string(
+      mutable_unknown_fields());
+  ::google::protobuf::io::CodedOutputStream unknown_fields_stream(
+      &unknown_fields_string);
+  // @@protoc_insertion_point(parse_start:Ultima.MT4.Packets.OrdersHistoryDTO)
+  for (;;) {
+    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
+    tag = p.first;
+    if (!p.second) goto handle_unusual;
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
       // required int32 command = 1;
       case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+        if (tag == 8) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
                    ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
                  input, &command_)));
           set_has_command();
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_orders;
         break;
@@ -4022,36 +4356,43 @@ bool OrdersHistoryDTO::MergePartialFromCodedStream(
 
       // repeated .Ultima.MT4.Packets.HistoryOrderInfoDTO orders = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+        if (tag == 18) {
          parse_orders:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
                 input, add_orders()));
         } else {
-          goto handle_uninterpreted;
+          goto handle_unusual;
         }
         if (input->ExpectTag(18)) goto parse_orders;
-        if (input->ExpectAtEnd()) return true;
+        if (input->ExpectAtEnd()) goto success;
         break;
       }
 
       default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+      handle_unusual:
+        if (tag == 0 ||
+            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
+          goto success;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::SkipField(input, tag));
+        DO_(::google::protobuf::internal::WireFormatLite::SkipField(
+            input, tag, &unknown_fields_stream));
         break;
       }
     }
   }
+success:
+  // @@protoc_insertion_point(parse_success:Ultima.MT4.Packets.OrdersHistoryDTO)
   return true;
+failure:
+  // @@protoc_insertion_point(parse_failure:Ultima.MT4.Packets.OrdersHistoryDTO)
+  return false;
 #undef DO_
 }
 
 void OrdersHistoryDTO::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
+  // @@protoc_insertion_point(serialize_start:Ultima.MT4.Packets.OrdersHistoryDTO)
   // required int32 command = 1;
   if (has_command()) {
     ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->command(), output);
@@ -4063,6 +4404,9 @@ void OrdersHistoryDTO::SerializeWithCachedSizes(
       2, this->orders(i), output);
   }
 
+  output->WriteRaw(unknown_fields().data(),
+                   unknown_fields().size());
+  // @@protoc_insertion_point(serialize_end:Ultima.MT4.Packets.OrdersHistoryDTO)
 }
 
 int OrdersHistoryDTO::ByteSize() const {
@@ -4085,6 +4429,8 @@ int OrdersHistoryDTO::ByteSize() const {
         this->orders(i));
   }
 
+  total_size += unknown_fields().size();
+
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = total_size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
@@ -4104,6 +4450,7 @@ void OrdersHistoryDTO::MergeFrom(const OrdersHistoryDTO& from) {
       set_command(from.command());
     }
   }
+  mutable_unknown_fields()->append(from.unknown_fields());
 }
 
 void OrdersHistoryDTO::CopyFrom(const OrdersHistoryDTO& from) {
@@ -4115,9 +4462,7 @@ void OrdersHistoryDTO::CopyFrom(const OrdersHistoryDTO& from) {
 bool OrdersHistoryDTO::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
 
-  for (int i = 0; i < orders_size(); i++) {
-    if (!this->orders(i).IsInitialized()) return false;
-  }
+  if (!::google::protobuf::internal::AllAreInitialized(this->orders())) return false;
   return true;
 }
 
@@ -4126,6 +4471,7 @@ void OrdersHistoryDTO::Swap(OrdersHistoryDTO* other) {
     std::swap(command_, other->command_);
     orders_.Swap(&other->orders_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.swap(other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
